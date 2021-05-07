@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "BoDXgq4xZDjwJhE0mWW1N/Q0f8fWbIa0opL6BdeupB+6UIGGLrDutBR7R2S6tyQwORwDS//DCxd3Beo08HApUg==",
+  "success": true,
+  "projectFilePath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Application/Movies.Application.csproj",
+  "expectedPackageFiles": [
+    "/Users/octaviodiaz/.nuget/packages/automapper/10.1.1/automapper.10.1.1.nupkg.sha512",
+    "/Users/octaviodiaz/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
+    "/Users/octaviodiaz/.nuget/packages/stylecop.analyzers/1.2.0-beta.333/stylecop.analyzers.1.2.0-beta.333.nupkg.sha512",
+    "/Users/octaviodiaz/.nuget/packages/stylecop.analyzers.unstable/1.2.0.333/stylecop.analyzers.unstable.1.2.0.333.nupkg.sha512",
+    "/Users/octaviodiaz/.nuget/packages/system.reflection.emit/4.7.0/system.reflection.emit.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

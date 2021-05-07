@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "YpIjJx/cSf0j8j1NOAQ8hzMLHoY+313XsMkZGr04w77cwb71OFN0szf7Mx0bXEMsII+tIHM9j8rK//RQ9J3Xig==",
+  "success": true,
+  "projectFilePath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/octaviodiaz/.nuget/packages/stylecop.analyzers/1.2.0-beta.333/stylecop.analyzers.1.2.0-beta.333.nupkg.sha512",
+    "/Users/octaviodiaz/.nuget/packages/stylecop.analyzers.unstable/1.2.0.333/stylecop.analyzers.unstable.1.2.0.333.nupkg.sha512"
+  ],
+  "logs": []
+}
