@@ -10,9 +10,9 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Application.deps.json
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Application.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Application.pdb
-\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.csprojAssemblyReference.cache
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.AssemblyInfoInputs.cache
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.AssemblyInfo.cs
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.csproj.CoreCompileInputs.cache
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.pdb
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.csprojAssemblyReference.cache

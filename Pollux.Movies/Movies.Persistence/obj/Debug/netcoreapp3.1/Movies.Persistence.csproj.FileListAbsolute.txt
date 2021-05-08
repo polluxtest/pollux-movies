@@ -22,3 +22,6 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.csproj.CopyComplete
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.pdb
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Persistence\bin\Debug\netcoreapp3.1\Movies.Persistence.runtimeconfig.json
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Persistence\bin\Debug\netcoreapp3.1\Movies.Persistence.runtimeconfig.dev.json
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.genruntimeconfig.cache

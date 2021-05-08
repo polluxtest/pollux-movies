@@ -6,8 +6,8 @@ namespace Pollux.Movies
     {
         /// <summary>
         /// Adds the di repositories as an extension methods for the startup .
-        /// </summary>
         /// <param name="services">The service collection.</param>
+        /// </summary>
         public static void AddDIRepositories(this IServiceCollection services)
         {
             //services.AddScoped<IUsersRepository, UsersRepository>();

@@ -1,13 +1,12 @@
 ﻿namespace Pollux.Persistence
 {
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Movies.Domain;
 
     /// <summary>
     /// Core Domain Db Context.
     /// </summary>
-    public class PolluxMoviesDbContext : IdentityDbContext
+    public class PolluxMoviesDbContext : DbContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PolluxMoviesDbContext"/> class.
@@ -30,7 +29,7 @@
         /// <value>
         /// The directos.
         /// </value>
-        public DbSet<Director> Directos { get; set; }
+        public DbSet<Director> Directors { get; set; }
 
         /// <summary>
         /// Override this method to further configure the model that was discovered by convention from the entity types
