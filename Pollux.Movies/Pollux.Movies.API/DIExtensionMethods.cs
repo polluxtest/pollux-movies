@@ -2,9 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Pollux.Movies
 {
-    public  static class DIExtensionMethods
+    public static class DIExtensionMethods
     {
-          /// <summary>
+        /// <summary>
         /// Adds the di repositories as an extension methods for the startup .
         /// </summary>
         /// <param name="services">The service collection.</param>
@@ -28,10 +28,7 @@ namespace Pollux.Movies
         /// <param name="services">The services.</param>
         public static void AddDIIdentityServerServices(this IServiceCollection services)
         {
-         
+
         }
-        
     }
 }
-
-

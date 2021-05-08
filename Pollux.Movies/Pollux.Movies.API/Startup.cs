@@ -1,16 +1,16 @@
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Pollux.Application.Mappers;
-using Pollux.Persistence;
-
 namespace Pollux.Movies
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.OpenApi.Models;
+    using Pollux.Application.Mappers;
+    using Pollux.Persistence;
+
     public class Startup
     {
         /// <summary>
@@ -33,7 +33,7 @@ namespace Pollux.Movies
         /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = this.Configuration.GetSection("AppSettings")["DbConnectionStrings:PolluxSQLConnectionString"];
+            var connectionString = this.Configuration.GetSection("AppSettings")["DbConnectionStrings:PolluxMoviesSQLConnectionString"];
             services.AddDbContext<PolluxMoviesDbContext>(options => options.UseSqlServer(connectionString));
             services.AddCors();
             services.AddMvc();

@@ -1,29 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Pollux.Movies.API/Pollux.Movies.API.csproj": {}
+    "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj": {}
   },
   "projects": {
-    "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Application/Movies.Application.csproj": {
+    "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Application/Movies.Application.csproj",
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj",
         "projectName": "Movies.Application",
-        "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Application/Movies.Application.csproj",
-        "packagesPath": "/Users/octaviodiaz/.nuget/packages/",
-        "outputPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Application/obj/",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj",
+        "packagesPath": "C:\\Users\\octaviodiaz\\.nuget\\packages\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/octaviodiaz/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\octaviodiaz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -35,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "AutoMapper": {
               "target": "Package",
@@ -62,30 +66,33 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.408/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Common/Movies.Common.csproj": {
+    "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Common/Movies.Common.csproj",
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj",
         "projectName": "Movies.Common",
-        "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Common/Movies.Common.csproj",
-        "packagesPath": "/Users/octaviodiaz/.nuget/packages/",
-        "outputPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Common/obj/",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj",
+        "packagesPath": "C:\\Users\\octaviodiaz\\.nuget\\packages\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/octaviodiaz/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\octaviodiaz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -97,6 +104,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -112,30 +120,33 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.408/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj": {
+    "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj",
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj",
         "projectName": "Movies.Domain",
-        "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj",
-        "packagesPath": "/Users/octaviodiaz/.nuget/packages/",
-        "outputPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/obj/",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj",
+        "packagesPath": "C:\\Users\\octaviodiaz\\.nuget\\packages\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/octaviodiaz/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\octaviodiaz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -147,6 +158,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "StyleCop.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -170,33 +182,36 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.408/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Persistence/Movies.Persistence.csproj": {
+    "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Persistence/Movies.Persistence.csproj",
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj",
         "projectName": "Movies.Persistence",
-        "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Persistence/Movies.Persistence.csproj",
-        "packagesPath": "/Users/octaviodiaz/.nuget/packages/",
-        "outputPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Persistence/obj/",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj",
+        "packagesPath": "C:\\Users\\octaviodiaz\\.nuget\\packages\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/octaviodiaz/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\octaviodiaz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj": {
-                "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj"
+              "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj": {
+                "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj"
               }
             }
           }
@@ -209,6 +224,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "LinqKit": {
               "target": "Package",
@@ -248,39 +264,42 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.408/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Pollux.Movies.API/Pollux.Movies.API.csproj": {
+    "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Pollux.Movies.API/Pollux.Movies.API.csproj",
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj",
         "projectName": "Pollux.Movies.API",
-        "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Pollux.Movies.API/Pollux.Movies.API.csproj",
-        "packagesPath": "/Users/octaviodiaz/.nuget/packages/",
-        "outputPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Pollux.Movies.API/obj/",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj",
+        "packagesPath": "C:\\Users\\octaviodiaz\\.nuget\\packages\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Pollux.Movies.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/octaviodiaz/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\octaviodiaz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Application/Movies.Application.csproj": {
-                "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Application/Movies.Application.csproj"
+              "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj": {
+                "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj"
               },
-              "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Common/Movies.Common.csproj": {
-                "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Common/Movies.Common.csproj"
+              "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj": {
+                "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj"
               },
-              "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Persistence/Movies.Persistence.csproj": {
-                "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Persistence/Movies.Persistence.csproj"
+              "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj": {
+                "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj"
               }
             }
           }
@@ -293,6 +312,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "AutoMapper": {
               "target": "Package",
@@ -351,7 +371,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.408/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

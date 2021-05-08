@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollux.Movies.API", "Pollux.Movies.API\Pollux.Movies.API.csproj", "{791F4F4B-4A9F-45DE-A592-4A9F2852099F}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pollux.Movies.API", "Pollux.Movies.API\Pollux.Movies.API.csproj", "{791F4F4B-4A9F-45DE-A592-4A9F2852099F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{2AA7C08B-44F0-44A1-8FE6-CA1269D76566}"
 EndProject
@@ -12,15 +15,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{4A34A3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{EC6B1DDB-0426-45B7-8A26-2D0D391498DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Domain", "Movies.Domain\Movies.Domain.csproj", "{085E0245-2A20-444D-B55B-42C5E5770F1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Domain", "Movies.Domain\Movies.Domain.csproj", "{085E0245-2A20-444D-B55B-42C5E5770F1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Application", "Movies.Application\Movies.Application.csproj", "{21819C28-20B9-4CB2-BFEF-79BF0F5A72E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Application", "Movies.Application\Movies.Application.csproj", "{21819C28-20B9-4CB2-BFEF-79BF0F5A72E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Persistence", "Movies.Persistence\Movies.Persistence.csproj", "{9AA76DFB-921A-4084-8B13-2D72E634D0B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Persistence", "Movies.Persistence\Movies.Persistence.csproj", "{9AA76DFB-921A-4084-8B13-2D72E634D0B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Common", "Movies.Common\Movies.Common.csproj", "{19D26D8F-D96E-420B-9626-E9363CAB64FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Common", "Movies.Common\Movies.Common.csproj", "{19D26D8F-D96E-420B-9626-E9363CAB64FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B9EA33E7-BA1B-49A0-8E0C-4516CEFA7270}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1EB318CF-FD32-4F1C-983D-72CEACB8BA00}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +57,9 @@ Global
 		{19D26D8F-D96E-420B-9626-E9363CAB64FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19D26D8F-D96E-420B-9626-E9363CAB64FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{791F4F4B-4A9F-45DE-A592-4A9F2852099F} = {2AA7C08B-44F0-44A1-8FE6-CA1269D76566}
 		{4A34A37C-D663-4F33-902E-655F914E5B80} = {EC6986EA-E867-443E-96F8-93445FC2E891}
@@ -57,5 +68,8 @@ Global
 		{21819C28-20B9-4CB2-BFEF-79BF0F5A72E7} = {EC6B1DDB-0426-45B7-8A26-2D0D391498DE}
 		{9AA76DFB-921A-4084-8B13-2D72E634D0B3} = {97C7C7C6-F85B-437E-B279-166BD28BD663}
 		{19D26D8F-D96E-420B-9626-E9363CAB64FB} = {B9EA33E7-BA1B-49A0-8E0C-4516CEFA7270}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {949A256B-BF31-4235-8CEE-957AB8AD843C}
 	EndGlobalSection
 EndGlobal

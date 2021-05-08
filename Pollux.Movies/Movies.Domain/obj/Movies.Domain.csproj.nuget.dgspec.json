@@ -1,29 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj": {}
+    "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj": {}
   },
   "projects": {
-    "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj": {
+    "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj",
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj",
         "projectName": "Movies.Domain",
-        "projectPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/Movies.Domain.csproj",
-        "packagesPath": "/Users/octaviodiaz/.nuget/packages/",
-        "outputPath": "/Users/octaviodiaz/Documents/Pollux/pollux-movies-service/Pollux.Movies/Movies.Domain/obj/",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj",
+        "packagesPath": "C:\\Users\\octaviodiaz\\.nuget\\packages\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/octaviodiaz/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\octaviodiaz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -35,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "StyleCop.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -58,7 +62,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.408/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
