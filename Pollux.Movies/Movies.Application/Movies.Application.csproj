@@ -12,4 +12,9 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Movies.Domain\Movies.Domain.csproj" />
+      <ProjectReference Include="..\Movies.Persistence\Movies.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>

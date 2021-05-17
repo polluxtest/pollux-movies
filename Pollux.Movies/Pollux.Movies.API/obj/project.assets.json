@@ -1608,7 +1608,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
-          "AutoMapper": "10.1.1"
+          "AutoMapper": "10.1.1",
+          "Movies.Domain": "1.0.0",
+          "Movies.Persistence": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Movies.Application.dll": {}

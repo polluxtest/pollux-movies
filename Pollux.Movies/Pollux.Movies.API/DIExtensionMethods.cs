@@ -1,16 +1,20 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Pollux.Movies
 {
+    using Microsoft.Extensions.DependencyInjection;
+    using Pollux.Persistence;
+    using Pollux.Persistence.Repositories;
+    using global::Movies.Application;
+
     public static class DIExtensionMethods
     {
         /// <summary>
-        /// Adds the di repositories as an extension methods for the startup .
-        /// <param name="services">The service collection.</param>
+        /// Adds the di repositories.
         /// </summary>
+        /// <param name="services">The services.</param>
         public static void AddDIRepositories(this IServiceCollection services)
         {
-            //services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddTransient<IMoviesRepository, MoviesRepository>();
+            services.AddTransient<IMovieAzureAssetsRepository, MovieAzureAssetsRepository>();
         }
 
         /// <summary>
@@ -19,16 +23,8 @@ namespace Pollux.Movies
         /// <param name="services">The service collection.</param>
         public static void AddDIServices(this IServiceCollection services)
         {
-            //services.AddScoped<DbContext, PolluxDbContext>();
-        }
-
-        /// <summary>
-        /// Adds the identity server services.
-        /// </summary>
-        /// <param name="services">The services.</param>
-        public static void AddDIIdentityServerServices(this IServiceCollection services)
-        {
-
+            services.AddTransient<PolluxMoviesDbContext, PolluxMoviesDbContext>();
+            services.AddTransient<IMovieAzureAssetsService, MovieAzureAssetsService>();
         }
     }
 }

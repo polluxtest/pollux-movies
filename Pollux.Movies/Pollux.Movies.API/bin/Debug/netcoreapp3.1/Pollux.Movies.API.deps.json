@@ -1503,7 +1503,9 @@
       },
       "Movies.Application/1.0.0": {
         "dependencies": {
-          "AutoMapper": "10.1.1"
+          "AutoMapper": "10.1.1",
+          "Movies.Domain": "1.0.0",
+          "Movies.Persistence": "1.0.0"
         },
         "runtime": {
           "Movies.Application.dll": {}

@@ -1,26 +1,24 @@
-﻿using Movies.Domain;
-
-namespace Pollux.Persistence.Repositories
+﻿namespace Pollux.Persistence.Repositories
 {
-    
+    using Movies.Domain;
 
     /// <summary>
     /// Users Repository contract.
     /// </summary>
-    public interface IUsersRepository : IRepository<Movie>
+    public interface IMoviesRepository : IRepository<Movie>
     {
     }
 
     /// <summary>
     /// Users Repository Data.
     /// </summary>
-    public class UsersRepository : RepositoryBase<Movie>, IUsersRepository
+    public class MoviesRepository : RepositoryBase<Movie>, IMoviesRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersRepository"/> class.
         /// </summary>
         /// <param name="moviesDbContext">The database context.</param>
-        public UsersRepository(PolluxMoviesDbContext moviesDbContext)
+        public MoviesRepository(PolluxMoviesDbContext moviesDbContext)
             : base(moviesDbContext)
         {
         }
