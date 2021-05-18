@@ -19,9 +19,14 @@
             this.movieAssetRepository = movieAssetRepository;
         }
 
+        /// <summary>
+        /// Gets the not transformed movies.
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<MovieAzureAsset>> GetNotTransformedMovies()
         {
-            var moviesToTransform = await this.movieAssetRepository.GetManyAsync(p => p.ProccesedByAzureJob == false);
+            var moviesToTransform = await this.movieAssetRepository
+                .GetManyAsync(p => p.ProccesedByAzureJob == false);
 
             return moviesToTransform;
         }

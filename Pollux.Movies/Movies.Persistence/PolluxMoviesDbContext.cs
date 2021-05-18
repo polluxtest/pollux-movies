@@ -1,4 +1,6 @@
-﻿namespace Pollux.Persistence
+﻿using Movies.Domain.Entities;
+
+namespace Pollux.Persistence
 {
     using Microsoft.EntityFrameworkCore;
     using Movies.Domain;

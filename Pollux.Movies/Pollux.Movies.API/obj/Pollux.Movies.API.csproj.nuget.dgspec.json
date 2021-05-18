@@ -313,6 +313,9 @@
               },
               "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj": {
                 "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj"
+              },
+              "\\\\Mac\\Home\\Documents\\Pollux\\pollux-process-stream-service\\MovieUploaderTransformerService.csproj": {
+                "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-process-stream-service\\MovieUploaderTransformerService.csproj"
               }
             }
           }
@@ -382,6 +385,94 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "\\\\Mac\\Home\\Documents\\Pollux\\pollux-process-stream-service\\MovieUploaderTransformerService.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-process-stream-service\\MovieUploaderTransformerService.csproj",
+        "projectName": "MovieUploaderTransformerService",
+        "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-process-stream-service\\MovieUploaderTransformerService.csproj",
+        "packagesPath": "C:\\Users\\octaviodiaz\\.nuget\\packages\\",
+        "outputPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-process-stream-service\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\octaviodiaz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj": {
+                "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Azure.Core": {
+              "target": "Package",
+              "version": "[1.14.0, )"
+            },
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.7.0, )"
+            },
+            "Microsoft.Azure.Management.Media": {
+              "target": "Package",
+              "version": "[3.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.EnvironmentVariables": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.Rest.ClientRuntime.Azure.Authentication": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

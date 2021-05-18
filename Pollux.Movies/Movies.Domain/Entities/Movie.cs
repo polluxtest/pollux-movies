@@ -1,4 +1,4 @@
-﻿namespace Movies.Domain
+﻿namespace Movies.Domain.Entities
 {
     /// <summary>
     /// Movie Entity.
@@ -68,5 +68,13 @@
         /// The URL.
         /// </value>
         public string Url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the file.
+        /// </summary>
+        /// <value>
+        /// The name of the file.
+        /// </value>
+        public string FileName { get; set; }
     }
 }

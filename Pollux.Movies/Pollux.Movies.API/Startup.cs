@@ -1,3 +1,5 @@
+using MovieUploaderTransformerService;
+
 namespace Pollux.Movies
 {
     using System.Collections.Generic;
@@ -35,6 +37,7 @@ namespace Pollux.Movies
         {
             var connectionString = this.Configuration.GetSection("AppSettings")["DbConnectionStrings:PolluxMoviesSQLConnectionString"];
             services.AddDbContext<PolluxMoviesDbContext>(options => options.UseSqlServer(connectionString));
+            this.AddAzureMediaServices(services);
             services.AddCors();
             services.AddMvc();
             services.AddAuthorization();
@@ -69,6 +72,19 @@ namespace Pollux.Movies
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute("default", "{controller}/{action}/{id}");
             });
+        }
+
+        /// <summary>
+        /// Adds the azure media service settings.
+        /// </summary>
+        /// <param name="services">The services.</param>
+        private void AddAzureMediaServices(IServiceCollection services)
+        {
+            var azureMediaServiceSettings = new AzureMediaServiceConfig();
+            this.Configuration.Bind("AzureMediaServiceSettings", azureMediaServiceSettings);
+
+            services.AddSingleton(azureMediaServiceSettings);
+            services.AddTransient<AzureMediaService>();
         }
 
         /// <summary>

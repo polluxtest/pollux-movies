@@ -1,9 +1,10 @@
+using Movies.Application;
+using Pollux.Persistence;
+
 namespace Pollux.Movies
 {
     using Microsoft.Extensions.DependencyInjection;
-    using Pollux.Persistence;
-    using Pollux.Persistence.Repositories;
-    using global::Movies.Application;
+    using Persistence.Repositories;
 
     public static class DIExtensionMethods
     {
@@ -25,6 +26,7 @@ namespace Pollux.Movies
         {
             services.AddTransient<PolluxMoviesDbContext, PolluxMoviesDbContext>();
             services.AddTransient<IMovieAzureAssetsService, MovieAzureAssetsService>();
+            services.AddTransient<IMoviesService, MoviesService>();
         }
     }
 }

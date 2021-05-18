@@ -1,4 +1,6 @@
-﻿namespace Pollux.Persistence.Repositories
+﻿using Movies.Domain.Entities;
+
+namespace Pollux.Persistence.Repositories
 {
     using Movies.Domain;
 
