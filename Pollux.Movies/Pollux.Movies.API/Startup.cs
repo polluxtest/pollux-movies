@@ -1,8 +1,7 @@
-using MovieUploaderTransformerService;
-
 namespace Pollux.Movies
 {
     using System.Collections.Generic;
+    using AzureUploaderTransformerVideos;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;

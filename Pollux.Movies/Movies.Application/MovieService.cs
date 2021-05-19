@@ -1,22 +1,22 @@
-﻿using Movies.Domain.Entities;
-
-namespace Movies.Application
+﻿namespace Movies.Application
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Movies.Domain;
+    using Movies.Domain.Entities;
     using Pollux.Persistence.Repositories;
 
-    public interface IMoviesService
+    public interface IMovieService
     {
         public Task<List<Movie>> GetAll();
+
+        Task Update(Movie movie);
     }
 
-    public class MoviesService : IMoviesService
+    public class MovieService : IMovieService
     {
         private readonly IMoviesRepository moviesRepository;
 
-        public MoviesService(IMoviesRepository moviesRepository)
+        public MovieService(IMoviesRepository moviesRepository)
         {
             this.moviesRepository = moviesRepository;
         }
@@ -29,6 +29,19 @@ namespace Movies.Application
         {
             var movies = this.moviesRepository.GetAllAsync(); // todo a soft deleted would be great
             return movies;
+        }
+
+        /// <summary>
+        /// Updates the specified movie.
+        /// </summary>
+        /// <param name="movie">The movie.</param>
+        /// <returns>Task.</returns>
+        public Task Update(Movie movie)
+        {
+            this.moviesRepository.Update(movie);
+            this.moviesRepository.Save();
+
+            return Task.CompletedTask;
         }
     }
 }

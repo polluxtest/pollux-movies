@@ -1,9 +1,9 @@
 ﻿namespace Pollux.Movies.Controllers
 {
     using System.Threading.Tasks;
+    using AzureUploaderTransformerVideos;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using MovieUploaderTransformerService;
     using Pollux.API.Controllers;
 
     public class AzureMediaServicesController : BaseController

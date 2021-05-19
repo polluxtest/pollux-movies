@@ -35,11 +35,11 @@
         public string AssetOutput { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [proccesed by azure job].
+        /// Gets or sets a value indicating whether [processed by azure job].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [proccesed by azure job]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [processed by azure job]; otherwise, <c>false</c>.
         /// </value>
-        public bool ProccesedByAzureJob { get; set; }
+        public bool ProcessedByAzureJob { get; set; }
     }
 }

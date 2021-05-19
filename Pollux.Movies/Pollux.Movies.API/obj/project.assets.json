@@ -2406,6 +2406,24 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
+      "AzureUploaderTransformerVideos/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Azure.Storage.Blobs": "12.7.0",
+          "Microsoft.Azure.Management.Media": "3.0.2",
+          "Microsoft.IdentityModel.Clients.ActiveDirectory": "4.3.0",
+          "Microsoft.Rest.ClientRuntime.Azure.Authentication": "2.4.1",
+          "Movies.Application": "1.0.0",
+          "Movies.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AzureUploaderTransformerVideos.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AzureUploaderTransformerVideos.dll": {}
+        }
+      },
       "Movies.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -8297,6 +8315,11 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
+    "AzureUploaderTransformerVideos/1.0.0": {
+      "type": "project",
+      "path": "../AzureUploaderTransformerVideos/AzureUploaderTransformerVideos.csproj",
+      "msbuildProject": "../AzureUploaderTransformerVideos/AzureUploaderTransformerVideos.csproj"
+    },
     "Movies.Application/1.0.0": {
       "type": "project",
       "path": "../Movies.Application/Movies.Application.csproj",
@@ -8327,6 +8350,7 @@
     ".NETCoreApp,Version=v3.1": [
       "AutoMapper >= 10.1.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.1.1",
+      "AzureUploaderTransformerVideos >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.4",
       "Microsoft.Extensions.DependencyInjection.Abstractions >= 5.0.0",
       "Microsoft.Extensions.Options >= 5.0.0",
@@ -8367,6 +8391,9 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
+            "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\AzureUploaderTransformerVideos\\AzureUploaderTransformerVideos.csproj": {
+              "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\AzureUploaderTransformerVideos\\AzureUploaderTransformerVideos.csproj"
+            },
             "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj": {
               "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj"
             },

@@ -9,7 +9,7 @@
         public void Configure(EntityTypeBuilder<MovieAzureAsset> builder)
         {
             builder.HasKey(p => p.MovieId).IsClustered();
-            builder.Property(p => p.ProccesedByAzureJob).IsRequired().HasDefaultValue(false);
+            builder.Property(p => p.ProcessedByAzureJob).IsRequired().HasDefaultValue(false);
             builder.Property(p => p.AssetInputName).IsRequired().HasMaxLength(100);
             builder.Property(p => p.AssetOutput).IsRequired().HasMaxLength(100);
 
