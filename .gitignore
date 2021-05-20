@@ -275,3 +275,6 @@ testscript.ps1
 aspnet-core/src/MatMgt.Local.MergeUtility/appsettings.Development.json
 
 reactjs/.env.production.bak
+Pollux.Movies/.vs/Pollux.Movies/DesignTimeBuild/.dtbcache.v2
+././bin/*
+././obj/*
