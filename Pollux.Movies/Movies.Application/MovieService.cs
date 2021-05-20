@@ -9,7 +9,7 @@
     {
         public Task<List<Movie>> GetAll();
 
-        Task Update(Movie movie);
+        Task UpdateMovie(Movie movie);
     }
 
     public class MovieService : IMovieService
@@ -36,7 +36,7 @@
         /// </summary>
         /// <param name="movie">The movie.</param>
         /// <returns>Task.</returns>
-        public Task Update(Movie movie)
+        public Task UpdateMovie(Movie movie)
         {
             this.moviesRepository.Update(movie);
             this.moviesRepository.Save();

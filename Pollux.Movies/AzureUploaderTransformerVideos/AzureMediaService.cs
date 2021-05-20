@@ -17,18 +17,15 @@ namespace AzureUploaderTransformerVideos
 {
     public class AzureMediaService
     {
-        private readonly IMovieAzureAssetsService movieAzureAssetsService;
         private readonly IMovieService movieService;
         private readonly AzureMediaServiceConfig amsConfig;
         private const string AdaptiveStreamingTransformName = "polluxmediaservicesencodingtransform";
         private const string VideoStoragePath = @"Movies";
 
         public AzureMediaService(
-             IMovieAzureAssetsService movieAzureAssetsService,
              IMovieService movieService,
              AzureMediaServiceConfig amsConfig)
         {
-            this.movieAzureAssetsService = movieAzureAssetsService;
             this.movieService = movieService;
             this.amsConfig = amsConfig;
         }
@@ -62,6 +59,7 @@ namespace AzureUploaderTransformerVideos
         private async Task ProcessAsync(Movie movie)
         {
             Debug.WriteLine("starting creating assents.");
+
             IAzureMediaServicesClient azureMediaServiceClient = await CreateMediaServicesClientAsync(amsConfig);
 
             azureMediaServiceClient.LongRunningOperationRetryTimeout = 2;
@@ -80,143 +78,48 @@ namespace AzureUploaderTransformerVideos
 
             Job job = await WaitForJobToFinishAsync(azureMediaServiceClient, amsConfig, amsIdentity.JobName);
 
-
             if (job.State == JobState.Finished)
             {
-                StreamingLocator locator = await CreateStreamingLocatorAsync(azureMediaServiceClient, amsConfig, amsIdentity);
-                movie.Url = await GetStreamingUrlsAsync(azureMediaServiceClient, amsConfig.ResourceGroup, amsConfig.AccountName, locator.Name);
-
-                await this.movieService.Update(movie);
-                await this.movieAzureAssetsService.Create(movie.Id, amsIdentity.OutputAssetName, amsIdentity.InputAssetName);
-
-                Debug.WriteLine("Done Job The streaming url " + movie.Url);
+                this.UpdateMovie(azureMediaServiceClient, movie, amsIdentity);
+                Debug.WriteLine("Done Job The streaming url " + movie.UrlVideo);
             }
 
             await CleanUpAsync(azureMediaServiceClient, amsConfig, amsIdentity.JobName);
+
+            Debug.WriteLine("Done clean up job and input asset");
         }
-
-        /// <summary>
-        /// Gets the azure video asset identity.
-        /// </summary>
-        /// <param name="movie">The movie.</param>
-        /// <returns></returns>
-        private AzureVideoAssetIdentity GetAzureVideoAssetIdentity(Movie movie)
-        {
-            var name = movie.Name;
-
-            return new AzureVideoAssetIdentity()
-            {
-                Name = name,
-                FileName = movie.FileName,
-                LocatorName = $"{name}-locator",
-                InputAssetName = $"{name}-input",
-                OutputAssetName = $"{name}-output",
-                JobName = $"{name}-job"
-            };
-
-        }
-
-        /// <summary>
-        /// Create the ServiceClientCredentials object based on the credentials
-        /// supplied in local configuration file.
-        /// </summary>
-        /// <param name="config">The param is of type ConfigWrapper. This class reads values from local configuration file.</param>
-        /// <returns></returns>
-        private async Task<ServiceClientCredentials> GetCredentialsAsync(AzureMediaServiceConfig config)
-        {
-            // Use ApplicationTokenProvider.LoginSilentWithCertificateAsync or UserTokenProvider.LoginSilentAsync to get a token using service principal with certificate
-            //// ClientAssertionCertificate
-            //// ApplicationTokenProvider.LoginSilentWithCertificateAsync
-
-            // Use ApplicationTokenProvider.LoginSilentAsync to get a token using a service principal with symetric key
-            ClientCredential clientCredential = new ClientCredential(config.AadClientId, config.AadSecret);
-            return await ApplicationTokenProvider.LoginSilentAsync(config.AadTenantId, clientCredential, ActiveDirectoryServiceSettings.Azure);
-        }
-
-        /// <summary>
-        /// Creates the AzureMediaServicesClient object based on the credentials
-        /// supplied in local configuration file.
-        /// </summary>
-        /// <param name="config">The param is of type ConfigWrapper. This class reads values from local configuration file.</param>
-        /// <returns></returns>
-        // <CreateMediaServicesClient>
-        private async Task<IAzureMediaServicesClient> CreateMediaServicesClientAsync(AzureMediaServiceConfig config)
-        {
-            var credentials = await GetCredentialsAsync(config);
-
-            return new AzureMediaServicesClient(config.ArmEndpoint, credentials)
-            {
-                SubscriptionId = config.SubscriptionId,
-            };
-        }
-        // </CreateMediaServicesClient>
 
         /// <summary>
         /// Creates the input asset asynchronous.
         /// </summary>
         /// <param name="client">The client.</param>
         /// <param name="amsConfig">The ams configuration.</param>
-        /// <param name="assetIdentity">The asset identity.</param>
+        /// <param name="assetModel">The asset identity.</param>
         /// <returns></returns>
         /// <exception cref="System.IO.FileNotFoundException"></exception>
         private async Task<Asset> CreateInputAssetAsync(
             IAzureMediaServicesClient client,
             AzureMediaServiceConfig amsConfig,
-            AzureVideoAssetIdentity assetIdentity)
+            AzureVideoAssetModel assetModel)
         {
 
-            Asset asset = await client.Assets.CreateOrUpdateAsync(amsConfig.ResourceGroup, amsConfig.AccountName, assetIdentity.InputAssetName, new Asset());
+            Asset asset = await client.Assets.CreateOrUpdateAsync(amsConfig.ResourceGroup, amsConfig.AccountName, assetModel.InputAssetName, new Asset());
 
             var response = await client.Assets.ListContainerSasAsync(
                 amsConfig.ResourceGroup,
                 amsConfig.AccountName,
-                assetIdentity.InputAssetName,
+                assetModel.InputAssetName,
                 permissions: AssetContainerPermission.ReadWrite,
                 expiryTime: DateTime.UtcNow.AddHours(4).ToUniversalTime());
 
             var sasUri = new Uri(response.AssetContainerSasUrls.First());
 
             BlobContainerClient container = new BlobContainerClient(sasUri);
-            BlobClient blob = container.GetBlobClient(Path.GetFileName(assetIdentity.FileName));
+            BlobClient blob = container.GetBlobClient(Path.GetFileName(assetModel.FileName));
 
-            this.UploadVideo(blob, assetIdentity);
+            this.UploadVideoToAzure(blob, assetModel);
 
             return asset;
-        }
-
-        /// <summary>
-        /// Uploads the video.
-        /// </summary>
-        /// <param name="blob">The BLOB.</param>
-        /// <param name="assetIdentity">The asset identity.</param>
-        /// <exception cref="System.IO.FileNotFoundException"></exception>
-        private void UploadVideo(BlobClient blob, AzureVideoAssetIdentity assetIdentity)
-        {
-            var directory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-            var videoLocation = Path.Combine(directory, VideoStoragePath, assetIdentity.FileName);
-            if (!File.Exists(videoLocation)) throw new FileNotFoundException();
-
-            Progress<long> progress = new Progress<long>();
-            progress.ProgressChanged += Progress_ProgressChanged;
-
-            var file = File.ReadAllBytes(videoLocation);
-            var stream = new MemoryStream(file);
-
-            Debug.WriteLine("starting uploading... " + assetIdentity.Name);
-
-            blob.Upload(stream, null, null, null, progress, null);
-
-            Debug.WriteLine("finished uploading " + assetIdentity.Name);
-        }
-
-        /// <summary>
-        /// Progresses the progress changed when uploading the video.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="progress">The progress.</param>
-        private void Progress_ProgressChanged(object sender, long progress)
-        {
-            Debug.WriteLine(progress);
         }
 
         /// <summary>
@@ -277,14 +180,14 @@ namespace AzureUploaderTransformerVideos
         private async Task<Job> SubmitJobAsync(
             IAzureMediaServicesClient client,
             AzureMediaServiceConfig amsConfig,
-            AzureVideoAssetIdentity assetIdentity)
+            AzureVideoAssetModel assetModel)
         {
             // Use the name of the created input asset to create the job input.
-            JobInput jobInput = new JobInputAsset(assetName: assetIdentity.InputAssetName);
+            JobInput jobInput = new JobInputAsset(assetName: assetModel.InputAssetName);
 
             JobOutput[] jobOutputs =
             {
-                 new JobOutputAsset(assetIdentity.OutputAssetName),
+                 new JobOutputAsset(assetModel.OutputAssetName),
             };
 
 
@@ -292,7 +195,7 @@ namespace AzureUploaderTransformerVideos
                 amsConfig.ResourceGroup,
                 amsConfig.AccountName,
                 AdaptiveStreamingTransformName,
-                assetIdentity.JobName,
+                assetModel.JobName,
                 new Job
                 {
                     Input = jobInput,
@@ -354,7 +257,7 @@ namespace AzureUploaderTransformerVideos
         private async Task<StreamingLocator> CreateStreamingLocatorAsync(
             IAzureMediaServicesClient client,
             AzureMediaServiceConfig amsConfig,
-            AzureVideoAssetIdentity azureVideoAsset)
+            AzureVideoAssetModel azureVideoAsset)
         {
             StreamingLocator locator = await client.StreamingLocators.CreateAsync(
                 amsConfig.ResourceGroup,
@@ -439,5 +342,112 @@ namespace AzureUploaderTransformerVideos
             await client.Jobs.DeleteAsync(config.ResourceGroup, config.AccountName, AdaptiveStreamingTransformName, jobName);
 
         }
+
+        /// <summary>
+        /// Uploads the video.
+        /// </summary>
+        /// <param name="blob">The BLOB.</param>
+        /// <param name="assetModel">The asset identity.</param>
+        /// <exception cref="System.IO.FileNotFoundException"></exception>
+        private void UploadVideoToAzure(BlobClient blob, AzureVideoAssetModel assetModel)
+        {
+            var directory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            var videoLocation = Path.Combine(directory, VideoStoragePath, assetModel.FileName);
+            if (!File.Exists(videoLocation)) throw new FileNotFoundException();
+
+            Progress<long> progress = new Progress<long>();
+            progress.ProgressChanged += Progress_ProgressChanged;
+
+            var file = File.ReadAllBytes(videoLocation);
+            var stream = new MemoryStream(file);
+
+            Debug.WriteLine("starting uploading... " + assetModel.Name);
+
+            blob.Upload(stream, null, null, null, progress, null);
+
+            Debug.WriteLine("finished uploading " + assetModel.Name);
+        }
+
+        /// <summary>
+        /// Update the movie entity to the Data base
+        /// </summary>
+        /// <param name="azureMediaServiceClient"></param>
+        /// <param name="movie"></param>
+        /// <param name="amsIdentity"></param>
+        private async void UpdateMovie(IAzureMediaServicesClient azureMediaServiceClient, Movie movie, AzureVideoAssetModel amsIdentity)
+        {
+            StreamingLocator locator = await CreateStreamingLocatorAsync(azureMediaServiceClient, amsConfig, amsIdentity);
+
+            movie.UrlVideo = await GetStreamingUrlsAsync(azureMediaServiceClient, amsConfig.ResourceGroup, amsConfig.AccountName, locator.Name);
+            movie.ProcessedByAzureJob = true;
+            await this.movieService.UpdateMovie(movie);
+        }
+
+        /// <summary>
+        /// Gets the azure video asset identity.
+        /// </summary>
+        /// <param name="movie">The movie.</param>
+        /// <returns></returns>
+        private AzureVideoAssetModel GetAzureVideoAssetIdentity(Movie movie)
+        {
+            var name = movie.Name;
+
+            return new AzureVideoAssetModel()
+            {
+                Name = name,
+                FileName = movie.FileName,
+                LocatorName = $"{name}-locator",
+                InputAssetName = $"{name}-input",
+                OutputAssetName = $"{name}-output",
+                JobName = $"{name}-job"
+            };
+
+        }
+
+        /// <summary>
+        /// Create the ServiceClientCredentials object based on the credentials
+        /// supplied in local configuration file.
+        /// </summary>
+        /// <param name="config">The param is of type ConfigWrapper. This class reads values from local configuration file.</param>
+        /// <returns></returns>
+        private async Task<ServiceClientCredentials> GetCredentialsAsync(AzureMediaServiceConfig config)
+        {
+            // Use ApplicationTokenProvider.LoginSilentWithCertificateAsync or UserTokenProvider.LoginSilentAsync to get a token using service principal with certificate
+            //// ClientAssertionCertificate
+            //// ApplicationTokenProvider.LoginSilentWithCertificateAsync
+
+            // Use ApplicationTokenProvider.LoginSilentAsync to get a token using a service principal with symetric key
+            ClientCredential clientCredential = new ClientCredential(config.AadClientId, config.AadSecret);
+            return await ApplicationTokenProvider.LoginSilentAsync(config.AadTenantId, clientCredential, ActiveDirectoryServiceSettings.Azure);
+        }
+
+        /// <summary>
+        /// Creates the AzureMediaServicesClient object based on the credentials
+        /// supplied in local configuration file.
+        /// </summary>
+        /// <param name="config">The param is of type ConfigWrapper. This class reads values from local configuration file.</param>
+        /// <returns></returns>
+        // <CreateMediaServicesClient>
+        private async Task<IAzureMediaServicesClient> CreateMediaServicesClientAsync(AzureMediaServiceConfig config)
+        {
+            var credentials = await GetCredentialsAsync(config);
+
+            return new AzureMediaServicesClient(config.ArmEndpoint, credentials)
+            {
+                SubscriptionId = config.SubscriptionId,
+            };
+        }
+        // </CreateMediaServicesClient>
+
+        /// <summary>
+        /// Progresses the progress changed when uploading the video.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="progress">The progress.</param>
+        private void Progress_ProgressChanged(object sender, long progress)
+        {
+            Debug.WriteLine(progress);
+        }
+
     }
 }

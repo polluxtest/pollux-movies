@@ -1,11 +1,10 @@
 using Movies.Application;
+using Pollux.Persistence;
+using Microsoft.Extensions.DependencyInjection;
+using Pollux.Persistence.Repositories;
 
 namespace Pollux.Movies
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Persistence;
-    using Persistence.Repositories;
-
     public static class DIExtensionMethods
     {
         /// <summary>
@@ -15,7 +14,6 @@ namespace Pollux.Movies
         public static void AddDIRepositories(this IServiceCollection services)
         {
             services.AddTransient<IMoviesRepository, MoviesRepository>();
-            services.AddTransient<IMovieAzureAssetsRepository, MovieAzureAssetsRepository>();
         }
 
         /// <summary>
@@ -25,7 +23,6 @@ namespace Pollux.Movies
         public static void AddDIServices(this IServiceCollection services)
         {
             services.AddTransient<PolluxMoviesDbContext, PolluxMoviesDbContext>();
-            services.AddTransient<IMovieAzureAssetsService, MovieAzureAssetsService>();
             services.AddTransient<IMovieService, MovieService>();
         }
     }

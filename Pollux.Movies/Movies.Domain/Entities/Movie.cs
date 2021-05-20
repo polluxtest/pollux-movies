@@ -67,7 +67,15 @@
         /// <value>
         /// The URL.
         /// </value>
-        public string Url { get; set; }
+        public string UrlVideo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL image.
+        /// </summary>
+        /// <value>
+        /// The URL image.
+        /// </value>
+        public string UrlImage { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the file.
@@ -76,5 +84,21 @@
         /// The name of the file.
         /// </value>
         public string FileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is deleted.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is deleted; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [processed by azure job].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [processed by azure job]; otherwise, <c>false</c>.
+        /// </value>
+        public bool ProcessedByAzureJob { get; set; }
     }
 }

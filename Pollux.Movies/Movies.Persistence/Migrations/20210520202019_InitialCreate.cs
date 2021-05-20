@@ -31,7 +31,11 @@ namespace Movies.Persistence.Migrations
                     Type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Language = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Year = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    UrlVideo = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    UrlImage = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    ProcessedByAzureJob = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

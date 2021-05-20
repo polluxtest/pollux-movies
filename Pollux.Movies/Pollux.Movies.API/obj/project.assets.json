@@ -8357,6 +8357,7 @@
       "MovieUploaderTransformerService >= 1.0.0",
       "Movies.Application >= 1.0.0",
       "Movies.Common >= 1.0.0",
+      "Movies.Domain >= 1.0.0",
       "Movies.Persistence >= 1.0.0",
       "StyleCop.Analyzers >= 1.2.0-beta.333",
       "Swashbuckle.AspNetCore.Swagger >= 6.1.4",
@@ -8399,6 +8400,9 @@
             },
             "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj": {
               "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj"
+            },
+            "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj": {
+              "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj"
             },
             "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj": {
               "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj"

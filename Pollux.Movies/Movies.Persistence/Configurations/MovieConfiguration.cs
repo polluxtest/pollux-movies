@@ -1,10 +1,8 @@
-﻿using Movies.Domain.Entities;
-
-namespace Movies.Persistence.Configurations
+﻿namespace Movies.Persistence.Configurations
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Movies.Domain;
+    using Movies.Domain.Entities;
 
     /// <summary>
     /// EF Configuration.
@@ -20,8 +18,9 @@ namespace Movies.Persistence.Configurations
             builder.Property(p => p.Description).IsRequired().HasMaxLength(1000);
             builder.Property(p => p.Gender).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Type).IsRequired().HasMaxLength(100);
-            builder.Property(p => p.UrlVideo).IsRequired().HasMaxLength(100);
-            builder.Property(p => p.Year).HasMaxLength(300);
+            builder.Property(p => p.UrlVideo).HasMaxLength(1000);
+            builder.Property(p => p.UrlImage).HasMaxLength(1000);
+            builder.Property(p => p.Year).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Language).IsRequired().HasMaxLength(100);
 
             builder.HasIndex("Name", "Gender", "Language");

@@ -1,6 +1,6 @@
 ﻿namespace AzureUploaderTransformerVideos
 {
-    public class AzureVideoAssetIdentity
+    public class AzureVideoAssetModel
     {
         public string Name { get; set; }
         public string LocatorName { get; set; }
