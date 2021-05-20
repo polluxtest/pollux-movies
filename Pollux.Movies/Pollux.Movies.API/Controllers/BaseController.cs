@@ -1,9 +1,9 @@
-﻿namespace Pollux.API.Controllers
-{
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Pollux.Common.Constants.Strings.Api;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Movies.Common.Constants.Strings;
 
+namespace Pollux.Movies.Controllers
+{
     /// <summary>
     /// Defines the Base Controllers attributes for the core domain <see cref="BaseController" />.
     /// </summary>

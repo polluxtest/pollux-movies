@@ -1,20 +1,21 @@
-﻿namespace Pollux.Persistence
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Dynamic.Core;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
-    using LinqKit;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using LinqKit;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Movies.Persistence.Repositories.Base.Interfaces;
 
+namespace Movies.Persistence.Repositories.Base
+{
     /// <summary>
     /// Implementation of Repository.
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    /// <seealso cref="Pollux.Persistence.IRepository{TEntity}" />
+    /// <seealso cref="IRepository{TEntity}" />
     public abstract class RepositoryBase<TEntity> : IRepository<TEntity>
         where TEntity : class
     {

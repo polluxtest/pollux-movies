@@ -1,9 +1,9 @@
 ﻿using Movies.Domain.Entities;
+using Movies.Persistence.Repositories.Base;
+using Movies.Persistence.Repositories.Base.Interfaces;
 
-namespace Pollux.Persistence.Repositories
+namespace Movies.Persistence.Repositories
 {
-    using Movies.Domain;
-
     /// <summary>
     /// Users Repository contract.
     /// </summary>

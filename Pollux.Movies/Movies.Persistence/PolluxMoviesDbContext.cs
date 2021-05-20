@@ -1,10 +1,9 @@
-﻿using Movies.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Movies.Domain;
+using Movies.Domain.Entities;
 
-namespace Pollux.Persistence
+namespace Movies.Persistence
 {
-    using Microsoft.EntityFrameworkCore;
-    using Movies.Domain;
-
     /// <summary>
     /// Core Domain Db Context.
     /// </summary>

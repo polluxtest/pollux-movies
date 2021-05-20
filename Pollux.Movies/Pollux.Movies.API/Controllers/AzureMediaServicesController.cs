@@ -4,7 +4,6 @@
     using AzureUploaderTransformerVideos;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Pollux.API.Controllers;
 
     public class AzureMediaServicesController : BaseController
     {

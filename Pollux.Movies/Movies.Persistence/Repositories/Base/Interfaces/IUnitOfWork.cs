@@ -1,8 +1,8 @@
-﻿namespace Pollux.Persistence
-{
-    using System;
-    using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
+namespace Movies.Persistence.Repositories.Base.Interfaces
+{
     /// <summary>
     /// Unit of Work interface definition.
     /// </summary>

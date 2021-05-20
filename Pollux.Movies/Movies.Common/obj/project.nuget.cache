@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "5gmD+CtCvGq4eP8cvetnU+5uJ5+ohK+zlYujuh+tbT1Pb+E/9HhBHWFJ8XyvrwMacQ4o6DeTNVs7iu8I5j/HOw==",
+  "dgSpecHash": "/OArirtloXb3afr6z8vrfR7DDKY0p4ajgVEI2qir9UpCoskrmtv1V7APxwEdPQ4SYUYmWcK1egJVsCxtinE8oA==",
   "success": true,
   "projectFilePath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\stylecop.analyzers\\1.2.0-beta.333\\stylecop.analyzers.1.2.0-beta.333.nupkg.sha512",
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\stylecop.analyzers.unstable\\1.2.0.333\\stylecop.analyzers.unstable.1.2.0.333.nupkg.sha512"
+  ],
   "logs": []
 }

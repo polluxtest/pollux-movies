@@ -1,9 +1,10 @@
-﻿namespace Movies.Application
+﻿using Movies.Persistence.Repositories;
+
+namespace Movies.Application
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Movies.Domain.Entities;
-    using Pollux.Persistence.Repositories;
 
     public interface IMovieService
     {

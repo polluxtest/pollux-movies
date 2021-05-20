@@ -1,7 +1,7 @@
 using Movies.Application;
-using Pollux.Persistence;
 using Microsoft.Extensions.DependencyInjection;
-using Pollux.Persistence.Repositories;
+using Movies.Persistence;
+using Movies.Persistence.Repositories;
 
 namespace Pollux.Movies
 {

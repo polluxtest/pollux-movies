@@ -1,12 +1,12 @@
-﻿namespace Pollux.Persistence
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
+namespace Movies.Persistence.Repositories.Base.Interfaces
+{
     /// <summary>
     /// IRepository contract for data access layer.
     /// </summary>

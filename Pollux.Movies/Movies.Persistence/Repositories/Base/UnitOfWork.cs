@@ -1,16 +1,17 @@
-﻿namespace Pollux.Persistence
-{
-    using System;
-    using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Movies.Persistence.Repositories.Base.Interfaces;
 
+namespace Movies.Persistence.Repositories.Base
+{
     /// <summary>
     /// Unit of work implementation.
     /// </summary>
     /// <typeparam name="T">Db Context.</typeparam>
     /// <seealso cref="System.IDisposable" />
-    /// <seealso cref="Pollux.Persistence.IUnitOfWork" />
+    /// <seealso cref="IUnitOfWork" />
     public abstract class UnitOfWork<T> : IDisposable, IUnitOfWork
         where T : DbContext
     {

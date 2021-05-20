@@ -17,22 +17,23 @@ namespace AzureUploaderTransformerVideos
 {
     public class AzureMediaService
     {
-        private readonly IMovieService movieService;
-        private readonly AzureMediaServiceConfig amsConfig;
         private const string AdaptiveStreamingTransformName = "polluxmediaservicesencodingtransform";
         private const string VideoStoragePath = @"Movies";
+        private readonly IMovieService movieService;
+        private readonly AzureMediaServiceConfig azureMSConfig;
 
         public AzureMediaService(
              IMovieService movieService,
-             AzureMediaServiceConfig amsConfig)
+             AzureMediaServiceConfig azureMsConfig)
         {
             this.movieService = movieService;
-            this.amsConfig = amsConfig;
+            this.azureMSConfig = azureMsConfig;
         }
 
         /// <summary>
-        /// Runs the process of video process and uploading.
+        /// Runs the asynchronous process of uploading transforming and encoding a video.
         /// </summary>
+        /// /// <returns>Task.</returns>
         public async Task RunAsync()
         {
             try
@@ -41,13 +42,12 @@ namespace AzureUploaderTransformerVideos
 
                 foreach (var movie in movies)
                 {
-                    await ProcessAsync(movie);
+                    await this.ProcessAsync(movie);
                 }
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception.Message);
-
             }
         }
 
@@ -55,28 +55,28 @@ namespace AzureUploaderTransformerVideos
         /// Processes the asynchronous.
         /// </summary>
         /// <param name="movie">The movie.</param>
-        /// <returns></returns>
+        /// <returns>Task.</returns>
         private async Task ProcessAsync(Movie movie)
         {
             Debug.WriteLine("starting creating assents.");
 
-            IAzureMediaServicesClient azureMediaServiceClient = await CreateMediaServicesClientAsync(amsConfig);
+            IAzureMediaServicesClient azureMediaServiceClient = await this.CreateMediaServicesClientAsync(this.azureMSConfig);
 
             azureMediaServiceClient.LongRunningOperationRetryTimeout = 2;
 
             var amsIdentity = this.GetAzureVideoAssetIdentity(movie);
 
-            var transform = await GetOrCreateTransformAsync(azureMediaServiceClient, amsConfig);
+            var transform = await this.GetOrCreateTransformAsync(azureMediaServiceClient);
 
-            var inputAsset = await CreateInputAssetAsync(azureMediaServiceClient, amsConfig, amsIdentity);
+            var inputAsset = await this.CreateInputAssetAsync(azureMediaServiceClient, amsIdentity);
 
             _ = new JobInputAsset(assetName: amsIdentity.OutputAssetName);
 
-            var outputAsset = await CreateOutputAssetAsync(azureMediaServiceClient, amsConfig, amsIdentity.OutputAssetName);
+            var outputAsset = await this.CreateOutputAssetAsync(azureMediaServiceClient, amsIdentity.OutputAssetName);
 
-            _ = await SubmitJobAsync(azureMediaServiceClient, amsConfig, amsIdentity);
+            await this.SubmitJobAsync(azureMediaServiceClient, amsIdentity);
 
-            Job job = await WaitForJobToFinishAsync(azureMediaServiceClient, amsConfig, amsIdentity.JobName);
+            Job job = await this.WaitForJobToFinishAsync(azureMediaServiceClient, amsIdentity.JobName);
 
             if (job.State == JobState.Finished)
             {
@@ -84,7 +84,7 @@ namespace AzureUploaderTransformerVideos
                 Debug.WriteLine("Done Job The streaming url " + movie.UrlVideo);
             }
 
-            await CleanUpAsync(azureMediaServiceClient, amsConfig, amsIdentity.JobName);
+            await this.CleanUpAsync(azureMediaServiceClient, amsIdentity.JobName);
 
             Debug.WriteLine("Done clean up job and input asset");
         }
@@ -93,21 +93,18 @@ namespace AzureUploaderTransformerVideos
         /// Creates the input asset asynchronous.
         /// </summary>
         /// <param name="client">The client.</param>
-        /// <param name="amsConfig">The ams configuration.</param>
         /// <param name="assetModel">The asset identity.</param>
-        /// <returns></returns>
-        /// <exception cref="System.IO.FileNotFoundException"></exception>
+        /// <returns>Asset.</returns>
+        /// <exception cref="System.IO.FileNotFoundException">IF the file to upload does not exists.</exception>
         private async Task<Asset> CreateInputAssetAsync(
             IAzureMediaServicesClient client,
-            AzureMediaServiceConfig amsConfig,
             AzureVideoAssetModel assetModel)
         {
-
-            Asset asset = await client.Assets.CreateOrUpdateAsync(amsConfig.ResourceGroup, amsConfig.AccountName, assetModel.InputAssetName, new Asset());
+            Asset asset = await client.Assets.CreateOrUpdateAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, assetModel.InputAssetName, new Asset());
 
             var response = await client.Assets.ListContainerSasAsync(
-                amsConfig.ResourceGroup,
-                amsConfig.AccountName,
+                this.azureMSConfig.ResourceGroup,
+                this.azureMSConfig.AccountName,
                 assetModel.InputAssetName,
                 permissions: AssetContainerPermission.ReadWrite,
                 expiryTime: DateTime.UtcNow.AddHours(4).ToUniversalTime());
@@ -127,15 +124,14 @@ namespace AzureUploaderTransformerVideos
         /// </summary>
         /// <param name="client">The Media Services client.</param>
         /// <param name="outputAssetName">The output asset name.</param>
-        /// <returns></returns>
+        /// <returns>Asset.</returns>
         // <CreateOutputAsset>
         private async Task<Asset> CreateOutputAssetAsync(
             IAzureMediaServicesClient client,
-            AzureMediaServiceConfig amsConfig,
             string outputAssetName)
         {
             // Check if an Asset already exists
-            Asset inputAsset = await client.Assets.GetAsync(amsConfig.ResourceGroup, amsConfig.AccountName, outputAssetName);
+            Asset inputAsset = await client.Assets.GetAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, outputAssetName);
             Asset outputAsset = new Asset();
 
             if (inputAsset != null)
@@ -143,9 +139,8 @@ namespace AzureUploaderTransformerVideos
                 throw new ArgumentException("the output asset name already exists", outputAssetName);
             }
 
-            return await client.Assets.CreateOrUpdateAsync(amsConfig.ResourceGroup, amsConfig.AccountName, outputAssetName, outputAsset);
+            return await client.Assets.CreateOrUpdateAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, outputAssetName, outputAsset);
         }
-        // </CreateOutputAsset>
 
         /// <summary>
         /// If the specified transform exists, get that transform.
@@ -153,16 +148,14 @@ namespace AzureUploaderTransformerVideos
         /// In this case, the output is set to encode a video using one of the built-in encoding presets.
         /// </summary>
         /// <param name="azureMediaServiceClient">The Media Services client.</param>
-        /// <returns></returns>
-        // <EnsureTransformExists>
+        /// <returns>Transform</returns>
         private async Task<Transform> GetOrCreateTransformAsync(
-            IAzureMediaServicesClient azureMediaServiceClient,
-            AzureMediaServiceConfig azureMediaServiceConfig)
+            IAzureMediaServicesClient azureMediaServiceClient)
         {
             // Does a Transform already exist with the desired name? Assume that an existing Transform with the desired name
             // also uses the same recipe or Preset for processing content.
             Transform transform = await azureMediaServiceClient.Transforms.
-                GetAsync(azureMediaServiceConfig.ResourceGroup, azureMediaServiceConfig.AccountName, AdaptiveStreamingTransformName);
+                GetAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, AdaptiveStreamingTransformName);
 
             if (transform == null)
             {
@@ -171,7 +164,6 @@ namespace AzureUploaderTransformerVideos
 
             return transform;
         }
-        // </EnsureTransformExists>
 
         /// <summary>
         /// Submits a request to Media Services to apply the specified Transform to a given input video.
@@ -179,7 +171,6 @@ namespace AzureUploaderTransformerVideos
         /// <param name="client">The Media Services client.</param>
         private async Task<Job> SubmitJobAsync(
             IAzureMediaServicesClient client,
-            AzureMediaServiceConfig amsConfig,
             AzureVideoAssetModel assetModel)
         {
             // Use the name of the created input asset to create the job input.
@@ -190,10 +181,9 @@ namespace AzureUploaderTransformerVideos
                  new JobOutputAsset(assetModel.OutputAssetName),
             };
 
-
             Job job = await client.Jobs.CreateAsync(
-                amsConfig.ResourceGroup,
-                amsConfig.AccountName,
+                this.azureMSConfig.ResourceGroup,
+                this.azureMSConfig.AccountName,
                 AdaptiveStreamingTransformName,
                 assetModel.JobName,
                 new Job
@@ -204,18 +194,16 @@ namespace AzureUploaderTransformerVideos
 
             return job;
         }
-        // </SubmitJob>
 
         /// <summary>
         /// Polls Media Services for the status of the Job.
         /// </summary>
         /// <param name="client">The Media Services client.</param>
         /// <param name="jobName">The name of the job you submitted.</param>
-        /// <returns></returns>
+        /// <returns>Job.</returns>
         // <WaitForJobToFinish>
         private async Task<Job> WaitForJobToFinishAsync(
             IAzureMediaServicesClient client,
-            AzureMediaServiceConfig amsConfig,
             string jobName)
         {
             const int SleepIntervalMs = 20 * 1000;
@@ -223,7 +211,7 @@ namespace AzureUploaderTransformerVideos
             Job job;
             do
             {
-                job = await client.Jobs.GetAsync(amsConfig.ResourceGroup, amsConfig.AccountName, AdaptiveStreamingTransformName, jobName);
+                job = await client.Jobs.GetAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, AdaptiveStreamingTransformName, jobName);
 
                 Debug.WriteLine($"Job is '{job.State}'.");
                 for (int i = 0; i < job.Outputs.Count; i++)
@@ -235,7 +223,7 @@ namespace AzureUploaderTransformerVideos
                         Debug.Write($"  Progress (%): '{output.Progress}'.");
                     }
 
-                    Debug.WriteLine("");
+                    Debug.WriteLine(string.Empty);
                 }
 
                 if (job.State != JobState.Finished && job.State != JobState.Error && job.State != JobState.Canceled)
@@ -253,7 +241,7 @@ namespace AzureUploaderTransformerVideos
         /// Once the StreamingLocator is created the output asset is available to clients for playback.
         /// </summary>
         /// <param name="client">The Media Services client.</param>
-        /// <returns></returns>
+        /// <returns>StreamingLocator.</returns>
         private async Task<StreamingLocator> CreateStreamingLocatorAsync(
             IAzureMediaServicesClient client,
             AzureMediaServiceConfig amsConfig,
@@ -266,7 +254,7 @@ namespace AzureUploaderTransformerVideos
                 new StreamingLocator
                 {
                     AssetName = azureVideoAsset.OutputAssetName,
-                    StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly
+                    StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly,
                 });
 
             return locator;
@@ -281,13 +269,13 @@ namespace AzureUploaderTransformerVideos
         /// <param name="resourceGroupName">The name of the resource group within the Azure subscription.</param>
         /// <param name="accountName"> The Media Services account name.</param>
         /// <param name="locatorName">The name of the StreamingLocator that was created.</param>
-        /// <returns></returns>
+        /// <returns>Url Vide.</returns>
         // <GetStreamingURLs>
         private async Task<string> GetStreamingUrlsAsync(
             IAzureMediaServicesClient client,
             string resourceGroupName,
             string accountName,
-            String locatorName)
+            string locatorName)
         {
             const string DefaultStreamingEndpointName = "default";
 
@@ -311,8 +299,7 @@ namespace AzureUploaderTransformerVideos
                 {
                     Scheme = "https",
                     Host = streamingEndpoint.HostName,
-
-                    Path = path.Paths[0]
+                    Path = path.Paths[0],
                 };
                 streamingUrls.Add(uriBuilder.ToString());
             }
@@ -321,26 +308,15 @@ namespace AzureUploaderTransformerVideos
         }
 
         /// <summary>
-        /// Deletes the jobs, assets and potentially the content key policy that were created.
-        /// Generally, you should clean up everything except objects 
-        /// that you are planning to reuse (typically, you will reuse Transforms, and you will persist output assets and StreamingLocators).
+        /// Cleans up asynchronous.
         /// </summary>
-        /// <param name="client"></param>
-        /// <param name="jobName"></param>
-        /// <param name="assetNames"></param>
-        /// <param name="contentKeyPolicyName"></param>
-        /// <returns></returns>
-        // <CleanUp>
+        /// <param name="client">The client.</param>
+        /// <param name="jobName">Name of the job.</param>
         private async Task CleanUpAsync(
            IAzureMediaServicesClient client,
-           AzureMediaServiceConfig config,
-           string jobName,
-           List<string> assetNames = null,
-           string contentKeyPolicyName = null
-           )
+           string jobName)
         {
-            await client.Jobs.DeleteAsync(config.ResourceGroup, config.AccountName, AdaptiveStreamingTransformName, jobName);
-
+            await client.Jobs.DeleteAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, AdaptiveStreamingTransformName, jobName);
         }
 
         /// <summary>
@@ -348,15 +324,19 @@ namespace AzureUploaderTransformerVideos
         /// </summary>
         /// <param name="blob">The BLOB.</param>
         /// <param name="assetModel">The asset identity.</param>
-        /// <exception cref="System.IO.FileNotFoundException"></exception>
+        /// <exception cref="System.IO.FileNotFoundException">File not found.</exception>
         private void UploadVideoToAzure(BlobClient blob, AzureVideoAssetModel assetModel)
         {
             var directory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
             var videoLocation = Path.Combine(directory, VideoStoragePath, assetModel.FileName);
-            if (!File.Exists(videoLocation)) throw new FileNotFoundException();
+
+            if (!File.Exists(videoLocation))
+            {
+                throw new FileNotFoundException();
+            }
 
             Progress<long> progress = new Progress<long>();
-            progress.ProgressChanged += Progress_ProgressChanged;
+            progress.ProgressChanged += this.Progress_ProgressChanged; // register process event to check status.
 
             var file = File.ReadAllBytes(videoLocation);
             var stream = new MemoryStream(file);
@@ -369,16 +349,16 @@ namespace AzureUploaderTransformerVideos
         }
 
         /// <summary>
-        /// Update the movie entity to the Data base
+        /// Updates the movie.
         /// </summary>
-        /// <param name="azureMediaServiceClient"></param>
-        /// <param name="movie"></param>
-        /// <param name="amsIdentity"></param>
+        /// <param name="azureMediaServiceClient">The azure media service client.</param>
+        /// <param name="movie">The movie.</param>
+        /// <param name="amsIdentity">The ams identity.</param>
         private async void UpdateMovie(IAzureMediaServicesClient azureMediaServiceClient, Movie movie, AzureVideoAssetModel amsIdentity)
         {
-            StreamingLocator locator = await CreateStreamingLocatorAsync(azureMediaServiceClient, amsConfig, amsIdentity);
+            StreamingLocator locator = await this.CreateStreamingLocatorAsync(azureMediaServiceClient, this.azureMSConfig, amsIdentity);
 
-            movie.UrlVideo = await GetStreamingUrlsAsync(azureMediaServiceClient, amsConfig.ResourceGroup, amsConfig.AccountName, locator.Name);
+            movie.UrlVideo = await this.GetStreamingUrlsAsync(azureMediaServiceClient, this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, locator.Name);
             movie.ProcessedByAzureJob = true;
             await this.movieService.UpdateMovie(movie);
         }
@@ -387,7 +367,7 @@ namespace AzureUploaderTransformerVideos
         /// Gets the azure video asset identity.
         /// </summary>
         /// <param name="movie">The movie.</param>
-        /// <returns></returns>
+        /// <returns>AzureVideoAssetModel.</returns>
         private AzureVideoAssetModel GetAzureVideoAssetIdentity(Movie movie)
         {
             var name = movie.Name;
@@ -399,9 +379,8 @@ namespace AzureUploaderTransformerVideos
                 LocatorName = $"{name}-locator",
                 InputAssetName = $"{name}-input",
                 OutputAssetName = $"{name}-output",
-                JobName = $"{name}-job"
+                JobName = $"{name}-job",
             };
-
         }
 
         /// <summary>
@@ -409,7 +388,7 @@ namespace AzureUploaderTransformerVideos
         /// supplied in local configuration file.
         /// </summary>
         /// <param name="config">The param is of type ConfigWrapper. This class reads values from local configuration file.</param>
-        /// <returns></returns>
+        /// <returns>ServiceClientCredentials.</returns>
         private async Task<ServiceClientCredentials> GetCredentialsAsync(AzureMediaServiceConfig config)
         {
             // Use ApplicationTokenProvider.LoginSilentWithCertificateAsync or UserTokenProvider.LoginSilentAsync to get a token using service principal with certificate
@@ -426,18 +405,17 @@ namespace AzureUploaderTransformerVideos
         /// supplied in local configuration file.
         /// </summary>
         /// <param name="config">The param is of type ConfigWrapper. This class reads values from local configuration file.</param>
-        /// <returns></returns>
+        /// <returns>IAzureMediaServicesClient.</returns>
         // <CreateMediaServicesClient>
         private async Task<IAzureMediaServicesClient> CreateMediaServicesClientAsync(AzureMediaServiceConfig config)
         {
-            var credentials = await GetCredentialsAsync(config);
+            var credentials = await this.GetCredentialsAsync(config);
 
             return new AzureMediaServicesClient(config.ArmEndpoint, credentials)
             {
                 SubscriptionId = config.SubscriptionId,
             };
         }
-        // </CreateMediaServicesClient>
 
         /// <summary>
         /// Progresses the progress changed when uploading the video.
@@ -448,6 +426,5 @@ namespace AzureUploaderTransformerVideos
         {
             Debug.WriteLine(progress);
         }
-
     }
 }
