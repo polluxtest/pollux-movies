@@ -20,7 +20,7 @@ namespace Movies.Persistence.Configurations
             builder.Property(p => p.Description).IsRequired().HasMaxLength(1000);
             builder.Property(p => p.Gender).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Type).IsRequired().HasMaxLength(100);
-            builder.Property(p => p.Url).IsRequired().HasMaxLength(100);
+            builder.Property(p => p.UrlVideo).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Year).HasMaxLength(300);
             builder.Property(p => p.Language).IsRequired().HasMaxLength(100);
 
