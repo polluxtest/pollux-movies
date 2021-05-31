@@ -333,7 +333,6 @@ namespace Movies.Persistence.Repositories.Base
         /// <param name="entity">The entity.</param>
         public virtual void Update(TEntity entity)
         {
-            this.Attach(entity);
             this.dbContext.Update(entity);
         }
 

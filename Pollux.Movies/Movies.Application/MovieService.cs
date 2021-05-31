@@ -28,7 +28,7 @@ namespace Movies.Application
         /// <returns>Movie List.</returns>
         public Task<List<Movie>> GetAll()
         {
-            var movies = this.moviesRepository.GetAllAsync(); // todo a soft deleted would be great
+            var movies = this.moviesRepository.GetManyAsync(p => p.ProcessedByAzureJob == false && p.IsDeleted == false); // todo a soft deleted would be great
             return movies;
         }
 
