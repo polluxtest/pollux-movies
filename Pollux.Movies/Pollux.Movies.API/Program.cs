@@ -14,7 +14,9 @@ namespace Pollux.Movies
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                            .UseUrls("http://localhost:4000", "https://localhost:4001");
+
                 });
     }
 }

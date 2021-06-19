@@ -1,9 +1,8 @@
-﻿namespace Movies.Domain.Entities
+﻿using Movies.Domain;
+
+namespace Movies.Application.Models
 {
-    /// <summary>
-    /// Movie Entity.
-    /// </summary>
-    public class Movie
+    public class MovieModel
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -76,30 +75,6 @@
         /// The URL image.
         /// </value>
         public string UrlImage { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the file.
-        /// </summary>
-        /// <value>
-        /// The name of the file.
-        /// </value>
-        public string FileName { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is deleted.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is deleted; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsDeleted { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [processed by azure job].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [processed by azure job]; otherwise, <c>false</c>.
-        /// </value>
-        public bool ProcessedByAzureJob { get; set; }
 
         /// <summary>
         /// Gets or sets the director identifier.

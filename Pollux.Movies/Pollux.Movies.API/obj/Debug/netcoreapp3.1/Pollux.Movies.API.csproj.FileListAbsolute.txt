@@ -190,3 +190,5 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\System.Text.Json.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\AzureUploaderTransformerVideos.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\AzureUploaderTransformerVideos.pdb
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\ReadFilesService.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\ReadFilesService.pdb

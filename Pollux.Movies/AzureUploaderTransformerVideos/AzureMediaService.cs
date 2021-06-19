@@ -18,15 +18,15 @@ namespace AzureUploaderTransformerVideos
     public class AzureMediaService
     {
         private const string AdaptiveStreamingTransformName = "polluxmediaservicesencodingtransform";
-        private const string VideoStoragePath = @"Movies";
-        private readonly IMovieService movieService;
+        private const string VideoStoragePath = @"W:\movies";
+        private readonly IMoviesService _moviesService;
         private readonly AzureMediaServiceConfig azureMSConfig;
 
         public AzureMediaService(
-             IMovieService movieService,
+             IMoviesService moviesService,
              AzureMediaServiceConfig azureMsConfig)
         {
-            this.movieService = movieService;
+            this._moviesService = moviesService;
             this.azureMSConfig = azureMsConfig;
         }
 
@@ -38,7 +38,7 @@ namespace AzureUploaderTransformerVideos
         {
             try
             {
-                var movies = await this.movieService.GetAll();
+                var movies = await this._moviesService.GetAll();
 
                 foreach (var movie in movies)
                 {
@@ -327,8 +327,7 @@ namespace AzureUploaderTransformerVideos
         /// <exception cref="System.IO.FileNotFoundException">File not found.</exception>
         private void UploadVideoToAzure(BlobClient blob, AzureVideoAssetModel assetModel)
         {
-            var directory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-            var videoLocation = Path.Combine(directory, VideoStoragePath, assetModel.FileName);
+            var videoLocation = Path.Combine(VideoStoragePath, assetModel.FileName);
 
             if (!File.Exists(videoLocation))
             {
@@ -360,7 +359,7 @@ namespace AzureUploaderTransformerVideos
 
             movie.UrlVideo = await this.GetStreamingUrlsAsync(azureMediaServiceClient, this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, locator.Name);
             movie.ProcessedByAzureJob = true;
-            await this.movieService.UpdateMovie(movie);
+            await this._moviesService.UpdateMovie(movie);
         }
 
         /// <summary>

@@ -2,6 +2,7 @@ using Movies.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Movies.Persistence;
 using Movies.Persistence.Repositories;
+using ReadFilesService;
 
 namespace Pollux.Movies
 {
@@ -14,6 +15,8 @@ namespace Pollux.Movies
         public static void AddDIRepositories(this IServiceCollection services)
         {
             services.AddTransient<IMoviesRepository, MoviesRepository>();
+            services.AddTransient<IFileReader, FileReader>();
+            services.AddTransient<IFileDbWriter, FileDBWriter>();
         }
 
         /// <summary>
@@ -23,7 +26,7 @@ namespace Pollux.Movies
         public static void AddDIServices(this IServiceCollection services)
         {
             services.AddTransient<PolluxMoviesDbContext, PolluxMoviesDbContext>();
-            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IMoviesService, MoviesService>();
         }
     }
 }

@@ -2495,6 +2495,21 @@
         "runtime": {
           "bin/placeholder/MovieUploaderTransformerService.dll": {}
         }
+      },
+      "ReadFilesService/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Movies.Application": "1.0.0",
+          "Movies.Common": "1.0.0",
+          "Movies.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ReadFilesService.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ReadFilesService.dll": {}
+        }
       }
     }
   },
@@ -8344,6 +8359,11 @@
       "type": "project",
       "path": "../../../pollux-process-stream-service/MovieUploaderTransformerService.csproj",
       "msbuildProject": "../../../pollux-process-stream-service/MovieUploaderTransformerService.csproj"
+    },
+    "ReadFilesService/1.0.0": {
+      "type": "project",
+      "path": "../ReadFilesService/ReadFilesService.csproj",
+      "msbuildProject": "../ReadFilesService/ReadFilesService.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8359,6 +8379,7 @@
       "Movies.Common >= 1.0.0",
       "Movies.Domain >= 1.0.0",
       "Movies.Persistence >= 1.0.0",
+      "ReadFilesService >= 1.0.0",
       "StyleCop.Analyzers >= 1.2.0-beta.333",
       "Swashbuckle.AspNetCore.Swagger >= 6.1.4",
       "Swashbuckle.AspNetCore.SwaggerGen >= 6.1.4",
@@ -8406,6 +8427,9 @@
             },
             "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj": {
               "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj"
+            },
+            "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\ReadFilesService\\ReadFilesService.csproj": {
+              "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\ReadFilesService\\ReadFilesService.csproj"
             },
             "\\\\Mac\\Home\\Documents\\Pollux\\pollux-process-stream-service\\MovieUploaderTransformerService.csproj": {
               "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-process-stream-service\\MovieUploaderTransformerService.csproj"

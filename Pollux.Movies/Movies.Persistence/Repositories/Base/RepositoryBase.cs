@@ -22,7 +22,7 @@ namespace Movies.Persistence.Repositories.Base
         /// <summary>
         /// The dbset.
         /// </summary>
-        protected readonly DbSet<TEntity> dbSet;
+        public readonly DbSet<TEntity> dbSet;
 
         /// <summary>
         /// The database context.

@@ -39,7 +39,7 @@ namespace Pollux.Movies
             var connectionString = this.Configuration.GetSection("AppSettings")["DbConnectionStrings:PolluxMoviesSQLConnectionString"];
             services.AddDbContext<PolluxMoviesDbContext>(options => options.UseSqlServer(connectionString));
             this.AddAzureMediaServices(services);
-            services.AddCors();
+            this.AddCors(services);
             services.AddMvc();
             services.AddAuthorization();
             services.AddControllers();
@@ -63,7 +63,7 @@ namespace Pollux.Movies
             }
 
             this.AddSwagger(app);
-            app.UseCors(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors("CookiePolicy");
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -96,6 +96,24 @@ namespace Pollux.Movies
         {
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+        }
+
+        /// <summary>
+        /// Adds the cors.
+        /// </summary>
+        /// <param name="services">The services.</param>
+        private void AddCors(IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "CookiePolicy",
+                    builder =>
+                        builder.WithOrigins("https://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials());
+            });
         }
 
         /// <summary>
