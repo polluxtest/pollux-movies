@@ -16,6 +16,8 @@ namespace Movies.Application
 
         public Task<List<MoviesByCategoryModel>> GetByLanguage();
 
+        Task<List<MoviesByCategoryModel>> GetByDirector();
+
         Task UpdateMovie(Movie movie);
 
         Task Add(Movie movie);
@@ -82,7 +84,7 @@ namespace Movies.Application
         /// Gets all by director.
         /// </summary>
         /// <returns>MovieModel List by Direactor.</returns>
-        public async Task<List<MoviesByCategoryModel>> GetAllByDirector()
+        public async Task<List<MoviesByCategoryModel>> GetByDirector()
         {
             var moviesDb = await this.moviesRepository.GetAll();
 

@@ -32,5 +32,21 @@ namespace Pollux.Movies.Controllers
 
             return this.Ok(moviesByLanguage);
         }
+
+        /// <summary>
+        /// Gets the by language.
+        /// </summary>
+        /// <param name="director">The director.</param>
+        /// <returns>List Movie By Language Model.</returns>
+        [AllowAnonymous]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [HttpGet]
+        [Route(ApiRoutesRouteConstants.ByDirector)]
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByDireactor()
+        {
+            var moviesByDireactor = await this.moviesService.GetByDirector();
+
+            return this.Ok(moviesByDireactor);
+        }
     }
 }
