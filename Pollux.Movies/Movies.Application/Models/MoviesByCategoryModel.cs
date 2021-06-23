@@ -2,7 +2,7 @@
 
 namespace Movies.Application.Models
 {
-    public class MovieByLanguageModel
+    public class MoviesByCategoryModel
     {
         /// <summary>
         /// Gets or sets the language.
@@ -10,7 +10,7 @@ namespace Movies.Application.Models
         /// <value>
         /// The language.
         /// </value>
-        public string Language { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets the movies.

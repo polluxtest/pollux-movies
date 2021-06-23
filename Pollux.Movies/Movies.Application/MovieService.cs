@@ -14,7 +14,7 @@ namespace Movies.Application
 
         public Task<List<Movie>> GetAllImages(bool processedByAzureJob = false);
 
-        public Task<List<MovieByLanguageModel>> GetByLanguage();
+        public Task<List<MoviesByCategoryModel>> GetByLanguage();
 
         Task UpdateMovie(Movie movie);
 
@@ -63,15 +63,15 @@ namespace Movies.Application
         /// Gets the by language.
         /// </summary>
         /// <returns>MovieModel List by Language.</returns>
-        public async Task<List<MovieByLanguageModel>> GetByLanguage()
+        public async Task<List<MoviesByCategoryModel>> GetByLanguage()
         {
             var moviesDb = await this.moviesRepository.GetAll();
 
             var moviesGroupedByLanguage = moviesDb
                 .GroupBy(p => p.Language)
-                .Select(p => new MovieByLanguageModel()
+                .Select(p => new MoviesByCategoryModel()
                 {
-                    Language = p.Key,
+                    Title = p.Key,
                     Movies = this.mapper.Map<List<Movie>, List<MovieModel>>(p.ToList()),
                 });
 
@@ -81,14 +81,20 @@ namespace Movies.Application
         /// <summary>
         /// Gets all by director.
         /// </summary>
-        /// <returns></returns>
-        public async Task<List<MoviesByDirectorModel>> GetAllByDirector()
+        /// <returns>MovieModel List by Direactor.</returns>
+        public async Task<List<MoviesByCategoryModel>> GetAllByDirector()
         {
-            var movies = await this.moviesRepository.GetAllByDirector();
-            var moviesByDirector = new List<MoviesByDirectorModel>();
-            this.mapper.Map(movies, moviesByDirector);
+            var moviesDb = await this.moviesRepository.GetAll();
 
-            return moviesByDirector;
+            var moviesGroupedByDirector = moviesDb
+                .GroupBy(p => p.Director.Name)
+                .Select(p => new MoviesByCategoryModel()
+                {
+                    Title = p.Key,
+                    Movies = this.mapper.Map<List<Movie>, List<MovieModel>>(p.ToList()),
+                });
+
+            return moviesGroupedByDirector.ToList();
         }
 
         /// <summary>

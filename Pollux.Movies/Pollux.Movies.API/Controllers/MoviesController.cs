@@ -26,7 +26,7 @@ namespace Pollux.Movies.Controllers
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesRouteConstants.ByLanguage)]
-        public async Task<ActionResult<List<MovieByLanguageModel>>> GetByLanguage()
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByLanguage()
         {
             var moviesByLanguage = await this.moviesService.GetByLanguage();
 
