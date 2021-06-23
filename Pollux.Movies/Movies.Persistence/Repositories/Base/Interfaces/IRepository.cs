@@ -26,6 +26,12 @@ namespace Movies.Persistence.Repositories.Base.Interfaces
         void Add(TEntity entity);
 
         /// <summary>
+        /// Adds the asynchronous.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        Task AddASync(TEntity entity);
+
+        /// <summary>
         /// Anies the specified where.
         /// </summary>
         /// <param name="where">The where.</param>

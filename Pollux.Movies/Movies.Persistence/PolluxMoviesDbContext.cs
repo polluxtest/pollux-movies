@@ -32,6 +32,15 @@ namespace Movies.Persistence
         /// </value>
         public DbSet<Director> Directors { get; set; }
 
+
+        /// <summary>
+        /// Gets or sets the user movies.
+        /// </summary>
+        /// <value>
+        /// The user movies.
+        /// </value>
+        public DbSet<UserMovies> UserMovies { get; set; }
+
         /// <summary>
         /// Override this method to further configure the model that was discovered by convention from the entity types
         /// exposed in <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1" /> properties on your derived context. The resulting model may be cached

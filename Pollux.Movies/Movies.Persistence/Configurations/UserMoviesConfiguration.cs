@@ -4,14 +4,13 @@ using Movies.Domain.Entities;
 
 namespace Movies.Persistence.Configurations
 {
-    public class UserMovieConfiguration : IEntityTypeConfiguration<UserMovie>
+    public class UserMoviesConfiguration : IEntityTypeConfiguration<UserMovies>
     {
-        public void Configure(EntityTypeBuilder<UserMovie> builder)
+        public void Configure(EntityTypeBuilder<UserMovies> builder)
         {
             builder.HasKey(p => p.UserId);
             builder.HasKey(p => p.MovieId);
             builder.HasOne(p => p.Movie);
-            builder.Property(p => p.IsDeleted).IsRequired().HasDefaultValue(false);
             builder.HasIndex("UserId");
         }
     }

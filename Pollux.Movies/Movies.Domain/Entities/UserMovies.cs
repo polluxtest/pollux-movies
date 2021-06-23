@@ -1,6 +1,8 @@
-﻿namespace Movies.Domain.Entities
+﻿using System;
+
+namespace Movies.Domain.Entities
 {
-    public class UserMovie
+    public class UserMovies
     {
         /// <summary>
         /// Gets or sets the user identifier.
@@ -8,7 +10,7 @@
         /// <value>
         /// The user identifier.
         /// </value>
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the movie identifier.
@@ -25,13 +27,5 @@
         /// The movie.
         /// </value>
         public Movie Movie { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is deleted.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is deleted; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsDeleted { get; set; }
     }
 }

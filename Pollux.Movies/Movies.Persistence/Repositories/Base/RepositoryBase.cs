@@ -49,11 +49,20 @@ namespace Movies.Persistence.Repositories.Base
         }
 
         /// <summary>
+        /// Adds the asynchronous.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        public async Task AddASync(TEntity entity)
+        {
+            await this.dbSet.AddAsync(entity);
+        }
+
+        /// <summary>
         /// Anies the specified where.
         /// </summary>
         /// <param name="where">The where.</param>
         /// <returns>
-        /// True/False
+        /// True/False.
         /// </returns>
         public virtual Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where)
         {

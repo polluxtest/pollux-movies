@@ -12,6 +12,8 @@ namespace Movies.Application
     {
         public Task<List<Movie>> GetAll(bool processedByAzureJob = false);
 
+        public Task<List<Movie>> GetAllImages(bool processedByAzureJob = false);
+
         public Task<List<MovieByLanguageModel>> GetByLanguage();
 
         Task UpdateMovie(Movie movie);
@@ -42,6 +44,18 @@ namespace Movies.Application
         {
             var movies = this.moviesRepository
                 .GetManyAsync(p => p.ProcessedByAzureJob == processedByAzureJob && p.IsDeleted == false);
+            return movies;
+        }
+
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <param name="processedByAzureJob">if set to <c>true</c> [processed by azure job].</param>
+        /// <returns>Movie List.</returns>
+        public Task<List<Movie>> GetAllImages(bool processedByAzureJob = false)
+        {
+            var movies = this.moviesRepository
+                .GetManyAsync(p => p.ProcessedByAzureJob == processedByAzureJob && p.IsDeleted == false && string.IsNullOrEmpty(p.UrlImage));
             return movies;
         }
 

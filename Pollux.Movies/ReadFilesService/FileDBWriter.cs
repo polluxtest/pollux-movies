@@ -60,7 +60,7 @@ namespace ReadFilesService
         /// <returns></returns>
         public async Task WriteImagesToDataBase(List<(string, string)> files)
         {
-            var movies = await _moviesesService.GetAll(true);
+            var movies = await _moviesesService.GetAllImages(true);
 
             foreach (var movie in movies)
             {
