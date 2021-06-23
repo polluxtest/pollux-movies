@@ -156,7 +156,6 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\obj\Debug\netcoreapp3.1\Pollux.Movies.API.AssemblyInfoInputs.cache
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\obj\Debug\netcoreapp3.1\Pollux.Movies.API.AssemblyInfo.cs
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\obj\Debug\netcoreapp3.1\Pollux.Movies.API.csproj.CoreCompileInputs.cache
-\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\obj\Debug\netcoreapp3.1\Pollux.Movies.API.MvcApplicationPartsAssemblyInfo.cs
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\obj\Debug\netcoreapp3.1\Pollux.Movies.API.MvcApplicationPartsAssemblyInfo.cache
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\obj\Debug\netcoreapp3.1\staticwebassets\Pollux.Movies.API.StaticWebAssets.Manifest.cache
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\obj\Debug\netcoreapp3.1\staticwebassets\Pollux.Movies.API.StaticWebAssets.xml

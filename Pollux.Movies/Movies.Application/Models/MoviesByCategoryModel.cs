@@ -5,10 +5,10 @@ namespace Movies.Application.Models
     public class MoviesByCategoryModel
     {
         /// <summary>
-        /// Gets or sets the language.
+        /// Gets or sets the title.
         /// </summary>
         /// <value>
-        /// The language.
+        /// The title.
         /// </value>
         public string Title { get; set; }
 
