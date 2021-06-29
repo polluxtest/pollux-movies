@@ -20,31 +20,31 @@ namespace Pollux.Movies.Controllers
         /// <summary>
         /// Gets the by language.
         /// </summary>
-        /// <param name="director">The director.</param>
+        /// <param name="sortBy">The sort by.</param>
         /// <returns>List Movie By Language Model.</returns>
         [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesRouteConstants.ByLanguage)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByLanguage()
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByLanguage(string sortBy = null)
         {
-            var moviesByLanguage = await this.moviesService.GetByLanguage();
+            var moviesByLanguage = await this.moviesService.GetByLanguage(sortBy);
 
             return this.Ok(moviesByLanguage);
         }
 
         /// <summary>
-        /// Gets the by language.
+        /// Gets the by direactor.
         /// </summary>
-        /// <param name="director">The director.</param>
-        /// <returns>List Movie By Language Model.</returns>
+        /// <param name="sortBy">The sort by.</param>
+        /// <returns>Movies By Direactor.</returns>
         [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesRouteConstants.ByDirector)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByDireactor()
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByDireactor(string sortBy = null)
         {
-            var moviesByDireactor = await this.moviesService.GetByDirector();
+            var moviesByDireactor = await this.moviesService.GetByDirector(sortBy);
 
             return this.Ok(moviesByDireactor);
         }

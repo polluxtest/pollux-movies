@@ -21,3 +21,5 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Domain.pdb
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Persistence.pdb
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.csproj.CopyComplete
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Common.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Common.pdb

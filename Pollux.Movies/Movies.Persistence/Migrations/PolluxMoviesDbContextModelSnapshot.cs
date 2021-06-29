@@ -114,21 +114,16 @@ namespace Movies.Persistence.Migrations
             modelBuilder.Entity("Movies.Domain.Entities.UserMovies", b =>
                 {
                     b.Property<int>("MovieId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("MovieId1")
                         .HasColumnType("int");
+
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("MovieId");
+                    b.HasKey("UserId");
 
-                    b.HasIndex("MovieId1");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "MovieId");
 
                     b.ToTable("UserMovies");
                 });
@@ -142,17 +137,6 @@ namespace Movies.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Director");
-                });
-
-            modelBuilder.Entity("Movies.Domain.Entities.UserMovies", b =>
-                {
-                    b.HasOne("Movies.Domain.Entities.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
                 });
 #pragma warning restore 612, 618
         }

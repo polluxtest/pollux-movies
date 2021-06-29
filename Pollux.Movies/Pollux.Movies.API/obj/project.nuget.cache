@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "nhRX2YkQWkqSiaRZm5xUZUPBm0xbPUvCUusqqHu0aLy2EQyNozgF+folTXSiIgvXK9/qyMMnXaCy/XrDH3Vzbg==",
+  "dgSpecHash": "Lxxjp269EprxcRIOnUou0Xax/Rl+2/OHsBk31XCPu6w7mWOr/RHNhUH1AHv3ir8kuYkFoaylLKwoFjAa+F3htQ==",
   "success": true,
   "projectFilePath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,9 @@
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\azure.core\\1.14.0\\azure.core.1.14.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\azure.storage.blobs\\12.7.0\\azure.storage.blobs.12.7.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\azure.storage.common\\12.6.0\\azure.storage.common.12.6.0.nupkg.sha512",
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\fluentvalidation\\10.2.3\\fluentvalidation.10.2.3.nupkg.sha512",
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.2.3\\fluentvalidation.aspnetcore.10.2.3.nupkg.sha512",
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.2.3\\fluentvalidation.dependencyinjectionextensions.10.2.3.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\linqkit.core\\1.1.24\\linqkit.core.1.1.24.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.azure.management.media\\3.0.2\\microsoft.azure.management.media.3.0.2.nupkg.sha512",

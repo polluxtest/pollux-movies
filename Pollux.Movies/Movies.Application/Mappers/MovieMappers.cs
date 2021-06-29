@@ -11,8 +11,7 @@ namespace Movies.Application.Mappers
         {
             this.CreateMap<Movie, MovieModel>();
 
-            this.CreateMap<MoviesListModel, MoviesByCategoryModel>()
-                .ForMember(p => p.Title, i => i.MapFrom(p => p.Movies.FirstOrDefault().Director.Name));
+            this.CreateMap<AddRemoveUserMovieModel, UserMovies>();
         }
     }
 }

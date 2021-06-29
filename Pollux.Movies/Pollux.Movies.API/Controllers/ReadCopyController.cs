@@ -16,7 +16,8 @@ namespace Pollux.Movies.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Get()
+        [Route("/CopyMovies")]
+        public async Task<IActionResult> CopyMovies()
         {
             await this.fileReader.ReadVideosFromDirectory();
 
@@ -25,9 +26,9 @@ namespace Pollux.Movies.Controllers
 
 
         [HttpGet]
-        [Route("/CopyMovies")]
+        [Route("/CopyImages")]
         [AllowAnonymous]
-        public async Task<IActionResult> CopyMovies()
+        public async Task<IActionResult> CopyImages()
         {
             await this.fileReader.ReadImagesFromDirectory();
 

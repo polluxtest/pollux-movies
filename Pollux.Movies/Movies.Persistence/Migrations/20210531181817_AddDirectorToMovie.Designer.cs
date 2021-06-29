@@ -124,15 +124,11 @@ namespace Movies.Persistence.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<int>("MovieId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("MovieId");
 
-                    b.HasIndex("MovieId1");
 
                     b.HasIndex("UserId");
 
@@ -154,7 +150,7 @@ namespace Movies.Persistence.Migrations
                 {
                     b.HasOne("Movies.Domain.Entities.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("MovieId1")
+                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

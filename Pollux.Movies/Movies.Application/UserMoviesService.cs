@@ -10,7 +10,7 @@ namespace Movies.Application
 {
     public interface IUserMoviesService
     {
-        Task AddAsync(AddRemoveUserMovieModel model);
+        Task AddRemoveAsync(AddRemoveUserMovieModel model);
 
         Task DeleteAsync(AddRemoveUserMovieModel model);
 
@@ -31,11 +31,20 @@ namespace Movies.Application
         }
 
         /// <summary>
-        /// Adds the asynchronous.
+        /// Adds the remove asynchronous.
         /// </summary>
         /// <param name="model">The model.</param>
-        public async Task AddAsync(AddRemoveUserMovieModel model)
+        /// <returns>Task.</returns>
+        public async Task AddRemoveAsync(AddRemoveUserMovieModel model)
         {
+            var exists = await this.userMoviesRepository.AnyAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
+
+            if (exists)
+            {
+                await this.DeleteAsync(model);
+                return;
+            }
+
             var userMovie = new UserMovies();
             this.mapper.Map(model, userMovie);
 
@@ -47,6 +56,7 @@ namespace Movies.Application
         /// Deletes the asynchronous.
         /// </summary>
         /// <param name="model">The model.</param>
+        /// <returns>Task.</returns>
         public async Task DeleteAsync(AddRemoveUserMovieModel model)
         {
             var userMovie = await this.userMoviesRepository.GetAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
@@ -58,7 +68,7 @@ namespace Movies.Application
         /// Gets the movies by user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns>Task <List<UserMovies>>.</returns>
+        /// <returns>Task<List<UserMovies>.</returns>
         public async Task<List<UserMovies>> GetMoviesByUser(Guid userId)
         {
             var userMovies = await this.userMoviesRepository.GetManyAsync(p => p.UserId == userId);

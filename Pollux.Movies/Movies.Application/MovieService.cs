@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Movies.Application.Models;
+using Movies.Common.Constants.Strings;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
 
@@ -14,9 +15,9 @@ namespace Movies.Application
 
         public Task<List<Movie>> GetAllImages(bool processedByAzureJob = false);
 
-        public Task<List<MoviesByCategoryModel>> GetByLanguage();
+        public Task<List<MoviesByCategoryModel>> GetByLanguage(string sortBy = null);
 
-        Task<List<MoviesByCategoryModel>> GetByDirector();
+        Task<List<MoviesByCategoryModel>> GetByDirector(string sortBy = null);
 
         Task UpdateMovie(Movie movie);
 
@@ -35,7 +36,6 @@ namespace Movies.Application
             this.moviesRepository = moviesRepository;
             this.mapper = mapper;
         }
-
 
         /// <summary>
         /// Gets all.
@@ -64,8 +64,9 @@ namespace Movies.Application
         /// <summary>
         /// Gets the by language.
         /// </summary>
+        /// <param name="sortBy">The sort by.</param>
         /// <returns>MovieModel List by Language.</returns>
-        public async Task<List<MoviesByCategoryModel>> GetByLanguage()
+        public async Task<List<MoviesByCategoryModel>> GetByLanguage(string sortBy = null)
         {
             var moviesDb = await this.moviesRepository.GetAll();
 
@@ -77,14 +78,18 @@ namespace Movies.Application
                     Movies = this.mapper.Map<List<Movie>, List<MovieModel>>(p.ToList()),
                 });
 
-            return moviesGroupedByLanguage.ToList();
+            var movies = moviesGroupedByLanguage.ToList();
+            await this.SortMovies(ref movies, sortBy);
+
+            return movies;
         }
 
         /// <summary>
-        /// Gets all by director.
+        /// Gets the by director.
         /// </summary>
+        /// <param name="sortBy">The sort by.</param>
         /// <returns>MovieModel List by Direactor.</returns>
-        public async Task<List<MoviesByCategoryModel>> GetByDirector()
+        public async Task<List<MoviesByCategoryModel>> GetByDirector(string sortBy = null)
         {
             var moviesDb = await this.moviesRepository.GetAll();
 
@@ -96,7 +101,29 @@ namespace Movies.Application
                     Movies = this.mapper.Map<List<Movie>, List<MovieModel>>(p.ToList()),
                 });
 
-            return moviesGroupedByDirector.ToList();
+            var movies = moviesGroupedByDirector.ToList();
+            await this.SortMovies(ref movies, sortBy);
+
+            return movies;
+        }
+
+        /// <summary>
+        /// Sorts the movies.
+        /// </summary>
+        /// <param name="movies">The movies.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <returns>Movies Sorted.</returns>
+        public Task<List<MoviesByCategoryModel>> SortMovies(ref List<MoviesByCategoryModel> movies, string sortBy = null)
+        {
+            if (string.IsNullOrEmpty(sortBy)) return Task.FromResult(movies);
+
+            switch (sortBy)
+            {
+                case SortByConstants.AlphaAscending: movies = movies.OrderBy(p => p.Title).ToList(); break;
+                case SortByConstants.AlphaDescending: movies = movies.OrderByDescending(p => p.Title).ToList(); break;
+            }
+
+            return Task.FromResult(movies);
         }
 
         /// <summary>

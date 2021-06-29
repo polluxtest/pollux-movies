@@ -90,7 +90,7 @@ namespace Movies.Application.Models
         /// <value>
         /// The director.
         /// </value>
-        public Director Director { get; set; }
+        public string DirectorName { get; set; }
 
         /// <summary>
         /// Gets or sets the likes.

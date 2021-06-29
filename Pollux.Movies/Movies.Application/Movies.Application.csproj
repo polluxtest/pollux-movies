@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Movies.Common\Movies.Common.csproj" />
       <ProjectReference Include="..\Movies.Domain\Movies.Domain.csproj" />
       <ProjectReference Include="..\Movies.Persistence\Movies.Persistence.csproj" />
     </ItemGroup>

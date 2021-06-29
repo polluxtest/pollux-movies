@@ -11,11 +11,22 @@
         /// <summary>
         /// The by director.
         /// </summary>
-        public const string ByDirector = "director/{director}";
+        public const string ByDirector = "ByDirector";
 
         /// <summary>
         /// The by language.
         /// </summary>
         public const string ByLanguage = "ByLanguage";
+
+
+        /// <summary>
+        /// My list.
+        /// </summary>
+        public const string MyList = "MyList";
+
+        /// <summary>
+        /// The update list.
+        /// </summary>
+        public const string UpdateList = "UpdateList";
     }
 }

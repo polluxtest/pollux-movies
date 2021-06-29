@@ -12,6 +12,7 @@ namespace Pollux.Movies
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
+    using FluentValidation.AspNetCore;
 
 
     public class Startup
@@ -40,7 +41,7 @@ namespace Pollux.Movies
             services.AddDbContext<PolluxMoviesDbContext>(options => options.UseSqlServer(connectionString));
             this.AddAzureMediaServices(services);
             this.AddCors(services);
-            services.AddMvc();
+            services.AddMvc().AddFluentValidation(options => options.RegisterValidatorsFromAssembly(ApiAssembly.Assembly));
             services.AddAuthorization();
             services.AddControllers();
             services.AddSwaggerGen();

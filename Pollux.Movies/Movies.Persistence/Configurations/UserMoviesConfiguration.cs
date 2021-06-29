@@ -10,8 +10,7 @@ namespace Movies.Persistence.Configurations
         {
             builder.HasKey(p => p.UserId);
             builder.HasKey(p => p.MovieId);
-            builder.HasOne(p => p.Movie);
-            builder.HasIndex("UserId");
+            builder.HasIndex("UserId", "MovieId");
         }
     }
 }

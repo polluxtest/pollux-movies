@@ -10,8 +10,8 @@ using Movies.Persistence;
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    [Migration("20210623170622_AddTableUserMovies")]
-    partial class AddTableUserMovies
+    [Migration("20210629145142_AddUserMoviesTable")]
+    partial class AddUserMoviesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,17 +120,12 @@ namespace Movies.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MovieId1")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("MovieId");
 
-                    b.HasIndex("MovieId1");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "MovieId");
 
                     b.ToTable("UserMovies");
                 });
@@ -144,17 +139,6 @@ namespace Movies.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Director");
-                });
-
-            modelBuilder.Entity("Movies.Domain.Entities.UserMovies", b =>
-                {
-                    b.HasOne("Movies.Domain.Entities.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
                 });
 #pragma warning restore 612, 618
         }
