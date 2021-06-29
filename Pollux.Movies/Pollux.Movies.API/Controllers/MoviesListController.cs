@@ -28,7 +28,7 @@ namespace Pollux.Movies.Controllers
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesRouteConstants.MyList)]
-        public async Task<ActionResult<List<int>>> Get([FromQuery] Guid userId)
+        public async Task<ActionResult<List<int>>> Get([FromQuery] string userId)
         {
             var userMovieList = await this.userMoviesService.GetMoviesByUser(userId);
 

@@ -13,13 +13,12 @@ namespace Movies.Persistence.Migrations
                 name: "UserMovies",
                 columns: table => new
                 {
-                    MovieId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MovieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserMovies", x => x.MovieId);
-                    table.PrimaryKey("PK_UserMovies_2", x => x.UserId);
+                    table.PrimaryKey("PK_UserMovies", x => new { x.UserId, x.MovieId });
                 });
 
             migrationBuilder.CreateIndex(
@@ -32,6 +31,8 @@ namespace Movies.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "UserMovies");
+
+
         }
     }
 }

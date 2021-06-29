@@ -113,15 +113,13 @@ namespace Movies.Persistence.Migrations
 
             modelBuilder.Entity("Movies.Domain.Entities.UserMovies", b =>
                 {
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("MovieId");
-                    b.HasKey("UserId");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "MovieId");
 
                     b.HasIndex("UserId", "MovieId");
 

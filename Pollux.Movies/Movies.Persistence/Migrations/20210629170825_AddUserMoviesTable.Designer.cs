@@ -10,7 +10,7 @@ using Movies.Persistence;
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    [Migration("20210629145142_AddUserMoviesTable")]
+    [Migration("20210629170825_AddUserMoviesTable")]
     partial class AddUserMoviesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,15 +115,13 @@ namespace Movies.Persistence.Migrations
 
             modelBuilder.Entity("Movies.Domain.Entities.UserMovies", b =>
                 {
-                    b.Property<int>("MovieId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("MovieId");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "MovieId");
 
                     b.HasIndex("UserId", "MovieId");
 

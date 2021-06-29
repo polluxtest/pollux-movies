@@ -8,8 +8,7 @@ namespace Movies.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<UserMovies> builder)
         {
-            builder.HasKey(p => p.UserId);
-            builder.HasKey(p => p.MovieId);
+            builder.HasKey(p => new { p.UserId, p.MovieId });
             builder.HasIndex("UserId", "MovieId");
         }
     }

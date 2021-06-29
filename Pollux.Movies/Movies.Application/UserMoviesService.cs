@@ -14,7 +14,7 @@ namespace Movies.Application
 
         Task DeleteAsync(AddRemoveUserMovieModel model);
 
-        Task<List<UserMovies>> GetMoviesByUser(Guid userId);
+        Task<List<int>> GetMoviesByUser(string userId);
     }
 
     public class UserMoviesService : IUserMoviesService
@@ -69,9 +69,9 @@ namespace Movies.Application
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>Task<List<UserMovies>.</returns>
-        public async Task<List<UserMovies>> GetMoviesByUser(Guid userId)
+        public async Task<List<int>> GetMoviesByUser(string userId)
         {
-            var userMovies = await this.userMoviesRepository.GetManyAsync(p => p.UserId == userId);
+            var userMovies = await this.userMoviesRepository.GetMoviesList(userId);
 
             return userMovies;
         }
