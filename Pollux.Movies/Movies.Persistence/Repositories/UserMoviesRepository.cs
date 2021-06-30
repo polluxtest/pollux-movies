@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories.Base;
 using Movies.Persistence.Repositories.Base.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Movies.Persistence.Repositories
 {
     public interface IUserMoviesRepository : IRepository<UserMovies>
     {
-        Task<List<int>> GetMoviesList(string userId);
+        Task<List<int>> GetMoviesListIds(string userId);
+        Task<List<Movie>> GetMoviesMyList(string userId);
     }
 
     public class UserMoviesRepository : RepositoryBase<UserMovies>, IUserMoviesRepository
@@ -17,6 +20,7 @@ namespace Movies.Persistence.Repositories
         public UserMoviesRepository(PolluxMoviesDbContext moviesDbContext)
            : base(moviesDbContext)
         {
+
         }
 
         /// <summary>
@@ -24,9 +28,23 @@ namespace Movies.Persistence.Repositories
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>Movie Ids List.</returns>
-        public async Task<List<int>> GetMoviesList(string userId)
+        public async Task<List<int>> GetMoviesListIds(string userId)
         {
-            return this.dbSet.Where(p => p.UserId.ToString() == userId).Select(p => p.MovieId).ToList();
+            return this.dbSet.Where(p => p.UserId.ToString().Equals(userId.ToUpper()))
+            .Select(p => p.MovieId).ToList();
+        }
+
+        /// <summary>
+        /// Gets the movies my list.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>List Movie.</returns>
+        public async Task<List<Movie>> GetMoviesMyList(string userId)
+        {
+            return this.dbSet.Include(p => p.Movie)
+                .Where(p => p.UserId.ToString() == userId.ToUpper())
+                .Select(p => p.Movie)
+                .ToList();
         }
     }
 }

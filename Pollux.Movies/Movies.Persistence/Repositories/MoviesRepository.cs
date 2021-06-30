@@ -14,7 +14,7 @@ namespace Movies.Persistence.Repositories
     public interface IMoviesRepository : IRepository<Movie>
     {
         public Task<List<Movie>> GetAll();
-        public Task<List<Movie>> Search();
+        public Task<List<Movie>> Search(string search);
     }
 
     /// <summary>
@@ -41,9 +41,20 @@ namespace Movies.Persistence.Repositories
                 .Where(p => p.ProcessedByAzureJob && !p.IsDeleted).ToListAsync();
         }
 
-        public Task<List<Movie>> Search()
+        /// <summary>
+        /// Searches the specified search.
+        /// </summary>
+        /// <param name="search">The search.</param>
+        /// <returns>Movie List Search Result.</returns>
+        public Task<List<Movie>> Search(string search)
         {
-            throw new System.NotImplementedException();
+            return this.dbSet.Include(p => p.Director)
+               .Where(p => p.ProcessedByAzureJob &&
+               !p.IsDeleted && (
+                    p.Director.Name.Contains(search) ||
+                    p.Name.Contains(search) ||
+                    p.Language.Contains(search)))
+               .ToListAsync();
         }
     }
 }

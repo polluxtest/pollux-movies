@@ -22,6 +22,8 @@ namespace Movies.Application
         Task UpdateMovie(Movie movie);
 
         Task Add(Movie movie);
+
+        Task<List<MoviesByCategoryModel>> Search(string search);
     }
 
     public class MoviesService : IMoviesService
@@ -150,6 +152,19 @@ namespace Movies.Application
             this.moviesRepository.Save();
 
             return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Searches the specified search.
+        /// </summary>
+        /// <param name="search">The search.</param>
+        /// <returns></returns>
+        public async Task<List<MoviesByCategoryModel>> Search(string search)
+        {
+            var moviesDbSearch = await this.moviesRepository.Search(search);
+            var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDbSearch);
+
+            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = movies, Title = "Titles Related to Your Search" } };
         }
     }
 }

@@ -33,6 +33,25 @@ namespace Pollux.Movies.Controllers
             return this.Ok(moviesByLanguage);
         }
 
+
+        /// <summary>
+        /// Searches the specified search.
+        /// </summary>
+        /// <param name="search">The search.</param>
+        /// <returns>Movie List.</returns>
+        [AllowAnonymous]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [HttpGet]
+        [Route(ApiRoutesRouteConstants.Search)]
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> Search(string search)
+        {
+            if (string.IsNullOrEmpty(search)) return this.BadRequest("invalid search text");
+
+            var searchMovies = await this.moviesService.Search(search);
+
+            return this.Ok(searchMovies);
+        }
+
         /// <summary>
         /// Gets the by direactor.
         /// </summary>

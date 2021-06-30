@@ -24,9 +24,20 @@
         /// </summary>
         public const string MyList = "MyList";
 
+
+        /// <summary>
+        /// My list.
+        /// </summary>
+        public const string MyListIds = "MyIdsList";
+
         /// <summary>
         /// The update list.
         /// </summary>
         public const string UpdateList = "UpdateList";
+
+        /// <summary>
+        /// The search
+        /// </summary>
+        public const string Search = "Search";
     }
 }

@@ -27,13 +27,30 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
-        [Route(ApiRoutesRouteConstants.MyList)]
-        public async Task<ActionResult<List<int>>> Get([FromQuery] string userId)
+        [Route(ApiRoutesRouteConstants.MyListIds)]
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetMyList([FromQuery] string userId)
         {
-            var userMovieList = await this.userMoviesService.GetMoviesByUser(userId);
+            var userMovieList = await this.userMoviesService.GetMovieMyList(userId);
 
             return this.Ok(userMovieList);
         }
+
+        /// <summary>
+        /// Gets the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>List of My movies.</returns>
+        [AllowAnonymous]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [HttpGet]
+        [Route(ApiRoutesRouteConstants.MyList)]
+        public async Task<ActionResult<List<int>>> Get([FromQuery] string userId)
+        {
+            var userMovieList = await this.userMoviesService.GetMoviesIdsByUser(userId);
+
+            return this.Ok(userMovieList);
+        }
+
 
         /// <summary>
         /// Posts the specified request.
