@@ -15,3 +15,4 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.csproj.CoreCompileInputs.cache
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.pdb
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.csprojAssemblyReference.cache

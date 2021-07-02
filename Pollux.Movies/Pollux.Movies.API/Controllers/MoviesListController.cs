@@ -27,7 +27,7 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
-        [Route(ApiRoutesRouteConstants.MyListIds)]
+        [Route(ApiRoutesRouteConstants.MyList)]
         public async Task<ActionResult<List<MoviesByCategoryModel>>> GetMyList([FromQuery] string userId)
         {
             var userMovieList = await this.userMoviesService.GetMovieMyList(userId);
@@ -43,7 +43,7 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
-        [Route(ApiRoutesRouteConstants.MyList)]
+        [Route(ApiRoutesRouteConstants.MyListIds)]
         public async Task<ActionResult<List<int>>> Get([FromQuery] string userId)
         {
             var userMovieList = await this.userMoviesService.GetMoviesIdsByUser(userId);

@@ -24,6 +24,8 @@ namespace Movies.Application
         Task Add(Movie movie);
 
         Task<List<MoviesByCategoryModel>> Search(string search);
+
+        Task<Movie> GetAsync(int movieId);
     }
 
     public class MoviesService : IMoviesService
@@ -158,13 +160,23 @@ namespace Movies.Application
         /// Searches the specified search.
         /// </summary>
         /// <param name="search">The search.</param>
-        /// <returns></returns>
+        /// <returns>List<MoviesByCategoryModel>.</returns>
         public async Task<List<MoviesByCategoryModel>> Search(string search)
         {
             var moviesDbSearch = await this.moviesRepository.Search(search);
             var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDbSearch);
 
             return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = movies, Title = "Titles Related to Your Search" } };
+        }
+
+        /// <summary>
+        /// Gets the asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns>MovieModel.</returns>
+        public async Task<Movie> GetAsync(int movieId)
+        {
+            return await this.moviesRepository.GetAsync(p => p.Id == movieId);
         }
     }
 }

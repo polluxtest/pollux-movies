@@ -24,6 +24,11 @@
         /// </summary>
         public const string MyList = "MyList";
 
+        /// <summary>
+        /// My likes.
+        /// </summary>
+        public const string MyLikes = "MyLikes";
+
 
         /// <summary>
         /// My list.
@@ -36,8 +41,13 @@
         public const string UpdateList = "UpdateList";
 
         /// <summary>
-        /// The search
+        /// The search.
         /// </summary>
         public const string Search = "Search";
+
+        /// <summary>
+        /// The like
+        /// </summary>
+        public const string Like = "Like";
     }
 }

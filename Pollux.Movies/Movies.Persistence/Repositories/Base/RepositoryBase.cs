@@ -19,15 +19,6 @@ namespace Movies.Persistence.Repositories.Base
     public abstract class RepositoryBase<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
-        /// <summary>
-        /// The dbset.
-        /// </summary>
-        protected DbSet<TEntity> dbSet;
-
-        /// <summary>
-        /// The database context.
-        /// </summary>
-        protected DbContext dbContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RepositoryBase{TEntity}"/> class.
@@ -38,6 +29,17 @@ namespace Movies.Persistence.Repositories.Base
             this.dbContext = context;
             this.dbSet = this.dbContext.Set<TEntity>();
         }
+
+        /// <summary>
+        /// The dbset.
+        /// </summary>
+        protected DbSet<TEntity> dbSet;
+
+        /// <summary>
+        /// The database context.
+        /// </summary>
+        protected DbContext dbContext;
+
 
         /// <summary>
         /// Adds the specified entity.

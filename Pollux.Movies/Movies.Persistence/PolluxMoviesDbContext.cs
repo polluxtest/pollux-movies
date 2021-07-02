@@ -32,7 +32,6 @@ namespace Movies.Persistence
         /// </value>
         public DbSet<Director> Directors { get; set; }
 
-
         /// <summary>
         /// Gets or sets the user movies.
         /// </summary>
@@ -40,6 +39,14 @@ namespace Movies.Persistence
         /// The user movies.
         /// </value>
         public DbSet<UserMovies> UserMovies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user likes.
+        /// </summary>
+        /// <value>
+        /// The user likes.
+        /// </value>
+        public DbSet<UserLikes> UserLikes { get; set; }
 
         /// <summary>
         /// Override this method to further configure the model that was discovered by convention from the entity types
