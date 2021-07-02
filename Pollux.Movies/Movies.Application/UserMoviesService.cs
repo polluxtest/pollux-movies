@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Movies.Application.Models;
+using Movies.Common.Constants.Strings;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
 
@@ -76,7 +77,7 @@ namespace Movies.Application
             var myListDb = await this.userMoviesRepository.GetMoviesMyList(userId);
             var myList = this.mapper.Map<List<Movie>, List<MovieModel>>(myListDb);
 
-            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = myList, Title = "My List" } };
+            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = myList, Title = TitleConstants.MyList } };
         }
 
         /// <summary>

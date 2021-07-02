@@ -78,7 +78,7 @@ namespace Movies.Application
                 .GroupBy(p => p.Language)
                 .Select(p => new MoviesByCategoryModel()
                 {
-                    Title = p.Key,
+                    Title = $"{p.Key} {TitleConstants.Language}",
                     Movies = this.mapper.Map<List<Movie>, List<MovieModel>>(p.ToList()),
                 });
 
@@ -166,7 +166,7 @@ namespace Movies.Application
             var moviesDbSearch = await this.moviesRepository.Search(search);
             var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDbSearch);
 
-            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = movies, Title = "Titles Related to Your Search" } };
+            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = movies, Title = TitleConstants.Search } };
         }
 
         /// <summary>

@@ -41,7 +41,9 @@ namespace Movies.Persistence.Repositories
         /// <returns>List Movie.</returns>
         public async Task<List<Movie>> GetMoviesMyList(string userId)
         {
-            return this.dbSet.Include(p => p.Movie)
+            return this.dbSet
+                .Include(p => p.Movie)
+                .ThenInclude(p => p.Director)
                 .Where(p => p.UserId.ToString() == userId.ToUpper())
                 .Select(p => p.Movie)
                 .ToList();
