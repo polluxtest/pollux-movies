@@ -18,7 +18,7 @@ namespace AzureUploaderTransformerVideos
     public class AzureMediaService
     {
         private const string AdaptiveStreamingTransformName = "polluxmediaservicesencodingtransform";
-        private const string VideoStoragePath = @"W:\movies";
+        private const string VideoStoragePath = @"Z:\Downloads\movies";
         private readonly IMoviesService _moviesService;
         private readonly AzureMediaServiceConfig azureMSConfig;
 
@@ -344,7 +344,7 @@ namespace AzureUploaderTransformerVideos
 
             blob.Upload(stream, null, null, null, progress, null);
 
-            Debug.WriteLine("finished uploading " + assetModel.Name);
+            //Debug.WriteLine("finished uploading " + assetModel.Name);
         }
 
         /// <summary>

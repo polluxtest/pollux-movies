@@ -15,8 +15,8 @@ namespace ReadFilesService
 
     public class FileReader : IFileReader
     {
-        private const string FilesMoviesPath = @"X:\movies";
-        private const string FilesImagesPath = @"W:\images";
+        private const string FilesMoviesPath = @"Z:\Downloads\movies";
+        private const string FilesImagesPath = @"W:\pollux\newImages";
         private const string AzureCDNPath = @"https://polluxcdn.azureedge.net";
         private const string AzureImagesContainer = "polluximagescontainer";
         private readonly IFileDbWriter fileDbWriter;
@@ -40,7 +40,7 @@ namespace ReadFilesService
 
             foreach (var file in files)
             {
-                var fileName = file.Remove(0, 10);
+                var fileName = file.Remove(0, 20);
                 var pointIndex = fileName.IndexOf(".");
                 var movieName = fileName.Remove(pointIndex, fileName.Length - pointIndex);
 
@@ -61,7 +61,7 @@ namespace ReadFilesService
 
             foreach (var file in files)
             {
-                var fileName = file.Remove(0, 10);
+                var fileName = file.Remove(0, 20);
                 var pointIndex = fileName.IndexOf(".");
                 var imageName = fileName.Remove(pointIndex, fileName.Length - pointIndex);
                 var azureFilePath = $"{AzureCDNPath}/{AzureImagesContainer}/{fileName}";
