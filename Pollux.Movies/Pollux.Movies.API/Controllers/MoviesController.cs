@@ -61,11 +61,11 @@ namespace Pollux.Movies.Controllers
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesRouteConstants.ByDirector)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByDireactor(string sortBy = null)
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByDirector(string sortBy = null)
         {
-            var moviesByDireactor = await this.moviesService.GetByDirector(sortBy);
+            var moviesByDirector = await this.moviesService.GetByDirector(sortBy);
 
-            return this.Ok(moviesByDireactor);
+            return this.Ok(moviesByDirector);
         }
     }
 }

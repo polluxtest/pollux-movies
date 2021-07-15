@@ -46,6 +46,8 @@ namespace Pollux.Movies.Controllers
         [Route(ApiRoutesRouteConstants.MyListIds)]
         public async Task<ActionResult<List<int>>> Get([FromQuery] string userId)
         {
+            if (base.IsUserIdValid(userId)) return this.BadRequest("Invalid User Id");
+
             var userMovieList = await this.userMoviesService.GetMoviesIdsByUser(userId);
 
             return this.Ok(userMovieList);
