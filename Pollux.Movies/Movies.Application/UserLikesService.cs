@@ -13,20 +13,21 @@ namespace Movies.Application
         Task AddRemoveUserLike(AddRemoveUserMovieModel model);
         Task DeleteAsync(AddRemoveUserMovieModel model);
         Task<List<int>> GetLikesMoviesIds(string userId);
+        public Task<bool> IsMovieLikedByUser(int movieId, string userId);
     }
 
     public class UserLikesService : IUserLikesService
     {
-        private readonly IMoviesService moviesService;
+        private readonly IMoviesRepository moviesRepository;
         private readonly IUserLikesRepository userLikesRepository;
         private readonly IMapper mapper;
 
         public UserLikesService(
-            IMoviesService moviesService,
+            IMoviesRepository moviesRepository,
             IUserLikesRepository userLikesRepository,
             IMapper mapper)
         {
-            this.moviesService = moviesService;
+            this.moviesRepository = moviesRepository;
             this.userLikesRepository = userLikesRepository;
             this.mapper = mapper;
         }
@@ -39,7 +40,7 @@ namespace Movies.Application
         public async Task AddRemoveUserLike(AddRemoveUserMovieModel model)
         {
             var exists = await this.userLikesRepository.AnyAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
-            var movieDb = await this.moviesService.GetAsync(model.MovieId);
+            var movieDb = await this.moviesRepository.GetAsync(p => p.Id == model.MovieId);
 
             if (exists)
             {
@@ -72,6 +73,18 @@ namespace Movies.Application
             return this.userLikesRepository.GetLikesMoviesIds(userId);
         }
 
+
+        /// <summary>
+        /// Determines whether [is movie liked by user] [the specified movie identifier].
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>True/False.</returns>
+        public Task<bool> IsMovieLikedByUser(int movieId, string userId)
+        {
+            return this.userLikesRepository.AnyAsync(p => p.MovieId == movieId && p.UserId.ToString().Equals(userId));
+        }
+
         /// <summary>
         /// Unlikes the movie.
         /// </summary>
@@ -81,7 +94,7 @@ namespace Movies.Application
         {
             await this.DeleteAsync(model);
             movieDb.Likes -= 1;
-            await this.moviesService.UpdateMovie(movieDb);
+            this.UpdateMovie(movieDb);
         }
 
         /// <summary>
@@ -97,8 +110,14 @@ namespace Movies.Application
             movieDb.Likes += 1;
 
             await this.userLikesRepository.AddASync(userMovie);
-            await this.moviesService.UpdateMovie(movieDb);
             this.userLikesRepository.Save();
+            this.UpdateMovie(movieDb);
+        }
+
+        private void UpdateMovie(Movie movie)
+        {
+            this.moviesRepository.Update(movie);
+            this.moviesRepository.Save();
         }
     }
 }

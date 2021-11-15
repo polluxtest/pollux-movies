@@ -85,8 +85,9 @@ namespace Pollux.Movies
             var azureMediaServiceSettings = new AzureMediaServiceConfig();
             this.Configuration.Bind("AzureMediaServiceSettings", azureMediaServiceSettings);
 
-            services.AddSingleton(azureMediaServiceSettings);
+            services.AddSingleton<AzureMediaServiceConfig>(azureMediaServiceSettings);
             services.AddTransient<AzureMediaService>();
+            services.AddTransient<IAzureBlobsService, AzureBlobsService>();
         }
 
         /// <summary>

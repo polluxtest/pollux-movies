@@ -27,7 +27,7 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
-        [Route(ApiRoutesRouteConstants.MyList)]
+        [Route(ApiRoutesConstants.MyList)]
         public async Task<ActionResult<List<MoviesByCategoryModel>>> GetMyList([FromQuery] string userId)
         {
             var userMovieList = await this.userMoviesService.GetMovieMyList(userId);
@@ -43,7 +43,7 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
-        [Route(ApiRoutesRouteConstants.MyListIds)]
+        [Route(ApiRoutesConstants.MyListIds)]
         public async Task<ActionResult<List<int>>> Get([FromQuery] string userId)
         {
             if (base.IsUserIdValid(userId)) return this.BadRequest("Invalid User Id");
@@ -61,7 +61,7 @@ namespace Pollux.Movies.Controllers
         /// <returns>Movie id added.</returns>
         [AllowAnonymous]
         [HttpPost]
-        [Route(ApiRoutesRouteConstants.UpdateList)]
+        [Route(ApiRoutesConstants.UpdateList)]
         public async Task<ActionResult<int>> Post([FromBody] AddRemoveUserMovieModel request)
         {
             await this.userMoviesService.AddRemoveAsync(request);

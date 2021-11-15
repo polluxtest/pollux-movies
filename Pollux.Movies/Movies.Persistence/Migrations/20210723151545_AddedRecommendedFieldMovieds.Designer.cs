@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Persistence;
 
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    partial class PolluxMoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210723151545_AddedRecommendedFieldMovieds")]
+    partial class AddedRecommendedFieldMovieds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,10 +90,6 @@ namespace Movies.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
-
-                    b.Property<string>("Subtitles")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Type")
                         .IsRequired()

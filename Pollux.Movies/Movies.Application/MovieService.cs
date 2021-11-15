@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using AutoMapper;
 using Movies.Application.Models;
 using Movies.Common.Constants.Strings;
+using Movies.Common.ExtensionMethods;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
 
@@ -11,11 +14,11 @@ namespace Movies.Application
 {
     public interface IMoviesService
     {
-        public Task<List<Movie>> GetAll(bool processedByAzureJob = false);
+        Task<List<Movie>> GetAll(bool processedByAzureJob = false);
 
-        public Task<List<Movie>> GetAllImages(bool processedByAzureJob = false);
+        Task<List<Movie>> GetAllImages(bool processedByAzureJob = false);
 
-        public Task<List<MoviesByCategoryModel>> GetByLanguage(string sortBy = null);
+        Task<List<MoviesByCategoryModel>> GetByLanguage(string sortBy = null);
 
         Task<List<MoviesByCategoryModel>> GetByDirector(string sortBy = null);
 
@@ -25,19 +28,34 @@ namespace Movies.Application
 
         Task<List<MoviesByCategoryModel>> Search(string search);
 
+        Task<List<MoviesByCategoryModel>> GetRecommendedByUsers();
+
+        Task<List<MoviesByCategoryModel>> GetRecommendedByPollux();
+
+        Task<MovieInfoModel> GetAsync(int movieId, string userId);
+
+        Task<Movie> GetByNameAsync(string name);
+
         Task<Movie> GetAsync(int movieId);
+
     }
 
     public class MoviesService : IMoviesService
     {
         private readonly IMoviesRepository moviesRepository;
+        private readonly IUserMoviesService userMoviesService;
+        private readonly IUserLikesService userMovieLikesService;
         private readonly IMapper mapper;
 
         public MoviesService(
             IMoviesRepository moviesRepository,
+            IUserMoviesService userMoviesService,
+            IUserLikesService userMovieLikesService,
             IMapper mapper)
         {
             this.moviesRepository = moviesRepository;
+            this.userMoviesService = userMoviesService;
+            this.userMovieLikesService = userMovieLikesService;
             this.mapper = mapper;
         }
 
@@ -170,13 +188,67 @@ namespace Movies.Application
         }
 
         /// <summary>
+        /// Gets the recommended by users.
+        /// </summary>
+        /// <returns>List<MoviesByCategoryModel/>.</returns>
+        public async Task<List<MoviesByCategoryModel>> GetRecommendedByPollux()
+        {
+            var moviesDb = await this.moviesRepository
+                .GetManyAsync(p => p.ProcessedByAzureJob == true && p.IsDeleted == false && p.Recommended);
+
+            var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDb);
+
+            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = movies, Title = TitleConstants.RecommendedByPollux } };
+        }
+
+        /// <summary>
+        /// Gets the recommended by users.
+        /// </summary>
+        /// <returns>List<MoviesByCategoryModel/>.</returns>
+        public async Task<List<MoviesByCategoryModel>> GetRecommendedByUsers()
+        {
+            var moviesDb = await this.moviesRepository.GetRecommended();
+
+            var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDb);
+
+            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = movies, Title = TitleConstants.RecommendedByUsers } };
+
+        }
+
+        /// <summary>
         /// Gets the asynchronous.
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
-        /// <returns>MovieModel.</returns>
-        public async Task<Movie> GetAsync(int movieId)
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>MovieInfoModel.</returns>
+        public async Task<MovieInfoModel> GetAsync(int movieId, string userId)
         {
-            return await this.moviesRepository.GetAsync(p => p.Id == movieId);
+            var movieInfoModel = new MovieInfoModel();
+            var movieDb = await this.moviesRepository.GetAsync(p => p.Id == movieId);
+            movieInfoModel.IsInList = await this.userMoviesService.IsMovieInListByUser(movieId, userId);
+            movieInfoModel.IsLiked = await this.userMovieLikesService.IsMovieLikedByUser(movieId, userId);
+
+            return this.mapper.Map<Movie, MovieInfoModel>(movieDb, movieInfoModel);
+        }
+
+        /// <summary>
+        /// Gets the by name asynchronous.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>Movie</returns>
+        public Task<Movie> GetByNameAsync(string name)
+        {
+            return this.moviesRepository.GetAsync(p => p.Name.TrimAll().ToLower().Equals(name));
+        }
+
+        /// <summary>
+        /// Gets the asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns></returns>
+        public Task<Movie> GetAsync(int movieId)
+        {
+            return this.moviesRepository.GetAsync(p => p.Id == movieId);
         }
     }
 }

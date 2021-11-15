@@ -1,4 +1,5 @@
-﻿using Movies.Domain;
+﻿using System.Collections.Generic;
+using Movies.Domain;
 
 namespace Movies.Application.Models
 {
@@ -99,5 +100,13 @@ namespace Movies.Application.Models
         /// The likes.
         /// </value>
         public int Likes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the subtitles.
+        /// </summary>
+        /// <value>
+        /// The subtitles.
+        /// </value>
+        public string Subtitles { get; set; }
     }
 }

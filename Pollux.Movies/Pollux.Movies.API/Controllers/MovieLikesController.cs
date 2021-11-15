@@ -24,7 +24,7 @@ namespace Pollux.Movies.Controllers
         /// <returns>Task.</returns>
         [AllowAnonymous]
         [HttpPost]
-        [Route(ApiRoutesRouteConstants.Like)]
+        [Route(ApiRoutesConstants.Like)]
         public async Task<ActionResult> Like([FromBody] AddRemoveUserMovieModel request)
         {
             await this.userLikesService.AddRemoveUserLike(request);
@@ -40,7 +40,7 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
-        [Route(ApiRoutesRouteConstants.MyLikes)]
+        [Route(ApiRoutesConstants.MyLikes)]
         public async Task<ActionResult<List<int>>> Get([FromQuery] string userId)
         {
             if (base.IsUserIdValid(userId)) return this.BadRequest("Invalid User Id");

@@ -25,5 +25,6 @@ namespace AzureUploaderTransformerVideos
 
         public string Location { get; set; }
 
+        public string StorageAccountName { get; set; }
     }
 }

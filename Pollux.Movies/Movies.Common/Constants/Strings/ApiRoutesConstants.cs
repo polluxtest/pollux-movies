@@ -1,7 +1,7 @@
 ﻿namespace Movies.Common.Constants.Strings
 {
 
-    public static class ApiRoutesRouteConstants
+    public static class ApiRoutesConstants
     {
         /// <summary>
         /// The default route.
@@ -49,5 +49,20 @@
         /// The like
         /// </summary>
         public const string Like = "Like";
+
+        /// <summary>
+        /// Get Movie. 
+        /// </summary>
+        public const string Movie = "Movie/{id}";
+
+        /// <summary>
+        /// Get Recommended Movies by Pollux.
+        /// </summary>
+        public const string RecommendedByPollux = "RecommendedByPollux";
+
+        /// <summary>
+        /// Get Recommended Movies by Users.
+        /// </summary>
+        public const string RecommendedByUsers = "RecommendedByUsers";
     }
 }

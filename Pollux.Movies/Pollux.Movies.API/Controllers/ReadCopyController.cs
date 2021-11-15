@@ -34,5 +34,17 @@ namespace Pollux.Movies.Controllers
 
             return this.Ok();
         }
+
+
+        [HttpGet]
+        [Route("/CopySubtitles")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CopySubtitles()
+        {
+            await this.fileReader.ReadSubtitlesFromDirectory();
+
+            return this.Ok();
+        }
+
     }
 }

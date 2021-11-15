@@ -20,14 +20,16 @@ namespace Movies.Persistence.Configurations
             builder.Property(p => p.Gender).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Type).IsRequired().HasMaxLength(100);
             builder.Property(p => p.UrlVideo).HasMaxLength(1000);
+            builder.Property(p => p.Subtitles).HasMaxLength(1000);
             builder.Property(p => p.UrlImage).HasMaxLength(1000);
             builder.Property(p => p.Year).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Language).IsRequired().HasMaxLength(100);
             builder.Property(p => p.DirectorId).IsRequired().HasDefaultValue(1);
             builder.Property(p => p.Likes).HasDefaultValue(0);
+            builder.Property(p => p.Recommended).HasDefaultValue(false);
 
             builder.HasOne<Director>(p => p.Director);
-            builder.HasIndex("Name", "Gender", "Language");
+            builder.HasIndex("Name", "Gender", "Language", "Likes", "Recommended");
         }
     }
 }

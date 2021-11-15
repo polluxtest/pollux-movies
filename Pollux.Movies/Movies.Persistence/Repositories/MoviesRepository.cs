@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Movies.Domain.Entities;
@@ -15,6 +17,7 @@ namespace Movies.Persistence.Repositories
     {
         public Task<List<Movie>> GetAll();
         public Task<List<Movie>> Search(string search);
+        public Task<List<Movie>> GetRecommended();
     }
 
     /// <summary>
@@ -39,6 +42,19 @@ namespace Movies.Persistence.Repositories
         {
             return this.dbSet.Include(p => p.Director)
                 .Where(p => p.ProcessedByAzureJob && !p.IsDeleted).ToListAsync();
+        }
+
+        /// <summary>
+        /// Gets the recommended.
+        /// </summary>
+        /// <returns></returns>
+        public Task<List<Movie>> GetRecommended()
+        {
+            return this.dbSet.Include(p => p.Director)
+                .Where(p => p.ProcessedByAzureJob && !p.IsDeleted)
+                .OrderBy(p => p.Likes)
+                .Take(15)
+                .ToListAsync();
         }
 
         /// <summary>

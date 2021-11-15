@@ -124,5 +124,21 @@
         /// The likes.
         /// </value>
         public int Likes { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="Movie"/> is recommended.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if recommended; otherwise, <c>false</c>.
+        /// </value>
+        public bool Recommended { get; set; }
+
+        /// <summary>
+        /// Gets or sets the subtitles.
+        /// </summary>
+        /// <value>
+        /// The subtitles.
+        /// </value>
+        public string Subtitles { get; set; }
     }
 }

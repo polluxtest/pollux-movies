@@ -11,6 +11,8 @@ namespace Movies.Application.Mappers
         {
             this.CreateMap<Movie, MovieModel>();
 
+            this.CreateMap<Movie, MovieInfoModel>();
+
             this.CreateMap<AddRemoveUserMovieModel, UserMovies>();
 
             this.CreateMap<AddRemoveUserMovieModel, UserLikes>();

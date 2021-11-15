@@ -18,6 +18,8 @@ namespace Movies.Application
         Task<List<int>> GetMoviesIdsByUser(string userId);
 
         Task<List<MoviesByCategoryModel>> GetMovieMyList(string userId);
+
+        Task<bool> IsMovieInListByUser(int movieId, string userId);
     }
 
     public class UserMoviesService : IUserMoviesService
@@ -78,6 +80,17 @@ namespace Movies.Application
             var myList = this.mapper.Map<List<Movie>, List<MovieModel>>(myListDb);
 
             return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = myList, Title = TitleConstants.MyList } };
+        }
+
+        /// <summary>
+        /// Determines whether [is movie liked by user] [the specified movie identifier].
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>True/False.</returns>
+        public Task<bool> IsMovieInListByUser(int movieId, string userId)
+        {
+            return this.userMoviesRepository.AnyAsync(p => p.MovieId == movieId && p.UserId.ToString().Equals(userId));
         }
 
         /// <summary>

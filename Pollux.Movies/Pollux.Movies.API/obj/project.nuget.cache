@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Lxxjp269EprxcRIOnUou0Xax/Rl+2/OHsBk31XCPu6w7mWOr/RHNhUH1AHv3ir8kuYkFoaylLKwoFjAa+F3htQ==",
+  "dgSpecHash": "L9r0ZwLHUc46nIbbplnzgabUVcIXieoUNqML58djN3MJQWvH8XDkAWVYa1CHoGv3Tt8yxtEJjlk9mHFVt1Hxcg==",
   "success": true,
   "projectFilePath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj",
   "expectedPackageFiles": [
@@ -164,7 +164,8 @@
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\octaviodiaz\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\windowsazure.storage\\9.3.3\\windowsazure.storage.9.3.3.nupkg.sha512"
   ],
   "logs": []
 }
