@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AzureUploaderTransformerVideos.Constants;
+using Movies.Common.Constants.Strings;
 using Movies.Common.ExtensionMethods;
 
 namespace ReadFilesService
@@ -20,7 +21,6 @@ namespace ReadFilesService
     {
         private const string FilesMoviesPath = @"W:\pollux\newMovies";
         private const string FilesImagesPath = @"W:\pollux\newImages";
-        private const string SubtitlesExtension = ".srt";
         private readonly IFileDbWriter fileDbWriter;
 
 
@@ -82,12 +82,27 @@ namespace ReadFilesService
                 var filesToUpload = new List<(string, List<string>)>();
                 var directorPath = directory.TrimAll().ToLower();
                 var directoryName = directorPath.Replace(FilesLocalPathsConstants.FilesSubtitlesPath, string.Empty).Replace("\\", string.Empty);
-                var subtitlesList = Directory.GetFiles(directory).Where(p => p.EndsWith(SubtitlesExtension) && !p.Contains("_")).ToList();
-                filesToUpload.Add((directoryName, new List<string>(subtitlesList)));
+                var subtitlesList = Directory.GetFiles(directory).Where(p => p.EndsWith(SubtitlesConstants.SRT) && !p.Contains("_")).ToList();
+                var subtitlesVTT = this.ChangeExtensionToVtt(subtitlesList);
+                filesToUpload.Add((directoryName, new List<string>(subtitlesVTT)));
                 await fileDbWriter.WriteSubtitlesToDataBase(filesToUpload);
 
             }
 
+        }
+
+        private List<string> ChangeExtensionToVtt(List<string> subtitles)
+        {
+            var subtitlesVTT = new List<string>();
+
+            foreach (var subtitle in subtitles)
+            {
+                var subtitleVTT = Path.ChangeExtension(subtitle, SubtitlesConstants.VTT);
+                File.Move(subtitle, subtitleVTT, false);
+                subtitlesVTT.Add(subtitleVTT);
+            }
+
+            return subtitlesVTT;
         }
     }
 }

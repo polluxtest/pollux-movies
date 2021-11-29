@@ -107,6 +107,6 @@ namespace Movies.Application.Models
         /// <value>
         /// The subtitles.
         /// </value>
-        public string Subtitles { get; set; }
+        public List<string> Subtitles { get; set; }
     }
 }

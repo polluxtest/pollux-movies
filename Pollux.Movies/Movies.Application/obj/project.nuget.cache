@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BK+ZuEw6KPHKyaJFFdDXV+w2NRe+CWtTKTytiFAJASCRrZLuTjAsDz8pewz4sbT6CWrSLltZMi5COB4u4M8dCg==",
+  "dgSpecHash": "QQNYQxRhVeQSMfHv4jqQY0YsnhALlthSIcQ1MuG4JvE9gOb7Zwr8JC6yF8aEsnYjB69hNO1AaG1W8fZzWmo9vg==",
   "success": true,
   "projectFilePath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj",
   "expectedPackageFiles": [
@@ -34,6 +34,7 @@
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\newtonsoft.json\\10.0.1\\newtonsoft.json.10.0.1.nupkg.sha512",
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\pitcher\\2.1.1\\pitcher.2.1.1.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\stylecop.analyzers\\1.2.0-beta.333\\stylecop.analyzers.1.2.0-beta.333.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\stylecop.analyzers.unstable\\1.2.0.333\\stylecop.analyzers.unstable.1.2.0.333.nupkg.sha512",

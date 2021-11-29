@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using AzureUploaderTransformerVideos;
 using AzureUploaderTransformerVideos.Constants;
+using Movies.Common.Constants.Strings;
 
 namespace ReadFilesService
 {
@@ -111,7 +113,6 @@ namespace ReadFilesService
                     }
 
                     var azureSubtitleUrl = $"{AzureContainersConstants.AzureCDNPath}/{AzureContainersConstants.AzureSubtitlesContainer}/{subtitleName}";
-
                     var subtitleUri = await this.blobService.UploadBlobFileAsync(AzureContainersConstants.AzureSubtitlesContainer,
                         subtitleName, subtitle);
 

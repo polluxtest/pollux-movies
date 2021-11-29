@@ -15,9 +15,10 @@ namespace Movies.Persistence.Repositories
     /// </summary>
     public interface IMoviesRepository : IRepository<Movie>
     {
-        public Task<List<Movie>> GetAll();
-        public Task<List<Movie>> Search(string search);
-        public Task<List<Movie>> GetRecommended();
+        Task<Movie> GetAsync(int movieId);
+        Task<List<Movie>> GetAll();
+        Task<List<Movie>> Search(string search);
+        Task<List<Movie>> GetRecommended();
     }
 
     /// <summary>
@@ -42,6 +43,17 @@ namespace Movies.Persistence.Repositories
         {
             return this.dbSet.Include(p => p.Director)
                 .Where(p => p.ProcessedByAzureJob && !p.IsDeleted).ToListAsync();
+        }
+
+        /// <summary>
+        /// Gets the movie asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns>Movie.</returns>
+        public new Task<Movie> GetAsync(int movieId)
+        {
+            return this.dbSet.Include(p => p.Director)
+                .SingleOrDefaultAsync(p => p.Id == movieId && p.ProcessedByAzureJob && !p.IsDeleted);
         }
 
         /// <summary>

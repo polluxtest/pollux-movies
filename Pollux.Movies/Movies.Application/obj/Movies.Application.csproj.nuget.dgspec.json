@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[10.1.1, )"
             },
+            "Pitcher": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
             "StyleCop.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",

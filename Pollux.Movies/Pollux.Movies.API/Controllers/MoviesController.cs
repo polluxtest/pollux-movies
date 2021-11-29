@@ -81,9 +81,15 @@ namespace Pollux.Movies.Controllers
         [Route(ApiRoutesConstants.Movie)]
         public async Task<ActionResult<MovieInfoModel>> GetMovie([FromRoute] int id, [FromQuery] string userId)
         {
-            var movie = await this.moviesService.GetAsync(id, userId);
-
-            return this.Ok(movie);
+            try
+            {
+                var movie = await this.moviesService.GetAsync(id, userId);
+                return this.Ok(movie);
+            }
+            catch (ArgumentException)
+            {
+                return this.NotFound();
+            }
         }
 
         /// <summary>
