@@ -9,6 +9,6 @@
 
     public static class FilesLocalPathsConstants
     {
-        public const string FilesSubtitlesPath = @"x:\movies\movies";
+        public const string FilesSubtitlesPath = @"w:\movies\movies";
     }
 }

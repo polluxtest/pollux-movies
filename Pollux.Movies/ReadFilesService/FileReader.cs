@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AzureUploaderTransformerVideos.Constants;
 using Movies.Common.Constants.Strings;
@@ -83,7 +84,7 @@ namespace ReadFilesService
                 var directorPath = directory.TrimAll().ToLower();
                 var directoryName = directorPath.Replace(FilesLocalPathsConstants.FilesSubtitlesPath, string.Empty).Replace("\\", string.Empty);
                 var subtitlesList = Directory.GetFiles(directory).Where(p => p.EndsWith(SubtitlesConstants.SRT) && !p.Contains("_")).ToList();
-                var subtitlesVTT = this.ChangeExtensionToVtt(subtitlesList);
+                var subtitlesVTT = await this.SrtToVTTTransform(subtitlesList);
                 filesToUpload.Add((directoryName, new List<string>(subtitlesVTT)));
                 await fileDbWriter.WriteSubtitlesToDataBase(filesToUpload);
 
@@ -97,12 +98,45 @@ namespace ReadFilesService
 
             foreach (var subtitle in subtitles)
             {
-                var subtitleVTT = Path.ChangeExtension(subtitle, SubtitlesConstants.VTT);
+                var subtitleVTT = Path.ChangeExtension(subtitle, SubtitlesConstants.SRT);
                 File.Move(subtitle, subtitleVTT, false);
                 subtitlesVTT.Add(subtitleVTT);
             }
 
             return subtitlesVTT;
+        }
+
+        private async Task<List<string>> SrtToVTTTransform(List<string> subtitles)
+        {
+            var subtitlesVTT = new List<string>();
+
+            foreach (var subtitle in subtitles)
+            {
+                var stringBuilder = new StringBuilder(SubtitlesConstants.VTTitle);
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine();
+                using (StreamReader sr = new StreamReader(subtitle, Encoding.GetEncoding("iso-8859-1")))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        var line = sr.ReadLine() ?? string.Empty;
+                        var updatedLine = line;
+                        if (line.Contains(SubtitlesConstants.SubtitleLineMarker))
+                        {
+                            updatedLine = line.Replace(",", ".");
+                        }
+
+                        stringBuilder.AppendLine(updatedLine);
+                    }
+
+                    var subtitleVTT = Path.ChangeExtension(subtitle, SubtitlesConstants.VTT);
+                    await File.WriteAllTextAsync(subtitleVTT, stringBuilder.ToString(), Encoding.Default);
+                    subtitlesVTT.Add(subtitleVTT);
+                }
+            }
+
+            return subtitlesVTT;
+
         }
     }
 }
