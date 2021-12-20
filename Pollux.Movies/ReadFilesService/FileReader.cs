@@ -15,15 +15,13 @@ namespace ReadFilesService
     {
         Task ReadVideosFromDirectory();
         Task ReadImagesFromDirectory();
+        Task ReadCoverImagesFromDirectory();
         Task ReadSubtitlesFromDirectory();
     }
 
     public class FileReader : IFileReader
     {
-        private const string FilesMoviesPath = @"W:\pollux\newMovies";
-        private const string FilesImagesPath = @"W:\pollux\newImages";
         private readonly IFileDbWriter fileDbWriter;
-
 
         public FileReader(IFileDbWriter fileDbWriter)
         {
@@ -36,7 +34,7 @@ namespace ReadFilesService
         /// <returns></returns>
         public async Task ReadVideosFromDirectory()
         {
-            var files = Directory.GetFiles(FilesMoviesPath);
+            var files = Directory.GetFiles(LocalPathFilesConstants.FilesMoviesPath);
 
             var filesToUpload = new List<(string, string)>();
 
@@ -57,7 +55,7 @@ namespace ReadFilesService
         /// </summary>
         public async Task ReadImagesFromDirectory()
         {
-            var files = Directory.GetFiles(FilesImagesPath);
+            var files = Directory.GetFiles(LocalPathFilesConstants.FilesImagesPath);
 
             var filesToUpload = new List<(string, string)>();
 
@@ -72,6 +70,26 @@ namespace ReadFilesService
             }
 
             await fileDbWriter.WriteImagesToDataBase(filesToUpload);
+        }
+
+        /// <summary>
+        /// Reads the cover images from directory.
+        /// </summary>
+        public async Task ReadCoverImagesFromDirectory()
+        {
+            var files = Directory.GetFiles(LocalPathFilesConstants.FilesCoverImagesPath);
+            var filesToUpload = new List<(string, string)>();
+
+            foreach (var file in files)
+            {
+                var fileName = file.Remove(0, 16);
+                var azureFilePath = $"{AzureContainersConstants.AzureCDNPath}/{AzureContainersConstants.AzureCoverImagesContainer}/{fileName}";
+
+                filesToUpload.Add((file, azureFilePath));
+            }
+
+
+            await fileDbWriter.WriteCoverImagesToDataBase(filesToUpload);
         }
 
         public async Task ReadSubtitlesFromDirectory()

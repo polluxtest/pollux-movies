@@ -78,6 +78,14 @@
         public string UrlImage { get; set; }
 
         /// <summary>
+        /// Gets or sets the Cover URL image.
+        /// </summary>
+        /// <value>
+        /// The URL image.
+        /// </value>
+        public string UrlCoverImage { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the file.
         /// </summary>
         /// <value>

@@ -19,6 +19,7 @@ namespace ReadFilesService
     {
         Task WriteToDataBase(List<(string, string)> files);
         Task WriteImagesToDataBase(List<(string, string)> files);
+        Task WriteCoverImagesToDataBase(List<(string, string)> files);
         Task WriteSubtitlesToDataBase(List<(string, List<string>)> files);
     }
 
@@ -62,13 +63,13 @@ namespace ReadFilesService
         }
 
         /// <summary>
-        /// Writes the images to data base.
+        /// WriteImagesToDataBase
         /// </summary>
-        /// <param name="files">The files. (fileName, azureCDNPath)</param>
+        /// <param name="files"></param>
         /// <returns></returns>
         public async Task WriteImagesToDataBase(List<(string, string)> files)
         {
-            var movies = await _moviesService.GetAllImages(true);
+            var movies = await _moviesService.GetAllMoviesImagesFilter(true);
 
             foreach (var movie in movies)
             {
@@ -82,6 +83,31 @@ namespace ReadFilesService
                     p.Item1.Equals(movieNameTrimmed, StringComparison.OrdinalIgnoreCase)).Item2;
 
                 movie.UrlImage = imagePath ?? string.Empty;
+                await _moviesService.UpdateMovie(movie);
+            }
+        }
+
+        /// <summary>
+        /// WriteImagesToDataBase
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        public async Task WriteCoverImagesToDataBase(List<(string, string)> files)
+        {
+            var movies = await _moviesService.GetAllMoviesCoverImagesFilter(true);
+
+            foreach (var movie in movies)
+            {
+                if (!string.IsNullOrEmpty(movie.UrlCoverImage))
+                {
+                    continue;
+                }
+
+                var movieName = movie.Name;
+                var imagePath = files.FirstOrDefault(p =>
+                    p.Item1.Contains(movieName, StringComparison.OrdinalIgnoreCase)).Item2;
+
+                movie.UrlCoverImage = imagePath ?? string.Empty;
                 await _moviesService.UpdateMovie(movie);
             }
         }

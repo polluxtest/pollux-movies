@@ -18,7 +18,9 @@ namespace Movies.Application
     {
         Task<List<Movie>> GetAll(bool processedByAzureJob = false);
 
-        Task<List<Movie>> GetAllImages(bool processedByAzureJob = false);
+        Task<List<Movie>> GetAllMoviesImagesFilter(bool processedByAzureJob = false);
+
+        Task<List<Movie>> GetAllMoviesCoverImagesFilter(bool processedByAzureJob = false);
 
         Task<List<MoviesByCategoryModel>> GetByLanguage(string sortBy = null);
 
@@ -78,10 +80,23 @@ namespace Movies.Application
         /// </summary>
         /// <param name="processedByAzureJob">if set to <c>true</c> [processed by azure job].</param>
         /// <returns>Movie List.</returns>
-        public Task<List<Movie>> GetAllImages(bool processedByAzureJob = false)
+        public Task<List<Movie>> GetAllMoviesImagesFilter(bool processedByAzureJob = false)
         {
             var movies = this.moviesRepository
                 .GetManyAsync(p => p.ProcessedByAzureJob == processedByAzureJob && p.IsDeleted == false && string.IsNullOrEmpty(p.UrlImage));
+            return movies;
+        }
+
+
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <param name="processedByAzureJob">if set to <c>true</c> [processed by azure job].</param>
+        /// <returns>Movie List.</returns>
+        public Task<List<Movie>> GetAllMoviesCoverImagesFilter(bool processedByAzureJob = false)
+        {
+            var movies = this.moviesRepository
+                .GetManyAsync(p => p.ProcessedByAzureJob == processedByAzureJob && p.IsDeleted == false && string.IsNullOrEmpty(p.UrlCoverImage));
             return movies;
         }
 

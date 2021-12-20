@@ -78,6 +78,14 @@ namespace Movies.Application.Models
         public string UrlImage { get; set; }
 
         /// <summary>
+        /// Gets or sets the URL cover image.
+        /// </summary>
+        /// <value>
+        /// The URL cover image.
+        /// </value>
+        public string UrlCoverImage { get; set; }
+
+        /// <summary>
         /// Gets or sets the director identifier.
         /// </summary>
         /// <value>
