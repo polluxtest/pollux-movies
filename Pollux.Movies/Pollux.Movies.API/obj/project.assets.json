@@ -797,6 +797,15 @@
           "lib/netstandard1.3/Newtonsoft.Json.dll": {}
         }
       },
+      "Pitcher/2.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Pitcher.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Pitcher.dll": {}
+        }
+      },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
         "type": "package",
         "runtimeTargets": {
@@ -2483,7 +2492,8 @@
           "AutoMapper": "10.1.1",
           "Movies.Common": "1.0.0",
           "Movies.Domain": "1.0.0",
-          "Movies.Persistence": "1.0.0"
+          "Movies.Persistence": "1.0.0",
+          "Pitcher": "2.1.1"
         },
         "compile": {
           "bin/placeholder/Movies.Application.dll": {}
@@ -3800,6 +3810,20 @@
         "newtonsoft.json.10.0.3.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "tools/install.ps1"
+      ]
+    },
+    "Pitcher/2.1.1": {
+      "sha512": "2ruQttZveTNjDq3ZhwERFKd/CEwHNS3y+6EOzDY1XN2g2RukXbsEMovCgb10YarJxw/SNPtDugjCIRcOuxw7sg==",
+      "type": "package",
+      "path": "pitcher/2.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Pitcher.dll",
+        "lib/netstandard2.0/Pitcher.pdb",
+        "lib/netstandard2.0/Pitcher.xml",
+        "pitcher.2.1.1.nupkg.sha512",
+        "pitcher.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -8508,6 +8532,7 @@
       "Movies.Common >= 1.0.0",
       "Movies.Domain >= 1.0.0",
       "Movies.Persistence >= 1.0.0",
+      "Pitcher >= 2.1.1",
       "ReadFilesService >= 1.0.0",
       "StyleCop.Analyzers >= 1.2.0-beta.333",
       "Swashbuckle.AspNetCore.Swagger >= 6.1.4",
@@ -8601,6 +8626,10 @@
           "Microsoft.Extensions.Options": {
             "target": "Package",
             "version": "[5.0.0, )"
+          },
+          "Pitcher": {
+            "target": "Package",
+            "version": "[2.1.1, )"
           },
           "StyleCop.Analyzers": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

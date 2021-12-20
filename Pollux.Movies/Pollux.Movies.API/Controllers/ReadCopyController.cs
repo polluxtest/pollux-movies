@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
+using AzureUploaderTransformerVideos.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Movies.Common.Constants.Strings;
 using ReadFilesService;
 
 namespace Pollux.Movies.Controllers
@@ -42,6 +44,16 @@ namespace Pollux.Movies.Controllers
         public async Task<IActionResult> CopySubtitles()
         {
             await this.fileReader.ReadSubtitlesFromDirectory();
+
+            return this.Ok();
+        }
+
+        [HttpGet]
+        [Route("/CopyCoverImages")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CopyCoverImages()
+        {
+            await this.fileReader.ReadCoverImagesFromDirectory();
 
             return this.Ok();
         }

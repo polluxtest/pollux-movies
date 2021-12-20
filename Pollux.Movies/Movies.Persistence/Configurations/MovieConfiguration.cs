@@ -22,6 +22,7 @@ namespace Movies.Persistence.Configurations
             builder.Property(p => p.UrlVideo).HasMaxLength(1000);
             builder.Property(p => p.Subtitles).HasMaxLength(1000);
             builder.Property(p => p.UrlImage).HasMaxLength(1000);
+            builder.Property(p => p.UrlCoverImage).HasMaxLength(1000);
             builder.Property(p => p.Year).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Language).IsRequired().HasMaxLength(100);
             builder.Property(p => p.DirectorId).IsRequired().HasDefaultValue(1);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -9,6 +10,7 @@ using Movies.Common.Constants.Strings;
 using Movies.Common.ExtensionMethods;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
+using Pitcher;
 
 namespace Movies.Application
 {
@@ -16,7 +18,9 @@ namespace Movies.Application
     {
         Task<List<Movie>> GetAll(bool processedByAzureJob = false);
 
-        Task<List<Movie>> GetAllImages(bool processedByAzureJob = false);
+        Task<List<Movie>> GetAllMoviesImagesFilter(bool processedByAzureJob = false);
+
+        Task<List<Movie>> GetAllMoviesCoverImagesFilter(bool processedByAzureJob = false);
 
         Task<List<MoviesByCategoryModel>> GetByLanguage(string sortBy = null);
 
@@ -76,10 +80,23 @@ namespace Movies.Application
         /// </summary>
         /// <param name="processedByAzureJob">if set to <c>true</c> [processed by azure job].</param>
         /// <returns>Movie List.</returns>
-        public Task<List<Movie>> GetAllImages(bool processedByAzureJob = false)
+        public Task<List<Movie>> GetAllMoviesImagesFilter(bool processedByAzureJob = false)
         {
             var movies = this.moviesRepository
                 .GetManyAsync(p => p.ProcessedByAzureJob == processedByAzureJob && p.IsDeleted == false && string.IsNullOrEmpty(p.UrlImage));
+            return movies;
+        }
+
+
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <param name="processedByAzureJob">if set to <c>true</c> [processed by azure job].</param>
+        /// <returns>Movie List.</returns>
+        public Task<List<Movie>> GetAllMoviesCoverImagesFilter(bool processedByAzureJob = false)
+        {
+            var movies = this.moviesRepository
+                .GetManyAsync(p => p.ProcessedByAzureJob == processedByAzureJob && p.IsDeleted == false && string.IsNullOrEmpty(p.UrlCoverImage));
             return movies;
         }
 
@@ -224,7 +241,10 @@ namespace Movies.Application
         public async Task<MovieInfoModel> GetAsync(int movieId, string userId)
         {
             var movieInfoModel = new MovieInfoModel();
-            var movieDb = await this.moviesRepository.GetAsync(p => p.Id == movieId);
+            var movieDb = await this.moviesRepository.GetAsync(movieId);
+
+            Throw.When(movieDb == null, new ArgumentException($"movie not found id {movieId}"));
+
             movieInfoModel.IsInList = await this.userMoviesService.IsMovieInListByUser(movieId, userId);
             movieInfoModel.IsLiked = await this.userMovieLikesService.IsMovieLikedByUser(movieId, userId);
 

@@ -4,6 +4,7 @@
     {
         public const string AzureCDNPath = @"https://polluxcdn.azureedge.net";
         public const string AzureImagesContainer = "polluximagescontainer";
+        public const string AzureCoverImagesContainer = "polluximagescovercontainer";
         public const string AzureSubtitlesContainer = "polluxsubtitlescontainer";
     }
 
