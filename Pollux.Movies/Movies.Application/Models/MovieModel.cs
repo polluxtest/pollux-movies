@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Movies.Domain;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Movies.Application.Models
 {
@@ -11,7 +11,7 @@ namespace Movies.Application.Models
         /// <value>
         /// The identifier.
         /// </value>
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.

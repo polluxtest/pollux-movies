@@ -7,8 +7,8 @@ namespace Pollux.Movies.Validators
     public class AddMovieToMyListValidator : AbstractValidator<AddRemoveUserMovieModel>
     {
         public AddMovieToMyListValidator()
-        { 
-            this.RuleFor(p => p.MovieId).GreaterThan(0).WithMessage("Invalid movie id");
+        {
+            this.RuleFor(p => p.MovieId).NotEmpty().WithMessage("Invalid movie id");
             this.RuleFor(p => p.UserId).NotNull().NotEmpty().WithMessage("Invalid User id");
         }
     }

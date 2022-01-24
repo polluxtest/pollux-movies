@@ -69,5 +69,10 @@
         /// The get movie names
         /// </summary>
         public const string GetMovieNames = "GetMovieNames";
+
+        /// <summary>
+        /// The featured movies.
+        /// </summary>
+        public const string FeaturedMovies = "FeaturedMovies";
     }
 }

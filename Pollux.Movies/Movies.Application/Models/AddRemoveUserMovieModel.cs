@@ -18,6 +18,6 @@ namespace Movies.Application.Models
         /// <value>
         /// The movie identifier.
         /// </value>
-        public int MovieId { get; set; }
+        public Guid MovieId { get; set; }
     }
 }

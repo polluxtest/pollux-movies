@@ -11,7 +11,7 @@ namespace Movies.Persistence.Repositories
 {
     public interface IUserMoviesRepository : IRepository<UserMovies>
     {
-        Task<List<int>> GetMoviesListIds(string userId);
+        Task<List<Guid>> GetMoviesListIds(string userId);
         Task<List<Movie>> GetMoviesMyList(string userId);
     }
 
@@ -28,7 +28,7 @@ namespace Movies.Persistence.Repositories
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>Movie Ids List.</returns>
-        public async Task<List<int>> GetMoviesListIds(string userId)
+        public async Task<List<Guid>> GetMoviesListIds(string userId)
         {
             return this.dbSet.Where(p => p.UserId.ToString().Equals(userId.ToUpper()))
             .Select(p => p.MovieId).ToList();

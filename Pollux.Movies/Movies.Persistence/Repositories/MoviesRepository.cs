@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Movies.Domain.Entities;
@@ -15,7 +14,7 @@ namespace Movies.Persistence.Repositories
     /// </summary>
     public interface IMoviesRepository : IRepository<Movie>
     {
-        Task<Movie> GetAsync(int movieId);
+        Task<Movie> GetAsync(Guid movieId);
         Task<List<Movie>> GetAll();
         Task<List<Movie>> Search(string search);
         Task<List<Movie>> GetRecommended();
@@ -50,7 +49,7 @@ namespace Movies.Persistence.Repositories
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
         /// <returns>Movie.</returns>
-        public new Task<Movie> GetAsync(int movieId)
+        public new Task<Movie> GetAsync(Guid movieId)
         {
             return this.dbSet.Include(p => p.Director)
                 .SingleOrDefaultAsync(p => p.Id == movieId && p.ProcessedByAzureJob && !p.IsDeleted);

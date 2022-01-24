@@ -1,16 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace Movies.Domain.Entities
 {
-    public class UserLikes
+    public class MovieFeatured
     {
-        /// <summary>
-        /// Gets or sets the user identifier.
-        /// </summary>
-        /// <value>
-        /// The user identifier.
-        /// </value>
-        public Guid UserId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the movie identifier.
@@ -27,5 +25,13 @@ namespace Movies.Domain.Entities
         /// The movie.
         /// </value>
         public Movie Movie { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL portrait image.
+        /// </summary>
+        /// <value>
+        /// The URL portrait image.
+        /// </value>
+        public string UrlPortraitImage { get; set; }
     }
 }

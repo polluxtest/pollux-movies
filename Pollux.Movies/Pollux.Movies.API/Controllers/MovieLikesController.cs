@@ -34,8 +34,8 @@ namespace Pollux.Movies.Controllers
 
         /// <summary>
         /// Gets the specified user identifier.
-        /// </summary>
         /// <param name="userId">The user identifier.</param>
+        /// </summary>
         /// <returns>List of movie likes ids.</returns>
         [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]

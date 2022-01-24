@@ -15,11 +15,11 @@ namespace Movies.Application
 
         Task DeleteAsync(AddRemoveUserMovieModel model);
 
-        Task<List<int>> GetMoviesIdsByUser(string userId);
+        Task<List<Guid>> GetMoviesIdsByUser(string userId);
 
         Task<List<MoviesByCategoryModel>> GetMovieMyList(string userId);
 
-        Task<bool> IsMovieInListByUser(int movieId, string userId);
+        Task<bool> IsMovieInListByUser(Guid movieId, string userId);
     }
 
     public class UserMoviesService : IUserMoviesService
@@ -88,7 +88,7 @@ namespace Movies.Application
         /// <param name="movieId">The movie identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns>True/False.</returns>
-        public Task<bool> IsMovieInListByUser(int movieId, string userId)
+        public Task<bool> IsMovieInListByUser(Guid movieId, string userId)
         {
             return this.userMoviesRepository.AnyAsync(p => p.MovieId == movieId && p.UserId.ToString().Equals(userId));
         }
@@ -98,7 +98,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>Task<List<UserMovies>.</returns>
-        public async Task<List<int>> GetMoviesIdsByUser(string userId)
+        public async Task<List<Guid>> GetMoviesIdsByUser(string userId)
         {
             var userMovies = await this.userMoviesRepository.GetMoviesListIds(userId);
 

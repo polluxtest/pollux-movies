@@ -79,7 +79,7 @@ namespace Pollux.Movies.Controllers
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.Movie)]
-        public async Task<ActionResult<MovieInfoModel>> GetMovie([FromRoute] int id, [FromQuery] string userId)
+        public async Task<ActionResult<MovieInfoModel>> GetMovie([FromRoute] Guid id, [FromQuery] string userId)
         {
             try
             {

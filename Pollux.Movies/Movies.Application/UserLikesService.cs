@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Movies.Application.Models;
@@ -12,8 +13,8 @@ namespace Movies.Application
     {
         Task AddRemoveUserLike(AddRemoveUserMovieModel model);
         Task DeleteAsync(AddRemoveUserMovieModel model);
-        Task<List<int>> GetLikesMoviesIds(string userId);
-        public Task<bool> IsMovieLikedByUser(int movieId, string userId);
+        Task<List<Guid>> GetLikesMoviesIds(string userId);
+        public Task<bool> IsMovieLikedByUser(Guid movieId, string userId);
     }
 
     public class UserLikesService : IUserLikesService
@@ -68,7 +69,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>List liked movies.</returns>
-        public Task<List<int>> GetLikesMoviesIds(string userId)
+        public Task<List<Guid>> GetLikesMoviesIds(string userId)
         {
             return this.userLikesRepository.GetLikesMoviesIds(userId);
         }
@@ -80,7 +81,7 @@ namespace Movies.Application
         /// <param name="movieId">The movie identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns>True/False.</returns>
-        public Task<bool> IsMovieLikedByUser(int movieId, string userId)
+        public Task<bool> IsMovieLikedByUser(Guid movieId, string userId)
         {
             return this.userLikesRepository.AnyAsync(p => p.MovieId == movieId && p.UserId.ToString().Equals(userId));
         }

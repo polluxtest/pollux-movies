@@ -15,6 +15,7 @@ namespace Pollux.Movies
         public static void AddDIRepositories(this IServiceCollection services)
         {
             services.AddTransient<IMoviesRepository, MoviesRepository>();
+            services.AddTransient<IMoviesFeaturedRepository, MoviesFeaturedRepository>();
             services.AddTransient<IUserMoviesRepository, UserMoviesRepository>();
             services.AddTransient<IUserLikesRepository, UserLikesRepository>();
             services.AddTransient<IFileReader, FileReader>();
@@ -29,6 +30,7 @@ namespace Pollux.Movies
         {
             services.AddTransient<PolluxMoviesDbContext, PolluxMoviesDbContext>();
             services.AddTransient<IMoviesService, MoviesService>();
+            services.AddTransient<IMoviesFeaturedService, MoviesFeaturedService>();
             services.AddTransient<IUserMoviesService, UserMoviesService>();
             services.AddTransient<IUserLikesService, UserLikesService>();
         }

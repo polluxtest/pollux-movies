@@ -194,7 +194,6 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\FluentValidation.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\FluentValidation.AspNetCore.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\FluentValidation.DependencyInjectionExtensions.dll
-\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\obj\Debug\netcoreapp3.1\Pollux.Movies.API.MvcApplicationPartsAssemblyInfo.cs
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Microsoft.WindowsAzure.Storage.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Pitcher.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\nunit.framework.dll

@@ -1,4 +1,6 @@
-﻿namespace Movies.Domain.Entities
+﻿using System;
+
+namespace Movies.Domain.Entities
 {
     /// <summary>
     /// Movie Entity.
@@ -11,7 +13,7 @@
         /// <value>
         /// The identifier.
         /// </value>
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.

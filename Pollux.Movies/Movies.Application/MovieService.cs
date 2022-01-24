@@ -36,11 +36,11 @@ namespace Movies.Application
 
         Task<List<MoviesByCategoryModel>> GetRecommendedByPollux();
 
-        Task<MovieInfoModel> GetAsync(int movieId, string userId);
+        Task<MovieInfoModel> GetAsync(Guid movieId, string userId);
 
         Task<Movie> GetByNameAsync(string name);
 
-        Task<Movie> GetAsync(int movieId);
+        Task<Movie> GetAsync(Guid movieId);
 
         Task<List<string>> GetMoviesNames();
 
@@ -240,7 +240,7 @@ namespace Movies.Application
         /// <param name="movieId">The movie identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns>MovieInfoModel.</returns>
-        public async Task<MovieInfoModel> GetAsync(int movieId, string userId)
+        public async Task<MovieInfoModel> GetAsync(Guid movieId, string userId)
         {
             var movieInfoModel = new MovieInfoModel();
             var movieDb = await this.moviesRepository.GetAsync(movieId);
@@ -268,7 +268,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
         /// <returns>Movie.</returns>
-        public Task<Movie> GetAsync(int movieId)
+        public Task<Movie> GetAsync(Guid movieId)
         {
             return this.moviesRepository.GetAsync(p => p.Id == movieId);
         }

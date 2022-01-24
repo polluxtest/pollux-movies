@@ -23,6 +23,10 @@ namespace Movies.Application.Mappers
             this.CreateMap<AddRemoveUserMovieModel, UserMovies>();
 
             this.CreateMap<AddRemoveUserMovieModel, UserLikes>();
+
+            this.CreateMap<MovieFeatured, MovieFeaturedModel>()
+                .ForMember(dest => dest.DirectorName, opt => opt.MapFrom(p => p.Movie.Director.Name))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(p => p.Movie.Name));
         }
     }
 }

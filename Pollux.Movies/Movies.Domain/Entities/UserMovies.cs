@@ -18,7 +18,7 @@ namespace Movies.Domain.Entities
         /// <value>
         /// The movie identifier.
         /// </value>
-        public int MovieId { get; set; }
+        public Guid MovieId { get; set; }
 
         /// <summary>
         /// Gets or sets the movie.

@@ -25,10 +25,18 @@ namespace Movies.Persistence
         public DbSet<Movie> Movies { get; set; }
 
         /// <summary>
-        /// Gets or sets the directos.
+        /// Gets or sets the movies featured.
         /// </summary>
         /// <value>
-        /// The directos.
+        /// The movies featured.
+        /// </value>
+        public DbSet<MovieFeatured> MoviesFeatured { get; set; }
+
+        /// <summary>
+        /// Gets or sets the directors.
+        /// </summary>
+        /// <value>
+        /// The directors.
         /// </value>
         public DbSet<Director> Directors { get; set; }
 
