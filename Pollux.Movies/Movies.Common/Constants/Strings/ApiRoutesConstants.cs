@@ -64,5 +64,10 @@
         /// Get Recommended Movies by Users.
         /// </summary>
         public const string RecommendedByUsers = "RecommendedByUsers";
+
+        /// <summary>
+        /// The get movie names
+        /// </summary>
+        public const string GetMovieNames = "GetMovieNames";
     }
 }

@@ -44,7 +44,7 @@ namespace Pollux.Movies.Controllers
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.Search)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> Search(string search)
+        public async Task<ActionResult<List<MovieModel>>> Search(string search)
         {
             if (string.IsNullOrEmpty(search)) return this.BadRequest("invalid search text");
 
@@ -95,7 +95,7 @@ namespace Pollux.Movies.Controllers
         /// <summary>
         /// Recommended the by pollux.
         /// </summary>
-        /// <returns>List<MoviesByCategoryModel></returns>
+        /// <returns>List<MoviesByCategoryModel/></returns>
         [AllowAnonymous]
         [ResponseCache(Duration = 8200, Location = ResponseCacheLocation.Any)]
         [HttpGet]
@@ -110,7 +110,7 @@ namespace Pollux.Movies.Controllers
         /// <summary>
         /// Recommended the by Users.
         /// </summary>
-        /// <returns>List<MoviesByCategoryModel></returns>
+        /// <returns>List<MoviesByCategoryModel/></returns>
         [AllowAnonymous]
         [ResponseCache(Duration = 8200, Location = ResponseCacheLocation.Any)]
         [HttpGet]
@@ -121,5 +121,21 @@ namespace Pollux.Movies.Controllers
 
             return this.Ok(recommendedMovies);
         }
+
+        /// <summary>
+        /// Gets the movies names.
+        /// </summary>
+        /// <returns>List<string/></returns>
+        [AllowAnonymous]
+        [ResponseCache(Duration = 8200, Location = ResponseCacheLocation.Any)]
+        [HttpGet]
+        [Route(ApiRoutesConstants.GetMovieNames)]
+        public async Task<ActionResult<List<string>>> GetMoviesNames()
+        {
+            var movieNames = await this.moviesService.GetMoviesNames();
+
+            return movieNames;
+        }
+
     }
 }

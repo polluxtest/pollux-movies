@@ -25,5 +25,18 @@
             await this.azureMediaService.RunAsync();
             return this.Ok();
         }
+
+        /// <summary>
+        /// Execute the job of azure media services from the project Uploader Transformer Service.
+        /// </summary>
+        /// <returns>200.</returns>
+        [HttpGet]
+        [Route("ChangeManifestToDashVideo")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChangeManifestToDashVideo()
+        {
+            await this.azureMediaService.ChangeURLVideoManifestToDashProtocol();
+            return this.Ok();
+        }
     }
 }

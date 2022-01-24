@@ -275,7 +275,8 @@ namespace AzureUploaderTransformerVideos
             IAzureMediaServicesClient client,
             string resourceGroupName,
             string accountName,
-            string locatorName)
+            string locatorName,
+            bool isDASH = false)
         {
             const string DefaultStreamingEndpointName = "default";
 
@@ -290,8 +291,17 @@ namespace AzureUploaderTransformerVideos
                     await client.StreamingEndpoints.StartAsync(resourceGroupName, accountName, DefaultStreamingEndpointName);
                 }
             }
+            ListPathsResponse paths = null;
 
-            ListPathsResponse paths = await client.StreamingLocators.ListPathsAsync(resourceGroupName, accountName, locatorName);
+            try
+            {
+                paths = await client.StreamingLocators.ListPathsAsync(resourceGroupName, accountName, locatorName);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(locatorName);
+                throw;
+            }
 
             foreach (StreamingPath path in paths.StreamingPaths)
             {
@@ -304,7 +314,7 @@ namespace AzureUploaderTransformerVideos
                 streamingUrls.Add(uriBuilder.ToString());
             }
 
-            return streamingUrls[2];
+            return isDASH ? streamingUrls[1] : streamingUrls[2];
         }
 
         /// <summary>
@@ -424,6 +434,29 @@ namespace AzureUploaderTransformerVideos
         private void Progress_ProgressChanged(object sender, long progress)
         {
             Debug.WriteLine(progress);
+        }
+
+        /// <summary>
+        /// Changes the URL video manifest to dash protocol.
+        /// </summary>
+        public async Task ChangeURLVideoManifestToDashProtocol()
+        {
+            IAzureMediaServicesClient azureMediaServiceClient = await this.CreateMediaServicesClientAsync(this.azureMSConfig);
+
+            var movies = await this._moviesService.GetAll(true);
+
+            foreach (var movie in movies)
+            {
+                if (movie.UrlVideo.EndsWith("(format=mpd-time-csf)")) continue;
+
+                var streamingLocatorName = $"{movie.Name}-locator";
+
+                movie.UrlVideo = await this.GetStreamingUrlsAsync(azureMediaServiceClient, this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, streamingLocatorName, true);
+                movie.ProcessedByAzureJob = true;
+                await this._moviesService.UpdateMovie(movie);
+
+            }
+
         }
     }
 }

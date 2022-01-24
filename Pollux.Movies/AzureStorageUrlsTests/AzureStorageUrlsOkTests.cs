@@ -1,0 +1,95 @@
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using Movies.Application;
+using Movies.Application.Mappers;
+using Movies.Domain.Entities;
+using Movies.Persistence;
+using Movies.Persistence.Repositories;
+using NUnit.Framework;
+
+namespace AzureStorageUrlsTests
+{
+    [TestFixture]
+    public class AzureStorageUrlsOkTests
+    {
+        private IServiceCollection services;
+        private IServiceProvider serviceProvider;
+        private IMoviesService moviesService;
+        private Mock<IMoviesRepository> moviesRepository;
+        private Mock<IMapper> mapper;
+        private HttpClient httpClient;
+
+        [SetUp]
+        public void Setup()
+        {
+            this.services = new ServiceCollection();
+            this.httpClient = new HttpClient();
+            this.mapper = new Mock<IMapper>();
+            this.moviesRepository = new Mock<IMoviesRepository>();
+
+            services.AddAutoMapper(AssemblyApplication.Assembly);
+            services.AddDbContext<PolluxMoviesDbContext>(options => options.UseSqlServer("Server=localhost;Database=Pollux.Movies;Trusted_Connection=True;"));
+            services.AddTransient<IMoviesService, MoviesService>();
+            services.AddTransient<IMoviesRepository, MoviesRepository>();
+            services.AddTransient<IUserMoviesRepository, UserMoviesRepository>();
+            services.AddTransient<IUserLikesRepository, UserLikesRepository>();
+            services.AddTransient<IUserMoviesService, UserMoviesService>();
+            services.AddTransient<IUserLikesService, UserLikesService>();
+
+            this.serviceProvider = this.services.BuildServiceProvider();
+            this.moviesService = this.serviceProvider.GetService<IMoviesService>();
+        }
+
+        [Test]
+        public async Task GetUrlCoverImagesOk()
+        {
+            var moviesList = new List<Movie>();
+            this.moviesRepository
+                .Setup(p => p.GetManyAsync(p => p.IsDeleted == false && p.ProcessedByAzureJob))
+                .Returns(Task.FromResult(moviesList));
+
+            moviesList = await this.moviesService.GetAll(true);
+
+            //this.moviesRepository.Verify(p => p.GetManyAsync(p => p.IsDeleted == false && p.ProcessedByAzureJob), Times.Once);
+
+            foreach (var movie in moviesList)
+            {
+                var response = await httpClient.GetAsync(new Uri(movie.UrlCoverImage));
+                Assert.True(response.IsSuccessStatusCode);
+            }
+        }
+
+        [Test]
+        public async Task GetUrlPreviewImagesOk()
+        {
+            var moviesList = new List<Movie>();
+            this.moviesRepository
+                .Setup(p => p.GetManyAsync(p => p.IsDeleted == false && p.ProcessedByAzureJob))
+                .Returns(Task.FromResult(moviesList));
+
+            moviesList = await this.moviesService.GetAll(true);
+
+
+            foreach (var movie in moviesList)
+            {
+                var response = await httpClient.GetAsync(new Uri(movie.UrlImage));
+                try
+                {
+                    Assert.True(response.IsSuccessStatusCode);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(movie.Name);
+                    throw;
+                }
+            }
+        }
+    }
+}

@@ -30,7 +30,7 @@ namespace Movies.Application
 
         Task Add(Movie movie);
 
-        Task<List<MoviesByCategoryModel>> Search(string search);
+        Task<List<MovieModel>> Search(string search);
 
         Task<List<MoviesByCategoryModel>> GetRecommendedByUsers();
 
@@ -41,6 +41,8 @@ namespace Movies.Application
         Task<Movie> GetByNameAsync(string name);
 
         Task<Movie> GetAsync(int movieId);
+
+        Task<List<string>> GetMoviesNames();
 
     }
 
@@ -68,7 +70,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="processedByAzureJob">if set to <c>true</c> [processed by azure job].</param>
         /// <returns>Movie List.</returns>
-        public Task<List<Movie>> GetAll(bool processedByAzureJob = false)
+        public Task<List<Movie>> GetAll(bool processedByAzureJob = true)
         {
             var movies = this.moviesRepository
                 .GetManyAsync(p => p.ProcessedByAzureJob == processedByAzureJob && p.IsDeleted == false);
@@ -80,7 +82,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="processedByAzureJob">if set to <c>true</c> [processed by azure job].</param>
         /// <returns>Movie List.</returns>
-        public Task<List<Movie>> GetAllMoviesImagesFilter(bool processedByAzureJob = false)
+        public Task<List<Movie>> GetAllMoviesImagesFilter(bool processedByAzureJob = true)
         {
             var movies = this.moviesRepository
                 .GetManyAsync(p => p.ProcessedByAzureJob == processedByAzureJob && p.IsDeleted == false && string.IsNullOrEmpty(p.UrlImage));
@@ -195,13 +197,13 @@ namespace Movies.Application
         /// Searches the specified search.
         /// </summary>
         /// <param name="search">The search.</param>
-        /// <returns>List<MoviesByCategoryModel>.</returns>
-        public async Task<List<MoviesByCategoryModel>> Search(string search)
+        /// <returns>List<MovieModel></returns>
+        public async Task<List<MovieModel>> Search(string search)
         {
             var moviesDbSearch = await this.moviesRepository.Search(search);
             var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDbSearch);
 
-            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = movies, Title = TitleConstants.Search } };
+            return movies;
         }
 
         /// <summary>
@@ -265,10 +267,21 @@ namespace Movies.Application
         /// Gets the asynchronous.
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
-        /// <returns></returns>
+        /// <returns>Movie.</returns>
         public Task<Movie> GetAsync(int movieId)
         {
             return this.moviesRepository.GetAsync(p => p.Id == movieId);
+        }
+
+        /// <summary>
+        /// Gets the movies names.
+        /// </summary>
+        /// <returns>List<string/></returns>
+        public async Task<List<string>> GetMoviesNames()
+        {
+            var moviesList = await this.GetAll();
+
+            return moviesList.Select(p => p.Name).ToList();
         }
     }
 }
