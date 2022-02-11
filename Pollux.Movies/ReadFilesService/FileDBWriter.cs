@@ -44,7 +44,6 @@ namespace ReadFilesService
                     DirectorId = 1,
                     FileName = file.Item1,
                     Name = file.Item2,
-                    Gender = string.Empty,
                     Language = string.Empty,
                     Year = string.Empty,
                     Type = string.Empty,

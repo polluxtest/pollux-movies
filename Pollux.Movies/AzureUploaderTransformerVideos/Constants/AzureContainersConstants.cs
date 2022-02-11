@@ -11,5 +11,6 @@
     public static class FilesLocalPathsConstants
     {
         public const string FilesSubtitlesPath = @"w:\movies\movies";
+        public const string FileGenresPath = @"w:\movies\MovieGenders.csv";
     }
 }

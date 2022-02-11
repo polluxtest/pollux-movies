@@ -10,8 +10,8 @@ using Movies.Persistence;
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    [Migration("20220124183201_AddMovieFeaturedTable")]
-    partial class AddMovieFeaturedTable
+    [Migration("20220205163110_RemoveColumnMovieIdGenres")]
+    partial class RemoveColumnMovieIdGenres
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,25 @@ namespace Movies.Persistence.Migrations
                     b.HasIndex("Name");
 
                     b.ToTable("Directors");
+                });
+
+            modelBuilder.Entity("Movies.Domain.Entities.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name");
+
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("Movies.Domain.Entities.Movie", b =>
@@ -147,6 +166,28 @@ namespace Movies.Persistence.Migrations
                     b.ToTable("MoviesFeatured");
                 });
 
+            modelBuilder.Entity("Movies.Domain.Entities.MovieGenres", b =>
+                {
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.HasKey("MovieId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.HasIndex("MovieId", "GenreId");
+
+                    b.ToTable("MovieGenres");
+                });
+
             modelBuilder.Entity("Movies.Domain.Entities.UserLikes", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -199,6 +240,25 @@ namespace Movies.Persistence.Migrations
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("Movies.Domain.Entities.MovieGenres", b =>
+                {
+                    b.HasOne("Movies.Domain.Entities.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Movies.Domain.Entities.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
 
                     b.Navigation("Movie");
                 });

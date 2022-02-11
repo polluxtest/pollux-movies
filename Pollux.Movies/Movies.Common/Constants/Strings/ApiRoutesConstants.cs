@@ -14,6 +14,11 @@
         public const string ByDirector = "ByDirector";
 
         /// <summary>
+        /// The by genre
+        /// </summary>
+        public const string ByGenre = "ByGenre";
+
+        /// <summary>
         /// The by language.
         /// </summary>
         public const string ByLanguage = "ByLanguage";
