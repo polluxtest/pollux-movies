@@ -7,13 +7,15 @@ using AutoMapper;
 using Movies.Application.Models;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
+using Movies.Application.ExtensionMethods;
 
 namespace Movies.Application
 {
     public interface IMovieGenresService
     {
         Task AddManyToMovieAsync(Guid movieId, List<int> genresIds);
-        Task<List<MoviesByCategoryModel>> GetAllByGenreAsync();
+        Task<List<MoviesByCategoryModel>> GetAllByGenreAsync(string sortBy = null);
+        Task<List<string>> GetAllByMovieIdAsync(Guid movieId);
     }
 
     public class MovieGenresService : IMovieGenresService
@@ -53,19 +55,34 @@ namespace Movies.Application
         /// <summary>
         /// Gets all by genre asynchronous.
         /// </summary>
-        /// <returns></returns>
-        public async Task<List<MoviesByCategoryModel>> GetAllByGenreAsync()
+        /// <param name="sortBy">The sort by.</param>
+        /// <returns>List<MoviesByCategoryModel/></returns>
+        public async Task<List<MoviesByCategoryModel>> GetAllByGenreAsync(string sortBy = null)
         {
             var moviesByGenreDb = await this.movieGenreRepository.GetAllAsync();
 
             return moviesByGenreDb
                 .GroupBy(p => p.Genre.Name)
-                .Select(x => new MoviesByCategoryModel()
+                .Select(x =>
                 {
-                    Title = x.Key,
-                    Movies = this.mapper.Map<List<Movie>, List<MovieModel>>(x.Select(m => m.Movie).OrderBy(p => p.Name).ToList()),
-                })
-                .ToList();
+                    var movies = x.Select(m => m.Movie).ToList().SortCustomBy(sortBy);
+                    return new MoviesByCategoryModel()
+                    {
+                        Title = x.Key,
+                        Movies = this.mapper.Map<List<Movie>, List<MovieModel>>(movies),
+                    };
+
+                }).ToList();
+        }
+
+        /// <summary>
+        /// Gets all by movie identifier asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns>List<string/></returns>
+        public async Task<List<string>> GetAllByMovieIdAsync(Guid movieId)
+        {
+            return await this.movieGenreRepository.GetGenresByMovieIdAsync(movieId);
         }
 
         /// <summary>

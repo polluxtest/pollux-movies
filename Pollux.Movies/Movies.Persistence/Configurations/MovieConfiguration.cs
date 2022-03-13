@@ -16,6 +16,7 @@ namespace Movies.Persistence.Configurations
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Description).IsRequired().HasMaxLength(1000);
+            builder.Property(p => p.DescriptionEs).IsRequired().HasMaxLength(1000);
             builder.Property(p => p.Type).IsRequired().HasMaxLength(100);
             builder.Property(p => p.UrlVideo).HasMaxLength(1000);
             builder.Property(p => p.Gender).IsRequired().HasMaxLength(100);
@@ -24,12 +25,13 @@ namespace Movies.Persistence.Configurations
             builder.Property(p => p.UrlCoverImage).HasMaxLength(1000);
             builder.Property(p => p.Year).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Language).IsRequired().HasMaxLength(100);
+            builder.Property(p => p.Imbd).IsRequired().HasMaxLength(5);
             builder.Property(p => p.DirectorId).IsRequired().HasDefaultValue(1);
             builder.Property(p => p.Likes).HasDefaultValue(0);
             builder.Property(p => p.Recommended).HasDefaultValue(false);
 
             builder.HasOne<Director>(p => p.Director);
-            builder.HasIndex("Name", "Gender", "Language", "Likes", "Recommended");
+            builder.HasIndex("Name", "Gender", "Language", "Likes", "Recommended", "Imbd");
         }
     }
 }

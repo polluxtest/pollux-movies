@@ -1,6 +1,7 @@
 using AzureUploaderTransformerVideos;
 using Movies.Application;
 using Microsoft.Extensions.DependencyInjection;
+using Movies.Application.ThirdParty;
 using Movies.Persistence;
 using Movies.Persistence.Repositories;
 using ReadFilesService;
@@ -39,6 +40,8 @@ namespace Pollux.Movies
             services.AddTransient<IUserMoviesService, UserMoviesService>();
             services.AddTransient<IUserLikesService, UserLikesService>();
             services.AddTransient<IGenresService, GenresService>();
+            services.AddTransient<IImbdService, ImbdService>();
+            services.AddTransient<ITranslationService, TranslationService>();
         }
     }
 }

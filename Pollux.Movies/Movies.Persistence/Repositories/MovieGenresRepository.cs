@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Movies.Persistence.Repositories.Base.Interfaces;
@@ -11,6 +12,7 @@ namespace Movies.Persistence.Repositories
     public interface IMovieGenresRepository : IRepository<MovieGenres>
     {
         Task<List<MovieGenres>> GetAllAsync();
+        Task<List<string>> GetGenresByMovieIdAsync(Guid movieId);
     }
 
     public class MovieGenresRepository : RepositoryBase<MovieGenres>, IMovieGenresRepository
@@ -33,6 +35,20 @@ namespace Movies.Persistence.Repositories
                 .Include(p => p.Movie)
                 .ThenInclude(p => p.Director)
                 .Where(p => !p.IsDeleted)
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Gets the genres by movie identifier asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns>List<string/></returns>
+        public async Task<List<string>> GetGenresByMovieIdAsync(Guid movieId)
+        {
+            return await this.dbSet
+                .Where(p => p.MovieId == movieId)
+                .Include(p => p.Genre)
+                .Select(p => p.Genre.Name)
                 .ToListAsync();
         }
     }

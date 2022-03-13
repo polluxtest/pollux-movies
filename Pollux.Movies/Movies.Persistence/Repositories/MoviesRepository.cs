@@ -53,7 +53,8 @@ namespace Movies.Persistence.Repositories
         /// <returns>Movie.</returns>
         public new Task<Movie> GetAsync(Guid movieId)
         {
-            return this.dbSet.Include(p => p.Director)
+            return this.dbSet
+                .Include(p => p.Director)
                 .SingleOrDefaultAsync(p => p.Id == movieId && p.ProcessedByAzureJob && !p.IsDeleted);
         }
 
@@ -66,6 +67,7 @@ namespace Movies.Persistence.Repositories
         public async Task<Movie> GetAsyncByName(string name)
         {
             var movieDb = await this.dbSet
+                .Include(p => p.Director)
                 .SingleOrDefaultAsync(p => p.Name.Trim().Equals(name.Trim()) && p.ProcessedByAzureJob && !p.IsDeleted);
 
             if (movieDb == null) throw new ArgumentException("Movie not found", name);

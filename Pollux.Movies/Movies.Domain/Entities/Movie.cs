@@ -33,6 +33,14 @@ namespace Movies.Domain.Entities
         /// </value>
         public string Description { get; set; }
 
+        /// <summary>
+        /// Gets or sets the description english.
+        /// </summary>
+        /// <value>
+        /// The description en.
+        /// </value>
+        public string DescriptionEs { get; set; }
+
 
         /// <summary>
         /// Gets or sets the type.
@@ -153,5 +161,13 @@ namespace Movies.Domain.Entities
         /// The gender.
         /// </value>
         public string Gender { get; set; }
+
+        /// <summary>
+        /// Gets or sets the imbd ranking.
+        /// </summary>
+        /// <value>
+        /// The imbd.
+        /// </value>
+        public string Imbd { get; set; }
     }
 }

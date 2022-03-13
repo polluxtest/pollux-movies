@@ -79,5 +79,10 @@
         /// The featured movies.
         /// </summary>
         public const string FeaturedMovies = "FeaturedMovies";
+
+        /// <summary>
+        /// The get imbd movie ranking
+        /// </summary>
+        public const string GetImbdMovieRanking = "GetImbdMovieRanking";
     }
 }
