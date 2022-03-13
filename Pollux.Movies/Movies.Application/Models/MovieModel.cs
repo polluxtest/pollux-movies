@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Movies.Domain.Entities;
 
 namespace Movies.Application.Models
 {
@@ -28,6 +29,14 @@ namespace Movies.Application.Models
         /// The description.
         /// </value>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description eng.
+        /// </summary>
+        /// <value>
+        /// The description en.
+        /// </value>
+        public string DescriptionEs { get; set; }
 
         /// <summary>
         /// Gets or sets the gender.
@@ -116,5 +125,21 @@ namespace Movies.Application.Models
         /// The subtitles.
         /// </value>
         public List<string> Subtitles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the imbd.
+        /// </summary>
+        /// <value>
+        /// The imbd.
+        /// </value>
+        public string Imbd { get; set; }
+
+        /// <summary>
+        /// Gets or sets the genres.
+        /// </summary>
+        /// <value>
+        /// The genres.
+        /// </value>
+        public List<string> Genres { get; set; }
     }
 }

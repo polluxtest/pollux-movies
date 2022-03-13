@@ -11,5 +11,15 @@
         /// Order Alphabetically descending.
         /// </summary>
         public const string AlphaDescending = "AlphaDescending";
+
+        /// <summary>
+        /// The imbd sorting.
+        /// </summary>
+        public const string Imbd = "IMBd";
+
+        /// <summary>
+        /// The featured sorting.
+        /// </summary>
+        public const string Featured = "Featured";
     }
 }

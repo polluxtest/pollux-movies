@@ -11,6 +11,7 @@ using Movies.Common.ExtensionMethods;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
 using Pitcher;
+using Movies.Application.ExtensionMethods;
 
 namespace Movies.Application
 {
@@ -26,6 +27,8 @@ namespace Movies.Application
 
         Task<List<MoviesByCategoryModel>> GetByDirector(string sortBy = null);
 
+        Task<List<MoviesByCategoryModel>> GetByGenreAsync(string sortBy = null);
+
         Task UpdateMovie(Movie movie);
 
         Task Add(Movie movie);
@@ -38,7 +41,7 @@ namespace Movies.Application
 
         Task<MovieInfoModel> GetAsync(Guid movieId, string userId);
 
-        Task<Movie> GetByNameAsync(string name);
+        Task AddGenresAsync(Dictionary<string, List<string>> movieGenres);
 
         Task<Movie> GetAsync(Guid movieId);
 
@@ -52,16 +55,22 @@ namespace Movies.Application
         private readonly IUserMoviesService userMoviesService;
         private readonly IUserLikesService userMovieLikesService;
         private readonly IMapper mapper;
+        private readonly IGenresService genresService;
+        private readonly IMovieGenresService movieGenresService;
 
         public MoviesService(
             IMoviesRepository moviesRepository,
             IUserMoviesService userMoviesService,
             IUserLikesService userMovieLikesService,
+            IGenresService genresService,
+            IMovieGenresService movieGenreService,
             IMapper mapper)
         {
             this.moviesRepository = moviesRepository;
             this.userMoviesService = userMoviesService;
             this.userMovieLikesService = userMovieLikesService;
+            this.genresService = genresService;
+            this.movieGenresService = movieGenreService;
             this.mapper = mapper;
         }
 
@@ -111,6 +120,8 @@ namespace Movies.Application
         {
             var moviesDb = await this.moviesRepository.GetAll();
 
+            moviesDb = moviesDb.SortCustomBy(sortBy);
+
             var moviesGroupedByLanguage = moviesDb
                 .GroupBy(p => p.Language)
                 .Select(p => new MoviesByCategoryModel()
@@ -120,7 +131,6 @@ namespace Movies.Application
                 });
 
             var movies = moviesGroupedByLanguage.ToList();
-            await this.SortMovies(ref movies, sortBy);
 
             return movies;
         }
@@ -129,10 +139,12 @@ namespace Movies.Application
         /// Gets the by director.
         /// </summary>
         /// <param name="sortBy">The sort by.</param>
-        /// <returns>MovieModel List by Direactor.</returns>
+        /// <returns>MovieModel List by Director.</returns>
         public async Task<List<MoviesByCategoryModel>> GetByDirector(string sortBy = null)
         {
             var moviesDb = await this.moviesRepository.GetAll();
+
+            moviesDb = moviesDb.SortCustomBy(sortBy);
 
             var moviesGroupedByDirector = moviesDb
                 .GroupBy(p => p.Director.Name)
@@ -140,10 +152,22 @@ namespace Movies.Application
                 {
                     Title = p.Key,
                     Movies = this.mapper.Map<List<Movie>, List<MovieModel>>(p.ToList()),
-                });
+                }).OrderByDescending(y => y.Movies.Count());
 
             var movies = moviesGroupedByDirector.ToList();
-            await this.SortMovies(ref movies, sortBy);
+            await this.SortMoviesReels(ref movies, sortBy);
+
+            return movies;
+        }
+
+        /// <summary>
+        /// Gets the by genre asynchronous.
+        /// </summary>
+        /// <param name="sortBy">The sort by.</param>
+        /// <returns>List<MoviesByCategoryModel/></returns>
+        public async Task<List<MoviesByCategoryModel>> GetByGenreAsync(string sortBy = null)
+        {
+            var movies = await this.movieGenresService.GetAllByGenreAsync(sortBy);
 
             return movies;
         }
@@ -154,7 +178,7 @@ namespace Movies.Application
         /// <param name="movies">The movies.</param>
         /// <param name="sortBy">The sort by.</param>
         /// <returns>Movies Sorted.</returns>
-        public Task<List<MoviesByCategoryModel>> SortMovies(ref List<MoviesByCategoryModel> movies, string sortBy = null)
+        public Task<List<MoviesByCategoryModel>> SortMoviesReels(ref List<MoviesByCategoryModel> movies, string sortBy = null)
         {
             if (string.IsNullOrEmpty(sortBy)) return Task.FromResult(movies);
 
@@ -166,6 +190,9 @@ namespace Movies.Application
 
             return Task.FromResult(movies);
         }
+
+
+
 
         /// <summary>
         /// Updates the specified movie.
@@ -244,13 +271,42 @@ namespace Movies.Application
         {
             var movieInfoModel = new MovieInfoModel();
             var movieDb = await this.moviesRepository.GetAsync(movieId);
+            var genres = await this.movieGenresService.GetAllByMovieIdAsync(movieId);
 
             Throw.When(movieDb == null, new ArgumentException($"movie not found id {movieId}"));
 
             movieInfoModel.IsInList = await this.userMoviesService.IsMovieInListByUser(movieId, userId);
             movieInfoModel.IsLiked = await this.userMovieLikesService.IsMovieLikedByUser(movieId, userId);
+            movieInfoModel.Genres = genres;
 
             return this.mapper.Map<Movie, MovieInfoModel>(movieDb, movieInfoModel);
+        }
+
+        /// <summary>
+        /// Adds the genres.
+        /// </summary>
+        /// <param name="movieGenres">The movie genres.</param>
+        public async Task AddGenresAsync(Dictionary<string, List<string>> movieGenres)
+        {
+            var genresDb = await this.genresService.GetAllAsync();
+
+            foreach (var (movieName, genres) in movieGenres)
+            {
+                var movieDb = await this.GetByNameAsync(movieName);
+                var genresIDs = new List<int>();
+
+                foreach (var genre in genres)
+                {
+                    var genreDb = genresDb.SingleOrDefault(p =>
+                        p.Name.Trim().Equals(genre.Trim(), StringComparison.CurrentCultureIgnoreCase));
+
+                    if (genreDb == null) throw new ArgumentException("Genre not found", genre);
+
+                    genresIDs.Add(genreDb.Id);
+                }
+
+                await this.movieGenresService.AddManyToMovieAsync(movieDb.Id, genresIDs);
+            }
         }
 
         /// <summary>
@@ -260,7 +316,7 @@ namespace Movies.Application
         /// <returns>Movie</returns>
         public Task<Movie> GetByNameAsync(string name)
         {
-            return this.moviesRepository.GetAsync(p => p.Name.TrimAll().ToLower().Equals(name));
+            return this.moviesRepository.GetAsyncByName(name);
         }
 
         /// <summary>

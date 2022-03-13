@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Movies.Domain.Entities
 {
@@ -32,12 +34,13 @@ namespace Movies.Domain.Entities
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the gender.
+        /// Gets or sets the description english.
         /// </summary>
         /// <value>
-        /// The gender.
+        /// The description en.
         /// </value>
-        public string Gender { get; set; }
+        public string DescriptionEs { get; set; }
+
 
         /// <summary>
         /// Gets or sets the type.
@@ -150,5 +153,21 @@ namespace Movies.Domain.Entities
         /// The subtitles.
         /// </value>
         public string Subtitles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the gender.
+        /// </summary>
+        /// <value>
+        /// The gender.
+        /// </value>
+        public string Gender { get; set; }
+
+        /// <summary>
+        /// Gets or sets the imbd ranking.
+        /// </summary>
+        /// <value>
+        /// The imbd.
+        /// </value>
+        public string Imbd { get; set; }
     }
 }

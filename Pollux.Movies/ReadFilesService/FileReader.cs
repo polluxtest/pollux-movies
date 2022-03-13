@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AzureUploaderTransformerVideos.Constants;
+using Movies.Application.Models;
 using Movies.Common.Constants.Strings;
 using Movies.Common.ExtensionMethods;
 
@@ -13,6 +14,8 @@ namespace ReadFilesService
 {
     public interface IFileReader
     {
+        Task<List<string>> ReadGenresFromFile();
+        Task<Dictionary<string, List<string>>> ReadMovieGenresFromFile();
         Task ReadVideosFromDirectory();
         Task ReadImagesFromDirectory();
         Task ReadCoverImagesFromDirectory();
@@ -26,6 +29,57 @@ namespace ReadFilesService
         public FileReader(IFileDbWriter fileDbWriter)
         {
             this.fileDbWriter = fileDbWriter;
+        }
+
+        public async Task<List<string>> ReadGenresFromFile()
+        {
+            var textLines = await File.ReadAllLinesAsync(FilesLocalPathsConstants.FileGenresPath);
+            var genresList = new List<string>();
+
+            foreach (var line in textLines)
+            {
+                var lineSpitted = line.Split(",");
+                if (lineSpitted[0].Trim().Equals("Name") || lineSpitted[0].Trim().Equals(string.Empty))
+                {
+                    continue;
+                }
+
+                lineSpitted = lineSpitted.Where(p => !p.Trim().Equals(string.Empty)).ToArray().Skip(1).ToArray();
+                foreach (var genre in lineSpitted)
+                {
+                    var genreTrimmed = genre.Trim();
+                    if (!genresList.Any(p => p.Equals(genreTrimmed, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        genresList.Add(genreTrimmed);
+                    }
+                }
+            }
+
+            return genresList;
+        }
+
+        public async Task<Dictionary<string, List<string>>> ReadMovieGenresFromFile()
+        {
+            var textLines = await File.ReadAllLinesAsync(FilesLocalPathsConstants.FileGenresPath);
+            var moviesGenresDictionary = new Dictionary<string, List<string>>();
+
+            foreach (var line in textLines)
+            {
+                var lineSpitted = line.Split(",");
+                if (lineSpitted[0].Trim().Equals("Name") || lineSpitted[0].Trim().Equals(string.Empty))
+                {
+                    continue;
+                }
+
+                var movieName = lineSpitted[0].Trim();
+                lineSpitted = lineSpitted.Where(p => !p.Trim().Equals(string.Empty)).ToArray().Skip(1).ToArray(); ;
+                if (!moviesGenresDictionary.ContainsKey(movieName))
+                {
+                    moviesGenresDictionary.Add(movieName, lineSpitted.ToList());
+                }
+            }
+
+            return moviesGenresDictionary;
         }
 
         /// <summary>

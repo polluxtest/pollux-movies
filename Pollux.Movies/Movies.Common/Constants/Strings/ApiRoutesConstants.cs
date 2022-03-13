@@ -14,6 +14,11 @@
         public const string ByDirector = "ByDirector";
 
         /// <summary>
+        /// The by genre
+        /// </summary>
+        public const string ByGenre = "ByGenre";
+
+        /// <summary>
         /// The by language.
         /// </summary>
         public const string ByLanguage = "ByLanguage";
@@ -74,5 +79,10 @@
         /// The featured movies.
         /// </summary>
         public const string FeaturedMovies = "FeaturedMovies";
+
+        /// <summary>
+        /// The get imbd movie ranking
+        /// </summary>
+        public const string GetImbdMovieRanking = "GetImbdMovieRanking";
     }
 }

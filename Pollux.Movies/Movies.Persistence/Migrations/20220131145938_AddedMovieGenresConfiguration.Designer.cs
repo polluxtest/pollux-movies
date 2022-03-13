@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Persistence;
 
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    partial class PolluxMoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220131145938_AddedMovieGenresConfiguration")]
+    partial class AddedMovieGenresConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,12 +47,17 @@ namespace Movies.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<Guid?>("MovieId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
 
                     b.HasIndex("Name");
 
@@ -68,11 +75,6 @@ namespace Movies.Persistence.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("DescriptionEs")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
                     b.Property<int>("DirectorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -85,11 +87,6 @@ namespace Movies.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Imbd")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -147,7 +144,7 @@ namespace Movies.Persistence.Migrations
 
                     b.HasIndex("DirectorId");
 
-                    b.HasIndex("Name", "Gender", "Language", "Likes", "Recommended", "Imbd");
+                    b.HasIndex("Name", "Gender", "Language", "Likes", "Recommended");
 
                     b.ToTable("Movies");
                 });
@@ -230,6 +227,13 @@ namespace Movies.Persistence.Migrations
                     b.ToTable("UserMovies");
                 });
 
+            modelBuilder.Entity("Movies.Domain.Entities.Genre", b =>
+                {
+                    b.HasOne("Movies.Domain.Entities.Movie", null)
+                        .WithMany("Genres")
+                        .HasForeignKey("MovieId");
+                });
+
             modelBuilder.Entity("Movies.Domain.Entities.Movie", b =>
                 {
                     b.HasOne("Movies.Domain.Director", "Director")
@@ -291,6 +295,11 @@ namespace Movies.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("Movies.Domain.Entities.Movie", b =>
+                {
+                    b.Navigation("Genres");
                 });
 #pragma warning restore 612, 618
         }

@@ -56,6 +56,23 @@ namespace Movies.Persistence
         /// </value>
         public DbSet<UserLikes> UserLikes { get; set; }
 
+
+        /// <summary>
+        /// Gets or sets the genres.
+        /// </summary>
+        /// <value>
+        /// The genres.
+        /// </value>
+        public DbSet<Genre> Genres { get; set; }
+
+        /// <summary>
+        /// Gets or sets the movie genres.
+        /// </summary>
+        /// <value>
+        /// The movie genres.
+        /// </value>
+        public DbSet<MovieGenres> MovieGenres { get; set; }
+
         /// <summary>
         /// Override this method to further configure the model that was discovered by convention from the entity types
         /// exposed in <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1" /> properties on your derived context. The resulting model may be cached

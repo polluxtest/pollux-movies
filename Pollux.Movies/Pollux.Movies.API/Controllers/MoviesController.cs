@@ -34,6 +34,38 @@ namespace Pollux.Movies.Controllers
             return this.Ok(moviesByLanguage);
         }
 
+        /// <summary>
+        /// Gets the by director.
+        /// </summary>
+        /// <param name="sortBy">The sort by.</param>
+        /// <returns>Movies By Director.</returns>
+        [AllowAnonymous]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [HttpGet]
+        [Route(ApiRoutesConstants.ByDirector)]
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByDirector(string sortBy = null)
+        {
+            var moviesByDirector = await this.moviesService.GetByDirector(sortBy);
+
+            return this.Ok(moviesByDirector);
+        }
+
+        /// <summary>
+        /// Gets the by director.
+        /// </summary>
+        /// <param name="sortBy">The sort by.</param>
+        /// <returns>Movies By Director.</returns>
+        [AllowAnonymous]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [HttpGet]
+        [Route(ApiRoutesConstants.ByGenre)]
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByGenre(string sortBy = null)
+        {
+            var moviesByGenre = await this.moviesService.GetByGenreAsync(sortBy);
+
+            return this.Ok(moviesByGenre);
+        }
+
 
         /// <summary>
         /// Searches the specified search.
@@ -51,22 +83,6 @@ namespace Pollux.Movies.Controllers
             var searchMovies = await this.moviesService.Search(search);
 
             return this.Ok(searchMovies);
-        }
-
-        /// <summary>
-        /// Gets the by director.
-        /// </summary>
-        /// <param name="sortBy">The sort by.</param>
-        /// <returns>Movies By Director.</returns>
-        [AllowAnonymous]
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
-        [HttpGet]
-        [Route(ApiRoutesConstants.ByDirector)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByDirector(string sortBy = null)
-        {
-            var moviesByDirector = await this.moviesService.GetByDirector(sortBy);
-
-            return this.Ok(moviesByDirector);
         }
 
         /// <summary>

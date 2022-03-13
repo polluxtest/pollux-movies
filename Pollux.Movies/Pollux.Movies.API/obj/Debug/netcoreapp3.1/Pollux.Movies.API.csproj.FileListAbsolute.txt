@@ -197,3 +197,12 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Microsoft.WindowsAzure.Storage.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Pitcher.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\nunit.framework.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\obj\Debug\netcoreapp3.1\Pollux.Movies.API.MvcApplicationPartsAssemblyInfo.cs
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Api.Gax.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Api.Gax.Rest.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Apis.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Apis.Auth.PlatformServices.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Apis.Auth.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Apis.Core.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Apis.Translate.v2.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Cloud.Translation.V2.dll
