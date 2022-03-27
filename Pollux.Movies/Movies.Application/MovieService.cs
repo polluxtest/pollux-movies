@@ -128,7 +128,7 @@ namespace Movies.Application
                 {
                     Title = $"{p.Key} {TitleConstants.Language}",
                     Movies = this.mapper.Map<List<Movie>, List<MovieModel>>(p.ToList()),
-                });
+                }).OrderByDescending(y => y.Movies.Count());
 
             var movies = moviesGroupedByLanguage.ToList();
 
@@ -155,7 +155,6 @@ namespace Movies.Application
                 }).OrderByDescending(y => y.Movies.Count());
 
             var movies = moviesGroupedByDirector.ToList();
-            await this.SortMoviesReels(ref movies, sortBy);
 
             return movies;
         }

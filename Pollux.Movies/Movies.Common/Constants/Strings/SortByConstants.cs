@@ -5,12 +5,12 @@
         /// <summary>
         /// Order Alphabetically ascending.
         /// </summary>
-        public const string AlphaAscending = "AlphaAscending";
+        public const string AlphaAscending = "A-Z";
 
         /// <summary>
         /// Order Alphabetically descending.
         /// </summary>
-        public const string AlphaDescending = "AlphaDescending";
+        public const string AlphaDescending = "Z-A";
 
         /// <summary>
         /// The imbd sorting.
