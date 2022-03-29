@@ -118,7 +118,7 @@ namespace Movies.Application
         /// <returns>MovieModel List by Language.</returns>
         public async Task<List<MoviesByCategoryModel>> GetByLanguage(string sortBy = null)
         {
-            var moviesDb = await this.moviesRepository.GetAll();
+            var moviesDb = await this.moviesRepository.GetAllAsync();
 
             moviesDb = moviesDb.SortCustomBy(sortBy);
 
@@ -142,7 +142,7 @@ namespace Movies.Application
         /// <returns>MovieModel List by Director.</returns>
         public async Task<List<MoviesByCategoryModel>> GetByDirector(string sortBy = null)
         {
-            var moviesDb = await this.moviesRepository.GetAll();
+            var moviesDb = await this.moviesRepository.GetAllAsync();
 
             moviesDb = moviesDb.SortCustomBy(sortBy);
 
@@ -238,8 +238,7 @@ namespace Movies.Application
         /// <returns>List<MoviesByCategoryModel/>.</returns>
         public async Task<List<MoviesByCategoryModel>> GetRecommendedByPollux()
         {
-            var moviesDb = await this.moviesRepository
-                .GetManyAsync(p => p.ProcessedByAzureJob == true && p.IsDeleted == false && p.Recommended);
+            var moviesDb = await this.moviesRepository.GetRecommendedByPolluxAsync();
 
             var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDb);
 
@@ -252,7 +251,7 @@ namespace Movies.Application
         /// <returns>List<MoviesByCategoryModel/>.</returns>
         public async Task<List<MoviesByCategoryModel>> GetRecommendedByUsers()
         {
-            var moviesDb = await this.moviesRepository.GetRecommended();
+            var moviesDb = await this.moviesRepository.GetRecommendedAsync();
 
             var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDb);
 

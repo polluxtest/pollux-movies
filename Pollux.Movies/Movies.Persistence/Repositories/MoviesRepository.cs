@@ -17,9 +17,10 @@ namespace Movies.Persistence.Repositories
     {
         Task<Movie> GetAsync(Guid movieId);
         Task<Movie> GetAsyncByName(string name);
-        Task<List<Movie>> GetAll();
+        Task<List<Movie>> GetAllAsync();
         Task<List<Movie>> Search(string search);
-        Task<List<Movie>> GetRecommended();
+        Task<List<Movie>> GetRecommendedAsync();
+        Task<List<Movie>> GetRecommendedByPolluxAsync();
     }
 
     /// <summary>
@@ -40,7 +41,7 @@ namespace Movies.Persistence.Repositories
         /// Gets all by default parameters.
         /// </summary>
         /// <returns>List Movie. </returns>
-        public new Task<List<Movie>> GetAll()
+        public new Task<List<Movie>> GetAllAsync()
         {
             return this.dbSet.Include(p => p.Director)
                 .Where(p => p.ProcessedByAzureJob && !p.IsDeleted).ToListAsync();
@@ -79,7 +80,7 @@ namespace Movies.Persistence.Repositories
         /// Gets the recommended.
         /// </summary>
         /// <returns>List<Movie/></returns>
-        public Task<List<Movie>> GetRecommended()
+        public Task<List<Movie>> GetRecommendedAsync()
         {
             return this.dbSet.Include(p => p.Director)
                 .Where(p => p.ProcessedByAzureJob && !p.IsDeleted)
@@ -88,6 +89,17 @@ namespace Movies.Persistence.Repositories
                 .ToListAsync();
         }
 
+
+        /// <summary>
+        /// Gets the recommended by pollux.
+        /// </summary>
+        /// <returns>Task<List<Movie>></returns>
+        public async Task<List<Movie>> GetRecommendedByPolluxAsync()
+        {
+            return await this.dbSet.Include(p => p.Director)
+                .Where(p => p.ProcessedByAzureJob && !p.IsDeleted && p.Recommended)
+                .ToListAsync();
+        }
 
         /// <summary>
         /// Searches the specified search.
