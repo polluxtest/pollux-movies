@@ -34,14 +34,13 @@ namespace Pollux.Movies.Controllers
 
         /// <summary>
         /// Gets the specified user identifier.
-        /// <param name="userId">The user identifier.</param>
         /// </summary>
-        /// <returns>List of movie likes ids.</returns>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>List<Guid></returns>
         [AllowAnonymous]
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.MyLikes)]
-        public async Task<ActionResult<List<int>>> Get([FromQuery] string userId)
+        public async Task<ActionResult<List<System.Guid>>> Get([FromQuery] string userId)
         {
             if (base.IsUserIdValid(userId)) return this.BadRequest("Invalid User Id");
 

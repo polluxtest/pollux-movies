@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +26,6 @@ namespace Pollux.Movies.Controllers
         /// <param name="userId">The user identifier.</param>
         /// <returns>List of My movie ids.</returns>
         [AllowAnonymous]
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.MyList)]
         public async Task<ActionResult<List<MoviesByCategoryModel>>> GetMyList([FromQuery] string userId)
@@ -44,7 +44,7 @@ namespace Pollux.Movies.Controllers
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.MyListIds)]
-        public async Task<ActionResult<List<int>>> Get([FromQuery] string userId)
+        public async Task<ActionResult<List<System.Guid>>> Get([FromQuery] string userId)
         {
             if (base.IsUserIdValid(userId)) return this.BadRequest("Invalid User Id");
 
