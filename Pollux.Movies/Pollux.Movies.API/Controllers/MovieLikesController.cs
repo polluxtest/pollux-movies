@@ -8,7 +8,6 @@ using Movies.Common.Constants.Strings;
 
 namespace Pollux.Movies.Controllers
 {
-    [Authorize]
     public class MovieLikesController : BaseController
     {
         private readonly IUserLikesService userLikesService;

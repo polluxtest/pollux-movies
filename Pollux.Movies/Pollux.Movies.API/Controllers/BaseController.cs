@@ -8,7 +8,7 @@ namespace Pollux.Movies.Controllers
     /// Defines the Base Controllers attributes for the core domain <see cref="BaseController" />.
     /// </summary>
     [Route(ApiRoutesConstants.DefaultRoute)]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = AuthConstants.TokenAuthenticationDefaultScheme)]
     [ApiController]
     public class BaseController : ControllerBase
     {

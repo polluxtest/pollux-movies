@@ -14,6 +14,8 @@ namespace Pollux.Movies
     using Microsoft.OpenApi.Models;
     using FluentValidation.AspNetCore;
     using Pollux.Movies.Middlewares;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using global::Movies.Common.Constants.Strings;
 
     public class Startup
     {
@@ -41,6 +43,7 @@ namespace Pollux.Movies
             services.AddDbContext<PolluxMoviesDbContext>(options => options.UseSqlServer(connectionString));
             this.AddAzureMediaServices(services);
             this.AddCors(services);
+            this.SetUpAuthentication(services);
             services.AddMvc().AddFluentValidation(options => options.RegisterValidatorsFromAssembly(ApiAssembly.Assembly));
             services.AddAuthorization();
             services.AddControllers();
@@ -61,7 +64,6 @@ namespace Pollux.Movies
             this.AddSwagger(app);
             app.UseCors("CookiePolicy");
             app.UseRouting();
-            app.UseMiddleware<AuthorizationMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(
@@ -149,5 +151,19 @@ namespace Pollux.Movies
                         });
             });
         }
+
+        /// <summary>
+        /// Adds the authentication scheme.
+        /// </summary>
+        /// <param name="services">serviceCollection</param>
+        private void SetUpAuthentication(IServiceCollection services)
+        {
+            services.AddAuthentication(o =>
+            {
+                o.DefaultScheme = AuthConstants.TokenAuthenticationDefaultScheme;
+            })
+            .AddScheme<TokenAuthenticationOptions, TokenAuthenticationHandler>(AuthConstants.TokenAuthenticationDefaultScheme, o => { });
+        }
+
     }
 }
