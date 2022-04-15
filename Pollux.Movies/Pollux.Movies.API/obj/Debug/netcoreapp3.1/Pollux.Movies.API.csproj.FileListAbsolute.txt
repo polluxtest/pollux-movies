@@ -206,3 +206,4 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Apis.Core.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Apis.Translate.v2.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Google.Cloud.Translation.V2.dll
+\\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Pollux.Movies.API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll

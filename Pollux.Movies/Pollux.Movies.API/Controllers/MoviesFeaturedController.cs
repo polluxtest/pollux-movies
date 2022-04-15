@@ -10,6 +10,7 @@ using Movies.Common.Constants.Strings;
 
 namespace Pollux.Movies.Controllers
 {
+    [Authorize]
     public class MoviesFeaturedController : BaseController
     {
         private readonly IMoviesFeaturedService moviesService;
@@ -23,7 +24,6 @@ namespace Pollux.Movies.Controllers
         /// Gets the by language.
         /// </summary>
         /// <returns>List Movie By Language Model.</returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.FeaturedMovies)]

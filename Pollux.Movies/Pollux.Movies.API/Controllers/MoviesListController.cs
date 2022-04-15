@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +10,7 @@ using Movies.Common.Constants.Strings;
 
 namespace Pollux.Movies.Controllers
 {
+    [Authorize]
     public class MoviesListController : BaseController
     {
         private readonly IUserMoviesService userMoviesService;
@@ -25,7 +25,6 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>List of My movie ids.</returns>
-        [AllowAnonymous]
         [HttpGet]
         [Route(ApiRoutesConstants.MyList)]
         public async Task<ActionResult<List<MoviesByCategoryModel>>> GetMyList([FromQuery] string userId)
@@ -40,7 +39,6 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>List of My movies.</returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.MyListIds)]
@@ -59,7 +57,6 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Movie id added.</returns>
-        [AllowAnonymous]
         [HttpPost]
         [Route(ApiRoutesConstants.UpdateList)]
         public async Task<ActionResult<int>> Post([FromBody] AddRemoveUserMovieModel request)

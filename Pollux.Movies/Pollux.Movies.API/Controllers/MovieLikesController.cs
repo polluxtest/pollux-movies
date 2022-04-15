@@ -8,6 +8,7 @@ using Movies.Common.Constants.Strings;
 
 namespace Pollux.Movies.Controllers
 {
+    [Authorize]
     public class MovieLikesController : BaseController
     {
         private readonly IUserLikesService userLikesService;
@@ -22,7 +23,6 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Task.</returns>
-        [AllowAnonymous]
         [HttpPost]
         [Route(ApiRoutesConstants.Like)]
         public async Task<ActionResult> Like([FromBody] AddRemoveUserMovieModel request)
@@ -37,7 +37,6 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>List<Guid></returns>
-        [AllowAnonymous]
         [HttpGet]
         [Route(ApiRoutesConstants.MyLikes)]
         public async Task<ActionResult<List<System.Guid>>> Get([FromQuery] string userId)

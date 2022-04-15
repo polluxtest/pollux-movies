@@ -1,4 +1,3 @@
-
 using Movies.Application.Mappers;
 using Movies.Persistence;
 
@@ -14,7 +13,7 @@ namespace Pollux.Movies
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
     using FluentValidation.AspNetCore;
-
+    using Pollux.Movies.Middlewares;
 
     public class Startup
     {
@@ -59,14 +58,10 @@ namespace Pollux.Movies
         /// <param name="env">The env.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
             this.AddSwagger(app);
             app.UseCors("CookiePolicy");
             app.UseRouting();
+            app.UseMiddleware<AuthorizationMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(

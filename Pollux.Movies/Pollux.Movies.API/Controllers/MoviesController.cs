@@ -9,6 +9,7 @@ using Movies.Common.Constants.Strings;
 
 namespace Pollux.Movies.Controllers
 {
+    [Authorize]
     public class MoviesController : BaseController
     {
         private readonly IMoviesService moviesService;
@@ -23,7 +24,6 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="sortBy">The sort by.</param>
         /// <returns>List Movie By Language Model.</returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.ByLanguage)]
@@ -39,7 +39,6 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="sortBy">The sort by.</param>
         /// <returns>Movies By Director.</returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.ByDirector)]
@@ -55,7 +54,6 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="sortBy">The sort by.</param>
         /// <returns>Movies By Director.</returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.ByGenre)]
@@ -72,7 +70,6 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="search">The search.</param>
         /// <returns>Movie List.</returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.Search)]
@@ -91,7 +88,6 @@ namespace Pollux.Movies.Controllers
         /// <param name="id">The identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns>MovieInfoModel.</returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.Movie)]
@@ -112,7 +108,6 @@ namespace Pollux.Movies.Controllers
         /// Recommended the by pollux.
         /// </summary>
         /// <returns>List<MoviesByCategoryModel/></returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 8200, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.RecommendedByPollux)]
@@ -127,7 +122,6 @@ namespace Pollux.Movies.Controllers
         /// Recommended the by Users.
         /// </summary>
         /// <returns>List<MoviesByCategoryModel/></returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 8200, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.RecommendedByUsers)]
@@ -142,7 +136,6 @@ namespace Pollux.Movies.Controllers
         /// Gets the movies names.
         /// </summary>
         /// <returns>List<string/></returns>
-        [AllowAnonymous]
         [ResponseCache(Duration = 8200, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.GetMovieNames)]

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "dlMWrrurlQvlU9oJm2fH9SmF5YSVPLt5i8uJXRVtC9AeYvCgUqYLmBMMkWx8fJonzrkNplweZnQQjRoC4PtfTw==",
+  "dgSpecHash": "+l1/kli6Ws3fhRX1558qrTzz6+10IlGLQX3WGuSzIhG/EoVfnIGDx3PXkA5HqRuMqg05PNmer/Ag5vlz0dE9ZQ==",
   "success": true,
   "projectFilePath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,7 @@
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\google.cloud.translation.v2\\2.1.0\\google.cloud.translation.v2.2.1.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\linqkit.core\\1.1.24\\linqkit.core.1.1.24.nupkg.sha512",
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.18\\microsoft.aspnetcore.authentication.jwtbearer.3.1.18.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.azure.management.media\\3.0.2\\microsoft.azure.management.media.3.0.2.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.0.0\\microsoft.bcl.asyncinterfaces.1.0.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
