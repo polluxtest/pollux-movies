@@ -13,7 +13,7 @@ namespace Pollux.Movies
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
     using FluentValidation.AspNetCore;
-    using Pollux.Movies.Middlewares;
+    using Pollux.Movies.Auth;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using global::Movies.Common.Constants.Strings;
 
