@@ -40,9 +40,10 @@ namespace Pollux.Movies
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = this.Configuration.GetSection("AppSettings")["DbConnectionStrings:PolluxMoviesSQLConnectionString"];
+            var allowedOrigin = this.Configuration.GetSection("AppSettings")["AllowedOrigin"];
             services.AddDbContext<PolluxMoviesDbContext>(options => options.UseSqlServer(connectionString));
             this.AddAzureMediaServices(services);
-            this.AddCors(services);
+            this.AddCors(services, allowedOrigin);
             this.SetUpAuthentication(services);
             services.AddMvc().AddFluentValidation(options => options.RegisterValidatorsFromAssembly(ApiAssembly.Assembly));
             services.AddAuthorization();
@@ -102,14 +103,15 @@ namespace Pollux.Movies
         /// Adds the cors.
         /// </summary>
         /// <param name="services">The services.</param>
-        private void AddCors(IServiceCollection services)
+        /// <param name="origin">The allowed url origin front end.</param>
+        private void AddCors(IServiceCollection services, string origin)
         {
             services.AddCors(options =>
             {
                 options.AddPolicy(
                     "CookiePolicy",
                     builder =>
-                        builder.WithOrigins("https://localhost:3000")
+                        builder.WithOrigins(origin)
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowCredentials());

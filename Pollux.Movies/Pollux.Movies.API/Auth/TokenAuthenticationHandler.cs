@@ -83,7 +83,7 @@ namespace Pollux.Movies.Auth
         {
             try
             {
-                var tokenIssuer = this.configuration.GetSection("Pollux")["TokenIssuer"];
+                var tokenIssuer = this.configuration.GetSection("AppSettings")["TokenIssuer"];
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandler.ReadJwtToken(token);
                 if (securityToken.Issuer.Equals(tokenIssuer))
