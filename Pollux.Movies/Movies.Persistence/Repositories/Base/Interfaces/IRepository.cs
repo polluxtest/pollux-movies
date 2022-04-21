@@ -17,7 +17,10 @@ namespace Movies.Persistence.Repositories.Base.Interfaces
         /// <summary>
         /// Saves this instance.
         /// </summary>
-        void Save();
+        /// <returns>
+        /// Task.
+        /// </returns>
+        Task SaveAsync();
 
         /// <summary>
         /// Adds the specified entity.

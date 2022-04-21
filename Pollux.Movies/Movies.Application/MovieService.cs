@@ -31,7 +31,7 @@ namespace Movies.Application
 
         Task UpdateMovie(Movie movie);
 
-        Task Add(Movie movie);
+        Task AddAsync(Movie movie);
 
         Task<List<MovieModel>> Search(string search);
 
@@ -198,12 +198,10 @@ namespace Movies.Application
         /// </summary>
         /// <param name="movie">The movie.</param>
         /// <returns>Task.</returns>
-        public Task UpdateMovie(Movie movie)
+        public async Task UpdateMovie(Movie movie)
         {
             this.moviesRepository.Update(movie);
-            this.moviesRepository.Save();
-
-            return Task.CompletedTask;
+            await this.moviesRepository.SaveAsync();
         }
 
         /// <summary>
@@ -211,12 +209,10 @@ namespace Movies.Application
         /// </summary>
         /// <param name="movie">The movie.</param>
         /// <returns>Task.</returns>
-        public Task Add(Movie movie)
+        public async Task AddAsync(Movie movie)
         {
-            this.moviesRepository.Add(movie);
-            this.moviesRepository.Save();
-
-            return Task.CompletedTask;
+            await this.moviesRepository.AddASync(movie);
+            await this.moviesRepository.SaveAsync();
         }
 
         /// <summary>

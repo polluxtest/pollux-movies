@@ -61,7 +61,7 @@ namespace Movies.Application
         {
             var userMovie = await this.userLikesRepository.GetAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
             this.userLikesRepository.Delete(userMovie);
-            this.userLikesRepository.Save();
+            await this.userLikesRepository.SaveAsync();
         }
 
         /// <summary>
@@ -111,14 +111,18 @@ namespace Movies.Application
             movieDb.Likes += 1;
 
             await this.userLikesRepository.AddASync(userMovie);
-            this.userLikesRepository.Save();
+            await this.userLikesRepository.SaveAsync();
             this.UpdateMovie(movieDb);
         }
 
-        private void UpdateMovie(Movie movie)
+        /// <summary>
+        /// Updates the movie.
+        /// </summary>
+        /// <param name="movie">The movie.</param>
+        private async void UpdateMovie(Movie movie)
         {
             this.moviesRepository.Update(movie);
-            this.moviesRepository.Save();
+            await this.moviesRepository.SaveAsync();
         }
     }
 }

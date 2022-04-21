@@ -34,7 +34,7 @@ namespace ReadFilesService
             this.blobService = blobService;
         }
 
-        public Task WriteToDataBase(List<(string, string)> files)
+        public async Task WriteToDataBase(List<(string, string)> files)
         {
             foreach (var file in files)
             {
@@ -54,11 +54,9 @@ namespace ReadFilesService
                     ProcessedByAzureJob = false
                 };
 
-                this._moviesService.Add(movie);
+                await this._moviesService.AddAsync(movie);
 
             }
-
-            return Task.CompletedTask;
         }
 
         /// <summary>

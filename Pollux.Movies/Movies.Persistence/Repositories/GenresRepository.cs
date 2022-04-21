@@ -49,12 +49,11 @@ namespace Movies.Persistence.Repositories
                 if (genreDb == null)
                 {
                     var newGenreDb = new Genre() { Name = genreNameTrimmed };
-                    this.Add(newGenreDb);
-                    this.Save();
+                    await this.AddASync(newGenreDb);
                 }
             }
 
-            this.Save();
+            await this.SaveAsync();
         }
     }
 }

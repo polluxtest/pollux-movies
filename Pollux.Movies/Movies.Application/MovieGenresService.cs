@@ -49,7 +49,7 @@ namespace Movies.Application
                 });
             }
 
-            this.movieGenreRepository.Save();
+            await this.movieGenreRepository.SaveAsync();
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Movies.Application
                 this.movieGenreRepository.Delete(movieGenre);
             }
 
-            this.movieGenreRepository.Save();
+            await this.movieGenreRepository.SaveAsync();
         }
     }
 }

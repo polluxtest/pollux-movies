@@ -54,7 +54,7 @@ namespace Movies.Application
             this.mapper.Map(model, userMovie);
 
             await this.userMoviesRepository.AddASync(userMovie);
-            this.userMoviesRepository.Save();
+            await this.userMoviesRepository.SaveAsync();
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Movies.Application
         {
             var userMovie = await this.userMoviesRepository.GetAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
             this.userMoviesRepository.Delete(userMovie);
-            this.userMoviesRepository.Save();
+            await this.userMoviesRepository.SaveAsync();
         }
 
         /// <summary>
