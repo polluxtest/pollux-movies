@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Pollux.Movies.Auth
 {
@@ -84,9 +83,11 @@ namespace Pollux.Movies.Auth
             try
             {
                 var tokenIssuer = this.configuration.GetSection("AppSettings")["TokenIssuer"];
+                var signingKeyId = this.configuration.GetSection("AppSettings")["SigningKeyId"];
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandler.ReadJwtToken(token);
-                if (securityToken.Issuer.Equals(tokenIssuer))
+                var securityTokenSigningkeyId = securityToken.Header["kid"];
+                if (securityToken.Issuer.Equals(tokenIssuer) && signingKeyId.Equals(securityTokenSigningkeyId))
                 {
                     var claims = securityToken.Claims.ToList();
                     var expiration = claims[1].Value;
@@ -103,7 +104,7 @@ namespace Pollux.Movies.Auth
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
