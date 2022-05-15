@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cO4L+qwyoRjY66yAIGsl03xoffZqp1Ol/ZBFD/8FiBayDd/tV2RTIobuYGUI3DJRDMZbkVWaV3qRvsbn84Wxjg==",
+  "dgSpecHash": "OQl3uhtpjO9FTPgQ6FIIxGC45C/y1aVEE9zV72cbYrvTkVd/NXH/uloSLRJTpsn/LEgXRi79wolJEvQJDejuTA==",
   "success": true,
-  "projectFilePath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj",
+  "projectFilePath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

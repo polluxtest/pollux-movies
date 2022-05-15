@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "brpzBM8VRjTVlC+iZOxaYah7U+WabvyYP4s0KhrZpvSzos3JF9INFN2neuo6mU+pPyaAGEzT4/SKg/CXZptEpg==",
+  "dgSpecHash": "2k4CpCW3Gb5PWIwBAKMpGQ1TO32yUbhOdu4vaL47m1ijVLhkV7k7Qo4/MsmyEsFib4Y6yQmadVFnpIPFbfDtOQ==",
   "success": true,
-  "projectFilePath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj",
+  "projectFilePath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\linqkit.core\\1.1.24\\linqkit.core.1.1.24.nupkg.sha512",

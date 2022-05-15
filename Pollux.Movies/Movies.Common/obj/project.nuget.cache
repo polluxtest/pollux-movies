@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0pXyMqS5d8xII4JuH3gufrmZq1zNsup4E6ibYNIcR+GgncBWaPAev1M5H5TWZSuYzoVX/awyy3fnogxXAcrP5A==",
+  "dgSpecHash": "E9ZAIMIUy/jrH9XYqAZA4ngto1bcWnt0jkhlPFa5bSUlp94eQhG8Kxbd6c9NlbcZhJR4wxjc1jdxdGSVfYXgfg==",
   "success": true,
-  "projectFilePath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj",
+  "projectFilePath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.18\\microsoft.aspnetcore.authentication.jwtbearer.3.1.18.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.csharp\\4.3.0\\microsoft.csharp.4.3.0.nupkg.sha512",

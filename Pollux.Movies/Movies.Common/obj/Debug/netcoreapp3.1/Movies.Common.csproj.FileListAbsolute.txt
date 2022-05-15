@@ -16,3 +16,12 @@
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.dll
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.pdb
 \\Mac\Home\Documents\Pollux\pollux-movies-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.csprojAssemblyReference.cache
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\bin\Debug\netcoreapp3.1\Movies.Common.deps.json
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\bin\Debug\netcoreapp3.1\Movies.Common.dll
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\bin\Debug\netcoreapp3.1\Movies.Common.pdb
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.csprojAssemblyReference.cache
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.AssemblyInfoInputs.cache
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.AssemblyInfo.cs
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.csproj.CoreCompileInputs.cache
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.dll
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.pdb

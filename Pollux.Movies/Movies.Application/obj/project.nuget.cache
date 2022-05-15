@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+L5AJTQVp2rxTWV3VDB4JqpDJs/Pfs2jVD1MZOcJ6n8tQvVoKp2G0xlw/gZbtGsWDNNz6yRWaGlpNZma1jbTvQ==",
+  "dgSpecHash": "GWTU0QOAm3/KP/EliBSWChmUDn2CIFFaJTFbwjUfO4mmINyFLLXHiDPPIFLRW6idalbbtSECVd/jY0Pk7nt/oA==",
   "success": true,
-  "projectFilePath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj",
+  "projectFilePath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\linqkit.core\\1.1.24\\linqkit.core.1.1.24.nupkg.sha512",

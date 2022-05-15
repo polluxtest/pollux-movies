@@ -65,11 +65,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj",
+      "projectUniqueName": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj",
       "projectName": "Movies.Domain",
-      "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj",
+      "projectPath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj",
       "packagesPath": "C:\\Users\\octaviodiaz\\.nuget\\packages\\",
-      "outputPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\obj\\",
+      "outputPath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\octaviodiaz\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -5993,11 +5993,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj",
+      "projectUniqueName": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj",
       "projectName": "Movies.Application",
-      "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj",
+      "projectPath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Application\\Movies.Application.csproj",
       "packagesPath": "C:\\Users\\octaviodiaz\\.nuget\\packages\\",
-      "outputPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Application\\obj\\",
+      "outputPath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\octaviodiaz\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -6014,14 +6014,14 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj": {
-              "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj"
+            "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj": {
+              "projectPath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Common\\Movies.Common.csproj"
             },
-            "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj": {
-              "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj"
+            "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj": {
+              "projectPath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj"
             },
-            "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj": {
-              "projectPath": "\\\\Mac\\Home\\Documents\\Pollux\\pollux-movies-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj"
+            "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj": {
+              "projectPath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj"
             }
           }
         }
