@@ -5,6 +5,7 @@ using Movies.Application.ThirdParty;
 using Movies.Persistence;
 using Movies.Persistence.Repositories;
 using ReadFilesService;
+using Microsoft.Extensions.Logging;
 
 namespace Pollux.Movies
 {
@@ -42,6 +43,9 @@ namespace Pollux.Movies
             services.AddTransient<IGenresService, GenresService>();
             services.AddTransient<IImbdService, ImbdService>();
             services.AddTransient<ITranslationService, TranslationService>();
+            var serviceProvider = services.BuildServiceProvider();
+            var logger = serviceProvider.GetService<ILogger<ApplicationLogger>>();
+            services.AddSingleton(typeof(ILogger), logger);
         }
     }
 }

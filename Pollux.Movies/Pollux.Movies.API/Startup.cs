@@ -16,6 +16,7 @@ namespace Pollux.Movies
     using Pollux.Movies.Auth;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using global::Movies.Common.Constants.Strings;
+    using Pollux.API.Middlewares;
 
     public class Startup
     {
@@ -62,6 +63,7 @@ namespace Pollux.Movies
         /// <param name="env">The env.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ExceptionMiddleware>();
             this.AddSwagger(app);
             app.UseCors("CookiePolicy");
             app.UseRouting();
