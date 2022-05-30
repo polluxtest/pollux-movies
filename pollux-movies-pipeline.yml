@@ -52,7 +52,8 @@ steps:
 - task: AzureWebApp@1
   displayName: 'Azure Web App Deploy: polluxmoviesbackend'
   inputs:
-    azureSubscription: '$(Parameters.connectedServiceName)'
+    ConnectedServiceName: AzureServiceConnectionPrincipal
+    WebAppName: polluxmoviesapiservice
     appType: webAppLinux
     appName: '$(Parameters.WebAppName)'
     package: '$(build.artifactstagingdirectory)/**/*.zip'
