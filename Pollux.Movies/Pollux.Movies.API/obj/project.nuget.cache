@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OQl3uhtpjO9FTPgQ6FIIxGC45C/y1aVEE9zV72cbYrvTkVd/NXH/uloSLRJTpsn/LEgXRi79wolJEvQJDejuTA==",
+  "dgSpecHash": "9nUmxaMXYe+F/NJogTc8o3RcW/LMiuepBVN8OVG5DYjU5dAda41ujqywsOyiEaIVbHEgtvSMvXfC+rxp2Eiilw==",
   "success": true,
   "projectFilePath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Pollux.Movies.API\\Pollux.Movies.API.csproj",
   "expectedPackageFiles": [
@@ -155,7 +155,8 @@
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\octaviodiaz\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\octaviodiaz\\.nuget\\packages\\windowsazure.storage\\9.3.3\\windowsazure.storage.9.3.3.nupkg.sha512"
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\windowsazure.storage\\9.3.3\\windowsazure.storage.9.3.3.nupkg.sha512",
+    "C:\\Users\\octaviodiaz\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.25\\microsoft.netcore.app.host.win-x64.3.1.25.nupkg.sha512"
   ],
   "logs": []
 }

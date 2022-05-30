@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2k4CpCW3Gb5PWIwBAKMpGQ1TO32yUbhOdu4vaL47m1ijVLhkV7k7Qo4/MsmyEsFib4Y6yQmadVFnpIPFbfDtOQ==",
+  "dgSpecHash": "s6FoXmRX6SoKslX+Sbcc63XuripQkJrZFh3rB+6dd3aVxQShAH1wk3+pj9dKlTnCxnf13kIczf06RFJL+7zjGA==",
   "success": true,
   "projectFilePath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Persistence\\Movies.Persistence.csproj",
   "expectedPackageFiles": [
