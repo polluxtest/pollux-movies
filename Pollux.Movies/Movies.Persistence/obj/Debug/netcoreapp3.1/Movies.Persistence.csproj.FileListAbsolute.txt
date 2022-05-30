@@ -32,7 +32,6 @@ C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\bin\Debug\netcor
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\bin\Debug\netcoreapp3.1\Movies.Persistence.pdb
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\bin\Debug\netcoreapp3.1\Movies.Domain.dll
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\bin\Debug\netcoreapp3.1\Movies.Domain.pdb
-C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.csprojAssemblyReference.cache
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.AssemblyInfoInputs.cache
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.AssemblyInfo.cs
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.csproj.CoreCompileInputs.cache
@@ -40,3 +39,5 @@ C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcor
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.dll
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.pdb
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.genruntimeconfig.cache
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.csproj.AssemblyReference.cache
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Persistence\obj\Debug\netcoreapp3.1\Movies.Persistence.GeneratedMSBuildEditorConfig.editorconfig

@@ -32,10 +32,11 @@ C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\bin\Debug\netcor
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Common.pdb
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Domain.pdb
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\bin\Debug\netcoreapp3.1\Movies.Persistence.pdb
-C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.csprojAssemblyReference.cache
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.AssemblyInfoInputs.cache
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.AssemblyInfo.cs
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.csproj.CoreCompileInputs.cache
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.csproj.CopyComplete
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.dll
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.pdb
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.csproj.AssemblyReference.cache
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Application\obj\Debug\netcoreapp3.1\Movies.Application.GeneratedMSBuildEditorConfig.editorconfig

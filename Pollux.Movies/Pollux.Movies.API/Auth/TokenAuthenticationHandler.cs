@@ -54,6 +54,12 @@ namespace Pollux.Movies.Auth
             {
                 this.Request.Headers.TryGetValue("Authorization", out var token);
                 this.logger.LogInformation($"token {token}");
+                if (string.IsNullOrEmpty(token))
+                {
+                    this.logger.LogInformation($"Initial Authorization token empty {token}");
+                    return Task.FromResult(AuthenticateResult.NoResult());
+                }
+
                 var claims = new[] { new Claim("token", token) };
                 var identity = new ClaimsIdentity(claims, nameof(TokenAuthenticationHandler));
                 var ticket = new AuthenticationTicket(new ClaimsPrincipal(identity), this.Scheme.Name);

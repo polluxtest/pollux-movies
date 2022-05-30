@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HhQAiE4jgWuXvKRB4UmY5lOKZXEljK9NGQkJNjAnheqU9B6aXyPGNwul0r403cJFO5tH8U/7BnUxVmvtgBxBkw==",
+  "dgSpecHash": "veVrWaZBvmSpBTM/J1bYubK5CseeCxQImiZxkMHPy15Yz93AVUtvwC49DdSKCQ8TeLQVHs8JCiCPUXH1Okgadg==",
   "success": true,
   "projectFilePath": "C:\\Pollux\\pollux-movie-service\\Pollux.Movies\\Movies.Domain\\Movies.Domain.csproj",
   "expectedPackageFiles": [

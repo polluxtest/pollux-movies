@@ -18,17 +18,17 @@ namespace Pollux.Movies
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     environment = hostingContext.HostingEnvironment.EnvironmentName;
-                    if (environment == "Development")
-                    {
-                        config.AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true);
-                    }
-                    else
-                    {
-                        config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
-                    }
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+                    config.AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    if (environment == "Development")
+                    {
+                        webBuilder.UseStartup<Startup>()
+                        .UseUrls("http:localhost:4001");
+
+                    }
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseKestrel();
 
