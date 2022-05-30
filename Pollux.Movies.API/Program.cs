@@ -3,7 +3,7 @@ namespace Pollux
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
-    using Pollux.API;
+    using Pollux.Movies;
 
     public class Program
     {
