@@ -24,3 +24,4 @@ C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.csproj.CoreCompileInputs.cache
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.dll
 C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.pdb
+C:\Pollux\pollux-movie-service\Pollux.Movies\Movies.Common\obj\Debug\netcoreapp3.1\Movies.Common.csprojAssemblyReference.cache
