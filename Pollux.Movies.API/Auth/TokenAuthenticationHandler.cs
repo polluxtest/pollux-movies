@@ -114,29 +114,38 @@ namespace Pollux.Movies.Auth
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandler.ReadJwtToken(token);
-                this.logger.LogInformation($"token decoded jwt {tokenIssuer}");
+                this.logger.LogInformation($"token decoded jwt issuer {securityToken.Issuer}");
                 var securityTokenSigningkeyId = securityToken.Header["kid"];
                 this.logger.LogInformation($"signing key request header {securityTokenSigningkeyId}");
 
-                if (securityToken.Issuer.Equals(tokenIssuer) && signingKeyId.Equals(securityTokenSigningkeyId))
+                if (securityToken.Issuer.Equals(tokenIssuer))
                 {
-                    var claims = securityToken.Claims.ToList();
-                    this.logger.LogInformation($"claims  {claims}");
-                    this.logger.LogInformation("token issuer and token decoded is the same ok.");
-                    var expiration = claims[1].Value;
-
-                    this.logger.LogInformation($"expiration  {expiration}");
-
-                    var expirationDateTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiration));
-                    if (DateTime.UtcNow > expirationDateTime)
+                    this.logger.LogInformation("Token issuer matched");
+                    if (signingKeyId.Equals(securityTokenSigningkeyId))
                     {
-                        this.logger.LogInformation($"expired token");
-                        return false;
+                        this.logger.LogInformation("Signing key matched");
+                        var claims = securityToken.Claims.ToList();
+                        this.logger.LogInformation($"claims  {claims}");
+                        this.logger.LogInformation("token issuer and token decoded is the same ok.");
+                        var expiration = claims[1].Value;
+
+                        this.logger.LogInformation($"expiration  {expiration}");
+
+                        var expirationDateTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiration));
+                        if (DateTime.UtcNow > expirationDateTime)
+                        {
+                            this.logger.LogInformation($"expired token");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        this.logger.LogInformation("signing key NOT MATCHED");
                     }
                 }
                 else
                 {
-                    this.logger.LogInformation("token issuer and token decoded is NOT the same failed.");
+                    this.logger.LogInformation("token issuer NOT MATCHED");
                     return false;
                 }
 
