@@ -110,10 +110,14 @@ namespace Pollux.Movies.Auth
                 var tokenIssuer = this.configuration.GetSection("AppSettings")["TokenIssuer"];
                 this.logger.LogInformation($"token issuer app settings {tokenIssuer}");
                 var signingKeyId = this.configuration.GetSection("AppSettings")["SigningKeyId"];
+                this.logger.LogInformation($"signing key app settings {signingKeyId}");
+
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandler.ReadJwtToken(token);
                 this.logger.LogInformation($"token decoded jwt {tokenIssuer}");
                 var securityTokenSigningkeyId = securityToken.Header["kid"];
+                this.logger.LogInformation($"signing key request header {securityTokenSigningkeyId}");
+
                 if (securityToken.Issuer.Equals(tokenIssuer) && signingKeyId.Equals(securityTokenSigningkeyId))
                 {
                     var claims = securityToken.Claims.ToList();
