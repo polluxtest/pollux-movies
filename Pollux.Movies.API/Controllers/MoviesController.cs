@@ -9,6 +9,7 @@ using Movies.Common.Constants.Strings;
 
 namespace Pollux.Movies.Controllers
 {
+    [AllowAnonymous]
     public class MoviesController : BaseController
     {
         private readonly IMoviesService moviesService;
