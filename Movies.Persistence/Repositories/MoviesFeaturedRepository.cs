@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Movies.Domain.Entities;
-using Movies.Persistence.Repositories.Base;
-using Movies.Persistence.Repositories.Base.Interfaces;
-
-namespace Movies.Persistence.Repositories
+﻿namespace Movies.Persistence.Repositories
 {
+    using Microsoft.EntityFrameworkCore;
+    using Movies.Domain.Entities;
+    using Movies.Persistence.Repositories.Base;
+    using Movies.Persistence.Repositories.Base.Interfaces;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Movies Featured Repository contract.
