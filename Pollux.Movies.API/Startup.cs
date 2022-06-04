@@ -3,20 +3,18 @@ using Movies.Persistence;
 
 namespace Pollux.Movies
 {
-    using System.Collections.Generic;
     using AzureUploaderTransformerVideos;
+    using FluentValidation.AspNetCore;
+    using global::Movies.Common.Constants.Strings;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
-    using FluentValidation.AspNetCore;
-    using Pollux.Movies.Auth;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using global::Movies.Common.Constants.Strings;
     using Pollux.API.Middlewares;
+    using Pollux.Movies.Auth;
+    using System.Collections.Generic;
 
     public class Startup
     {
@@ -102,18 +100,20 @@ namespace Pollux.Movies
         }
 
         /// <summary>
-        /// Adds the cors.
+        /// Adds the CORS policy.
         /// </summary>
         /// <param name="services">The services.</param>
         /// <param name="allowedOrigin">The allowed url origin front end.</param>
         private void AddCors(IServiceCollection services, string allowedOrigin)
         {
+            var origins = allowedOrigin.Split(',');
+
             services.AddCors(options =>
             {
                 options.AddPolicy(
                     "CookiePolicy",
                     builder =>
-                        builder.WithOrigins(allowedOrigin)
+                        builder.WithOrigins(origins)
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowCredentials());
