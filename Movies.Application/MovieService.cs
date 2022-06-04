@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Movies.Application.ExtensionMethods;
 using Movies.Application.Models;
 using Movies.Common.Constants.Strings;
-using Movies.Common.ExtensionMethods;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
 using Pitcher;
-using Movies.Application.ExtensionMethods;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Movies.Application
 {
@@ -45,7 +42,7 @@ namespace Movies.Application
 
         Task<Movie> GetAsync(Guid movieId);
 
-        Task<List<string>> GetMoviesNames();
+        Task<List<string>> GetMovieSearchOptions();
 
     }
 
@@ -327,11 +324,17 @@ namespace Movies.Application
         /// Gets the movies names.
         /// </summary>
         /// <returns>List<string/></returns>
-        public async Task<List<string>> GetMoviesNames()
+        public async Task<List<string>> GetMovieSearchOptions()
         {
-            var moviesList = await this.GetAll();
+            var resultOptions = new List<string>();
+            var moviesList = await this.moviesRepository.GetAllAsync();
+            var directorsList = moviesList.Select(p => p.Director.Name).Distinct().ToList();
+            var movieNamesList = moviesList.Select(p => p.Name).ToList();
 
-            return moviesList.Select(p => p.Name).ToList();
+            resultOptions.AddRange(movieNamesList);
+            resultOptions.AddRange(directorsList);
+
+            return resultOptions;
         }
     }
 }

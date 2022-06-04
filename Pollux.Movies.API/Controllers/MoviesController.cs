@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Application;
 using Movies.Application.Models;
 using Movies.Common.Constants.Strings;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Pollux.Movies.Controllers
 {
@@ -141,9 +141,9 @@ namespace Pollux.Movies.Controllers
         [Route(ApiRoutesConstants.GetMovieNames)]
         public async Task<ActionResult<List<string>>> GetMoviesNames()
         {
-            var movieNames = await this.moviesService.GetMoviesNames();
+            var movieSearchResultOptions = await this.moviesService.GetMovieSearchOptions();
 
-            return movieNames;
+            return movieSearchResultOptions;
         }
 
     }
