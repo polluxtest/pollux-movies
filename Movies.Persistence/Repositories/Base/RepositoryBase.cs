@@ -1,13 +1,13 @@
-﻿using System;
+﻿using LinqKit;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Movies.Persistence.Repositories.Base.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using LinqKit;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Movies.Persistence.Repositories.Base.Interfaces;
 
 namespace Movies.Persistence.Repositories.Base
 {
@@ -368,6 +368,12 @@ namespace Movies.Persistence.Repositories.Base
         public async Task SaveAsync()
         {
             await this.dbContext.SaveChangesAsync();
+        }
+
+        /// <summary>Saves the specified entity.</summary>
+        public void Save()
+        {
+            this.dbContext.SaveChanges();
         }
     }
 }

@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Movies.Application;
-using Movies.Application.Models;
-using Movies.Common.Constants.Strings;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Pollux.Movies.Controllers
+﻿namespace Pollux.Movies.Controllers
 {
-    [AllowAnonymous]
+    using global::Movies.Application;
+    using global::Movies.Application.Models;
+    using global::Movies.Common.Constants.Strings;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public class MoviesController : BaseController
     {
         private readonly IMoviesService moviesService;

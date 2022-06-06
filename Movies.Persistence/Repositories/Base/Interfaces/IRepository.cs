@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Movies.Persistence.Repositories.Base.Interfaces
 {
@@ -15,12 +15,20 @@ namespace Movies.Persistence.Repositories.Base.Interfaces
         where TEntity : class
     {
         /// <summary>
-        /// Saves this instance.
+        /// Saves this instance async.
         /// </summary>
         /// <returns>
         /// Task.
         /// </returns>
         Task SaveAsync();
+
+        /// <summary>
+        /// Saves this instance.
+        /// </summary>
+        /// <returns>
+        /// Task.
+        /// </returns>
+        void Save();
 
         /// <summary>
         /// Adds the specified entity.

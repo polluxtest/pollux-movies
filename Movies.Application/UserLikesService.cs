@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Movies.Application.Models;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Movies.Application
 {
@@ -119,10 +119,10 @@ namespace Movies.Application
         /// Updates the movie.
         /// </summary>
         /// <param name="movie">The movie.</param>
-        private async void UpdateMovie(Movie movie)
+        private void UpdateMovie(Movie movie)
         {
             this.moviesRepository.Update(movie);
-            await this.moviesRepository.SaveAsync();
+            this.moviesRepository.Save(); // todo race condition on dispose with save async
         }
     }
 }
