@@ -21,5 +21,8 @@
         /// The featured sorting.
         /// </summary>
         public const string Featured = "Featured";
+
+        /// <summary>The magic sort</summary>
+        public const string Magic = "Magic";
     }
 }

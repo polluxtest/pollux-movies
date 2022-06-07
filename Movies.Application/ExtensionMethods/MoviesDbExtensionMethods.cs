@@ -16,15 +16,9 @@
         /// <returns>IEnumerable<Movie/></returns>
         public static List<Movie> SortCustomBy(this List<Movie> movies, string sortBy = null)
         {
-            if (string.IsNullOrEmpty(sortBy))
-            {
-                var rng = new Random();
-                var moviesRandomOrder = movies.OrderBy(a => rng.Next()).ToList();
-                return moviesRandomOrder;
-            }
-
             switch (sortBy)
             {
+                case SortByConstants.Magic: movies = MagicSort(movies); break;
                 case SortByConstants.AlphaAscending: movies = movies.OrderBy(p => p.Name).ToList(); break;
                 case SortByConstants.AlphaDescending: movies = movies.OrderByDescending(p => p.Name).ToList(); break;
                 case SortByConstants.Imbd: movies = movies.OrderByDescending(p => p.Imbd).ToList(); break;
@@ -32,6 +26,16 @@
             }
 
             return movies;
+        }
+
+        /// <summary>Magics the sort.</summary>
+        /// <param name="movies">The movies.</param>
+        /// <returns>List<Movie></Movie></returns>
+        private static List<Movie> MagicSort(List<Movie> movies)
+        {
+            var rng = new Random();
+            var moviesRandomOrder = movies.OrderBy(a => rng.Next()).ToList();
+            return moviesRandomOrder;
         }
     }
 }
