@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Movies.Application.Models;
 using Movies.Domain.Entities;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Movies.Application.Mappers
 {
@@ -24,9 +23,9 @@ namespace Movies.Application.Mappers
 
             this.CreateMap<AddRemoveUserMovieModel, UserLikes>();
 
-            this.CreateMap<MovieFeatured, MovieFeaturedModel>()
-                .ForMember(dest => dest.DirectorName, opt => opt.MapFrom(p => p.Movie.Director.Name))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(p => p.Movie.Name));
+            this.CreateMap<MovieFeatured, MovieFeaturedModel>().ForMember(
+                dest => dest.Movie,
+                opt => opt.MapFrom(p => p.Movie));
         }
     }
 }

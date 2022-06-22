@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Movies.Domain.Entities
+﻿namespace Movies.Domain.Entities
 {
+    using System;
+
     public class MovieGenres
     {
         /// <summary>

@@ -1,17 +1,17 @@
-﻿using AutoMapper;
-using Movies.Application.ExtensionMethods;
-using Movies.Application.Models;
-using Movies.Common.Constants.Strings;
-using Movies.Domain.Entities;
-using Movies.Persistence.Repositories;
-using Pitcher;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Movies.Application
+﻿namespace Movies.Application
 {
+    using AutoMapper;
+    using Movies.Application.ExtensionMethods;
+    using Movies.Application.Models;
+    using Movies.Common.Constants.Strings;
+    using Movies.Domain.Entities;
+    using Movies.Persistence.Repositories;
+    using Pitcher;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public interface IMoviesService
     {
         Task<List<Movie>> GetAll(bool processedByAzureJob = false);

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-
-namespace Movies.Domain.Entities
+﻿namespace Movies.Domain.Entities
 {
+    using System;
+
     public class MovieFeatured
     {
         public int Id { get; set; }

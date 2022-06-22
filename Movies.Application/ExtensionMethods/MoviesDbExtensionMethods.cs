@@ -23,6 +23,7 @@
                 case SortByConstants.AlphaDescending: movies = movies.OrderByDescending(p => p.Name).ToList(); break;
                 case SortByConstants.Imbd: movies = movies.OrderByDescending(p => p.Imbd).ToList(); break;
                 case SortByConstants.Featured: movies = movies.OrderByDescending(p => p.Likes).ToList(); break;
+                default: movies = MagicSort(movies); break;
             }
 
             return movies;

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Movies.Domain.Entities
+﻿namespace Movies.Domain.Entities
 {
+    using System;
+
     /// <summary>
     /// Movie Entity.
     /// </summary>
