@@ -16,7 +16,7 @@
     {
         private readonly IMovieGenresService moviesGenreService;
         private readonly IMoviesFeaturedRepository moviesFeaturedRepository;
-        private IMapper mapper;
+        private readonly IMapper mapper;
 
         public MoviesFeaturedService(
             IMovieGenresService moviesGenresService,
