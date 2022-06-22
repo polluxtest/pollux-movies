@@ -29,7 +29,7 @@ steps:
 - task: VSBuild@1
   displayName: 'Build solution **\*.sln'
   inputs:
-    solution: '$(Parameters.solution)'
+    solution: 'Pollux.Movies.sln'
     msbuildArgs: '/p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:publishUrl="$(Agent.TempDirectory)\WebAppContent\\"'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
