@@ -50,10 +50,9 @@ steps:
     configuration: '$(BuildConfiguration)'
 
 - task: AzureWebApp@1
-  displayName: 'Azure Web App Deploy: polluxmoviesbackend'
+  displayName: 'Azure Web App Deploy: polluxmovies'
   inputs:
-    ConnectedServiceName: AzureServiceConnectionPrincipal
-    WebAppName: polluxmoviesapiservice
+    azureSubscription: '$(Parameters.connectedServiceName)'
     appType: webAppLinux
     appName: '$(Parameters.WebAppName)'
     package: '$(build.artifactstagingdirectory)/**/*.zip'
@@ -70,3 +69,4 @@ steps:
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
   condition: succeededOrFailed()
+
