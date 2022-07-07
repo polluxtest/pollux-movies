@@ -54,6 +54,7 @@
         private readonly IMapper mapper;
         private readonly IGenresService genresService;
         private readonly IMovieGenresService movieGenresService;
+        private readonly IMoviesWatchingService moviesWatchingService;
 
         public MoviesService(
             IMoviesRepository moviesRepository,
@@ -61,6 +62,7 @@
             IUserLikesService userMovieLikesService,
             IGenresService genresService,
             IMovieGenresService movieGenreService,
+            IMoviesWatchingService moviesWatchingService,
             IMapper mapper)
         {
             this.moviesRepository = moviesRepository;
@@ -68,6 +70,7 @@
             this.userMovieLikesService = userMovieLikesService;
             this.genresService = genresService;
             this.movieGenresService = movieGenreService;
+            this.moviesWatchingService = moviesWatchingService;
             this.mapper = mapper;
         }
 
@@ -263,11 +266,14 @@
             var movieInfoModel = new MovieInfoModel();
             var movieDb = await this.moviesRepository.GetAsync(movieId);
             var genres = await this.movieGenresService.GetAllByMovieIdAsync(movieId);
+            var movieContinueWatching = await this.moviesWatchingService.GetAsync(userId, movieId);
 
             Throw.When(movieDb == null, new ArgumentException($"movie not found id {movieId}"));
 
             movieInfoModel.IsInList = await this.userMoviesService.IsMovieInListByUser(movieId, userId);
             movieInfoModel.IsLiked = await this.userMovieLikesService.IsMovieLikedByUser(movieId, userId);
+            movieInfoModel.ElapsedTime = movieContinueWatching?.ElapsedTime ?? 0;
+            movieInfoModel.Duration = movieContinueWatching?.Duration ?? 0;
             movieInfoModel.Genres = genres;
 
             return this.mapper.Map<Movie, MovieInfoModel>(movieDb, movieInfoModel);

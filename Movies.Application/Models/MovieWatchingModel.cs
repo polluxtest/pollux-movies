@@ -1,22 +1,24 @@
 ﻿namespace Movies.Application.Models
 {
-    public class MovieInfoModel : MovieModel
+    using System;
+
+    public class MovieWatchingModel
     {
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is liked.
+        /// Gets or sets the user identifier.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is liked; otherwise, <c>false</c>.
+        /// The user identifier.
         /// </value>
-        public bool IsLiked { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is in list.
+        /// Gets or sets the movie identifier.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is in list; otherwise, <c>false</c>.
+        /// The movie identifier.
         /// </value>
-        public bool IsInList { get; set; }
+        public Guid MovieId { get; set; }
 
         /// <summary>Gets or sets the elapsed time.</summary>
         /// <value>The elapsed time.</value>

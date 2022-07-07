@@ -81,8 +81,18 @@
         public const string FeaturedMovies = "FeaturedMovies";
 
         /// <summary>
-        /// The get imbd movie ranking
+        /// The get IMBD movie ranking
         /// </summary>
         public const string GetImbdMovieRanking = "GetImbdMovieRanking";
+
+        /// <summary>
+        /// The get all continue watching
+        /// </summary>
+        public const string GetAllContinueWatching = "GetAllContinueWatching";
+
+        /// <summary>
+        /// The get continue watching
+        /// </summary>
+        public const string GetContinueWatching = "GetContinueWatching";
     }
 }

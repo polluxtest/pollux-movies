@@ -1,11 +1,11 @@
-﻿using AutoMapper;
-using Movies.Application.Models;
-using Movies.Domain.Entities;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-
-namespace Movies.Application.Mappers
+﻿namespace Movies.Application.Mappers
 {
+    using AutoMapper;
+    using Movies.Application.Models;
+    using Movies.Domain.Entities;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+
     public class MovieMappers : Profile
     {
         public MovieMappers()
@@ -26,6 +26,8 @@ namespace Movies.Application.Mappers
             this.CreateMap<MovieFeatured, MovieFeaturedModel>().ForMember(
                 dest => dest.Movie,
                 opt => opt.MapFrom(p => p.Movie));
+
+            this.CreateMap<MovieWatching, MovieWatchingModel>().ReverseMap();
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Movies.Common.Constants.Strings
+﻿namespace Movies.Common.Constants.Strings
 {
     public class TitleConstants
     {
@@ -11,5 +7,7 @@ namespace Movies.Common.Constants.Strings
         public const string Search = "Titles related to your search";
         public const string RecommendedByPollux = "Recommended by Pollux";
         public const string RecommendedByUsers = "Recommended by Users";
+        public const string ContinueWatching = "Continue Watching";
+
     }
 }
