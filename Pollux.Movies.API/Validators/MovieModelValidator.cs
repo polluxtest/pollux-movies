@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Movies.Application.Models.Requests;
 
 namespace Pollux.Movies.Validators
 {
-    public class MovieModelValidator
+    public class MovieWartchingRequestValidator : AbstractValidator<MovieContinueWatchingRequest>
     {
+        public MovieWartchingRequestValidator()
+        {
+            this.RuleFor(p => p.MovieId).NotNull().NotEmpty().WithMessage("Invalid movie id");
+            this.RuleFor(p => p.UserId).NotNull().NotEmpty().WithMessage("Invalid User id");
+        }
     }
 }

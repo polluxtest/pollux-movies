@@ -27,7 +27,7 @@
                 dest => dest.Movie,
                 opt => opt.MapFrom(p => p.Movie));
 
-            this.CreateMap<MovieWatching, MovieWatchingModel>().ReverseMap();
+            this.CreateMap<MovieWatching, MovieWatchingModel>();
         }
     }
 }

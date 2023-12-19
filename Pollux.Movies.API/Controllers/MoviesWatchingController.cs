@@ -1,7 +1,9 @@
 ﻿namespace Pollux.Movies.Controllers
 {
+    using Azure.Core;
     using global::Movies.Application;
     using global::Movies.Application.Models;
+    using global::Movies.Application.Models.Requests;
     using global::Movies.Common.Constants.Strings;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -28,15 +30,16 @@
             return this.NoContent();
         }
 
-        /// <summary>Gets the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="movieId">The movie identifier.</param>
-        /// <returns>MovieWatchingModel.</returns>
+        /// <summary>
+        /// Gets the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>MovieWatchingModel</returns>
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<MovieWatchingModel>> Get([FromQuery] string userId, [FromQuery] Guid movieId)
+        public async Task<ActionResult<MovieWatchingModel>> Get([FromQuery] MovieContinueWatchingRequest request)
         {
-            var movieWatchingModel = await this.moviesWatchingService.GetAsync(userId, movieId);
+            var movieWatchingModel = await this.moviesWatchingService.GetAsync(request);
             return this.Ok(movieWatchingModel);
         }
 

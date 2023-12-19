@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using Movies.Application.Models;
+    using Movies.Application.Models.Requests;
     using Movies.Common.Constants.Strings;
     using Movies.Domain.Entities;
     using Movies.Persistence.Repositories;
@@ -11,7 +12,7 @@
 
     public interface IMoviesWatchingService
     {
-        Task<MovieWatchingModel> GetAsync(string userId, Guid movieId);
+        Task<MovieWatchingModel> GetAsync(MovieContinueWatchingRequest request);
         Task Save(MovieWatchingModel movieWatchingModel);
         Task<List<MoviesByCategoryModel>> GetAllAsync(string userId);
     }
@@ -27,13 +28,14 @@
             this.mapper = mapper;
         }
 
-        /// <summary>Gets the asynchronous.</summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="movieId">The movie identifier.</param>
-        /// <returns>MovieWatching.</returns>
-        public async Task<MovieWatchingModel> GetAsync(string userId, Guid movieId)
+        /// <summary>
+        /// Gets the asynchronous.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>MovieWatchingModel</returns>
+        public async Task<MovieWatchingModel> GetAsync(MovieContinueWatchingRequest request)
         {
-            var movieContinueWatchingDb = await this.moviesWatchingRepository.GetAsync(p => p.UserId == userId && p.MovieId == movieId);
+            var movieContinueWatchingDb = await this.moviesWatchingRepository.GetAsync(request.UserId,request.MovieId);
             return this.mapper.Map<MovieWatching, MovieWatchingModel>(movieContinueWatchingDb);
         }
 

@@ -1,17 +1,19 @@
-﻿namespace Movies.Application
-{
-    using AutoMapper;
-    using Movies.Application.ExtensionMethods;
-    using Movies.Application.Models;
-    using Movies.Common.Constants.Strings;
-    using Movies.Domain.Entities;
-    using Movies.Persistence.Repositories;
-    using Pitcher;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+﻿using AutoMapper;
+using Movies.Application.ExtensionMethods;
+using Movies.Application.Models;
+using Movies.Common.Constants.Strings;
+using Movies.Domain.Entities;
+using Movies.Persistence.Repositories;
+using Pitcher;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Movies.Common.ExtensionMethods;
+using Movies.Application.Models.Requests;
 
+namespace Movies.Application
+{
     public interface IMoviesService
     {
         Task<List<Movie>> GetAll(bool processedByAzureJob = false);
@@ -216,14 +218,19 @@
         }
 
         /// <summary>
-        /// Searches the specified search.
+        /// Searches the specified search takes 15 movies to avoid returning too many.
         /// </summary>
         /// <param name="search">The search.</param>
         /// <returns>List<MovieModel></returns>
         public async Task<List<MovieModel>> Search(string search)
         {
+            if (string.IsNullOrEmpty(search))
+            {
+                search = search.RandomLetter(97, 123);
+            }
+
             var moviesDbSearch = await this.moviesRepository.Search(search);
-            var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDbSearch);
+            var movies = this.mapper.Map<List<Movie>, List<MovieModel>>(moviesDbSearch.Take(15).ToList());
 
             return movies;
         }
@@ -266,7 +273,8 @@
             var movieInfoModel = new MovieInfoModel();
             var movieDb = await this.moviesRepository.GetAsync(movieId);
             var genres = await this.movieGenresService.GetAllByMovieIdAsync(movieId);
-            var movieContinueWatching = await this.moviesWatchingService.GetAsync(userId, movieId);
+            var movieContinueWatching = await this.moviesWatchingService
+                .GetAsync(new MovieContinueWatchingRequest() { UserId = userId, MovieId = movieId });
 
             Throw.When(movieDb == null, new ArgumentException($"movie not found id {movieId}"));
 

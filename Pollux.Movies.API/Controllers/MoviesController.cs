@@ -73,8 +73,6 @@
         [Route(ApiRoutesConstants.Search)]
         public async Task<ActionResult<List<MovieModel>>> Search(string search)
         {
-            if (string.IsNullOrEmpty(search)) return this.BadRequest("invalid search text");
-
             var searchMovies = await this.moviesService.Search(search);
 
             return this.Ok(searchMovies);

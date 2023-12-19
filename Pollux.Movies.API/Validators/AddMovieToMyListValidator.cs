@@ -8,7 +8,7 @@ namespace Pollux.Movies.Validators
     {
         public AddMovieToMyListValidator()
         {
-            this.RuleFor(p => p.MovieId).NotEmpty().WithMessage("Invalid movie id");
+            this.RuleFor(p => p.MovieId).NotNull().NotEmpty().WithMessage("Invalid movie id");
             this.RuleFor(p => p.UserId).NotNull().NotEmpty().WithMessage("Invalid User id");
         }
     }

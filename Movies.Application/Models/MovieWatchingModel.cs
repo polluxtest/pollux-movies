@@ -20,6 +20,14 @@
         /// </value>
         public Guid MovieId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the movie.
+        /// </summary>
+        /// <value>
+        /// The movie identifier.
+        /// </value>
+        public MovieModel Movie { get; set; }
+
         /// <summary>Gets or sets the elapsed time.</summary>
         /// <value>The elapsed time.</value>
         public decimal ElapsedTime { get; set; }
