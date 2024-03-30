@@ -54,7 +54,7 @@ namespace Movies.Persistence.Repositories.Base
         /// Adds the asynchronous.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public async Task AddASync(TEntity entity)
+        public async Task AddAsync(TEntity entity)
         {
             await this.dbSet.AddAsync(entity);
         }

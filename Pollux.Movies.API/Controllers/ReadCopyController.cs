@@ -12,12 +12,12 @@ namespace Pollux.Movies.Controllers
     public class ReadCopyController : BaseController
     {
         private readonly IFileReader fileReader;
-        private readonly IGenresService genresService;
+        private readonly IMoviesGenresService genresService;
         private readonly IMoviesService moviesService;
 
         public ReadCopyController(
             IFileReader fileReader,
-            IGenresService genresService,
+            IMoviesGenresService genresService,
             IMoviesService moviesService)
         {
             this.fileReader = fileReader;

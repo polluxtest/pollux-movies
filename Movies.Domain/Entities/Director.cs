@@ -1,4 +1,4 @@
-namespace Movies.Domain
+namespace Movies.Domain.Entities
 {
     /// <summary>
     /// Director Entity.

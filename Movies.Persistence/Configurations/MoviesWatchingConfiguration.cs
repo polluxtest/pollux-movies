@@ -9,9 +9,9 @@ namespace Movies.Persistence.Configurations
         public void Configure(EntityTypeBuilder<MovieWatching> builder)
         {
             builder.HasKey(p => new { p.UserId, p.MovieId });
-            builder.Property(p => p.ElapsedTime).HasDefaultValue(0).HasColumnType("decimal");
-            builder.Property(p => p.Duration).HasDefaultValue(0).HasColumnType("decimal");
-            builder.HasOne<Movie>(p => p.Movie);
+            builder.Property(p => p.ElapsedTime).HasDefaultValue(0);
+            builder.Property(p => p.Duration).HasDefaultValue(0);
+            builder.Property(p => p.RemainingTime).HasDefaultValue(0);
             builder.HasIndex(p => new { p.UserId, p.MovieId });
         }
     }

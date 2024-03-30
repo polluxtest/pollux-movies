@@ -2,7 +2,7 @@
 
 namespace Movies.Domain.Entities
 {
-    public class UserMovies
+    public class MoviesLists
     {
         /// <summary>
         /// Gets or sets the user identifier.

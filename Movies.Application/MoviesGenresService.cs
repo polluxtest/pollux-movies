@@ -5,21 +5,21 @@ using Movies.Persistence.Repositories;
 
 namespace Movies.Application
 {
-    public interface IGenresService
+    public interface IMoviesGenresService
     {
         Task AddAsync(List<string> genres);
         Task<List<Genre>> GetAllAsync();
     }
 
-    public class GenresService : IGenresService
+    public class MoviesGenresService : IMoviesGenresService
     {
-        private readonly IGenresRepository genresRepository;
+        private readonly IMoviesGenresRepository genresRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenresService"/> class.
+        /// Initializes a new instance of the <see cref="MoviesGenresService"/> class.
         /// </summary>
         /// <param name="genresRepository">The genres repository.</param>
-        public GenresService(IGenresRepository genresRepository)
+        public MoviesGenresService(IMoviesGenresRepository genresRepository)
         {
             this.genresRepository = genresRepository;
         }

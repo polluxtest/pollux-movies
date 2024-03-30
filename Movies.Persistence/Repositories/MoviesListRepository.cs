@@ -9,15 +9,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Movies.Persistence.Repositories
 {
-    public interface IUserMoviesRepository : IRepository<UserMovies>
+    public interface IMoviesListRepository : IRepository<MoviesLists>
     {
         Task<List<Guid>> GetMoviesListIds(string userId);
         Task<List<Movie>> GetMoviesMyList(string userId);
     }
 
-    public class UserMoviesRepository : RepositoryBase<UserMovies>, IUserMoviesRepository
+    public class MoviesListRepository : RepositoryBase<MoviesLists>, IMoviesListRepository
     {
-        public UserMoviesRepository(PolluxMoviesDbContext moviesDbContext)
+        public MoviesListRepository(PolluxMoviesDbContext moviesDbContext)
            : base(moviesDbContext)
         {
 

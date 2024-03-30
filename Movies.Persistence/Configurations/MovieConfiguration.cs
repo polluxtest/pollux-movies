@@ -31,7 +31,7 @@ namespace Movies.Persistence.Configurations
             builder.Property(p => p.Recommended).HasDefaultValue(false);
 
             builder.HasOne<Director>(p => p.Director);
-            builder.HasIndex("Name", "Gender", "Language", "Likes", "Recommended", "Imbd");
+            builder.HasIndex("Name", "Language", "Likes", "Recommended", "Imbd");
         }
     }
 }

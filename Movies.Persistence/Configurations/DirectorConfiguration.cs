@@ -1,4 +1,6 @@
-﻿namespace Movies.Persistence.Configurations
+﻿using Movies.Domain.Entities;
+
+namespace Movies.Persistence.Configurations
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;

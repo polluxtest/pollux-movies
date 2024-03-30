@@ -25,9 +25,6 @@ namespace Movies.Persistence.Repositories.Base.Interfaces
         /// <summary>
         /// Saves this instance.
         /// </summary>
-        /// <returns>
-        /// Task.
-        /// </returns>
         void Save();
 
         /// <summary>
@@ -40,7 +37,7 @@ namespace Movies.Persistence.Repositories.Base.Interfaces
         /// Adds the asynchronous.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        Task AddASync(TEntity entity);
+        Task AddAsync(TEntity entity);
 
         /// <summary>
         /// Anies the specified where.

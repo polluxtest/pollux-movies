@@ -4,10 +4,11 @@ using Movies.Domain.Entities;
 
 namespace Movies.Persistence.Configurations
 {
-    public class UserMoviesConfiguration : IEntityTypeConfiguration<UserMovies>
+    public class MoviesListsConfiguration : IEntityTypeConfiguration<MoviesLists>
     {
-        public void Configure(EntityTypeBuilder<UserMovies> builder)
+        public void Configure(EntityTypeBuilder<MoviesLists> builder)
         {
+            builder.ToTable<MoviesLists>("MoviesLists");
             builder.HasKey(p => new { p.UserId, p.MovieId });
             builder.HasIndex("UserId", "MovieId");
         }

@@ -46,7 +46,7 @@ namespace Movies.Persistence
         /// <value>
         /// The user movies.
         /// </value>
-        public DbSet<UserMovies> UserMovies { get; set; }
+        public DbSet<MoviesLists> UserMovies { get; set; }
 
         /// <summary>
         /// Gets or sets the user likes.
@@ -54,7 +54,7 @@ namespace Movies.Persistence
         /// <value>
         /// The user likes.
         /// </value>
-        public DbSet<UserLikes> UserLikes { get; set; }
+        public DbSet<MoviesLikes> UserLikes { get; set; }
 
 
         /// <summary>

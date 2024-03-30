@@ -4,7 +4,7 @@
     {
         /// <summary>Gets or sets the movie.</summary>
         /// <value>The movie.</value>
-        public MovieInfoModel Movie { get; set; }
+        public MovieModel Movie { get; set; }
 
         /// <summary>
         /// Gets or sets the URL portrait image.

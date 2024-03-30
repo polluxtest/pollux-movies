@@ -10,7 +10,7 @@ namespace Movies.Persistence.Repositories
     /// <summary>
     /// Movies Featured Repository contract.
     /// </summary>
-    public interface IGenresRepository : IRepository<Genre>
+    public interface IMoviesGenresRepository : IRepository<Genre>
     {
         Task AddManyAsync(List<string> genres);
     }
@@ -18,16 +18,16 @@ namespace Movies.Persistence.Repositories
     /// <summary>
     /// Users Repository Data.
     /// </summary>
-    public class GenresRepository : RepositoryBase<Genre>, IGenresRepository
+    public class MoviesGenresRepository : RepositoryBase<Genre>, IMoviesGenresRepository
     {
         private readonly IMoviesRepository moviesRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenresRepository"/> class.
+        /// Initializes a new instance of the <see cref="MoviesGenresRepository"/> class.
         /// </summary>
         /// <param name="moviesDbContext">The movies database context.</param>
         /// <param name="moviesRepository">The movies repository.</param>
-        public GenresRepository(
+        public MoviesGenresRepository(
             PolluxMoviesDbContext moviesDbContext,
             IMoviesRepository moviesRepository)
             : base(moviesDbContext)
@@ -49,7 +49,7 @@ namespace Movies.Persistence.Repositories
                 if (genreDb == null)
                 {
                     var newGenreDb = new Genre() { Name = genreNameTrimmed };
-                    await this.AddASync(newGenreDb);
+                    await this.AddAsync(newGenreDb);
                 }
             }
 

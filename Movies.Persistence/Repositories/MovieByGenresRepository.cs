@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using Movies.Persistence.Repositories.Base.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Movies.Domain.Entities;
@@ -9,15 +10,15 @@ using Movies.Persistence.Repositories.Base;
 
 namespace Movies.Persistence.Repositories
 {
-    public interface IMovieGenresRepository : IRepository<MovieGenres>
+    public interface IMoviesByGenresRepository : IRepository<MovieGenres>
     {
         Task<List<MovieGenres>> GetAllAsync();
         Task<List<string>> GetGenresByMovieIdAsync(Guid movieId);
     }
 
-    public class MovieGenresRepository : RepositoryBase<MovieGenres>, IMovieGenresRepository
+    public class MovieByGenresRepository : RepositoryBase<MovieGenres>, IMoviesByGenresRepository
     {
-        public MovieGenresRepository(PolluxMoviesDbContext context)
+        public MovieByGenresRepository(PolluxMoviesDbContext context)
             : base(context)
         {
         }
@@ -31,8 +32,9 @@ namespace Movies.Persistence.Repositories
         public new Task<List<MovieGenres>> GetAllAsync()
         {
             return this.dbSet
+                .AsNoTracking()
                 .Include(p => p.Genre)
-                .Include(p => p.Movie)
+                .Include(movie => movie.Movie)
                 .ThenInclude(p => p.Director)
                 .Where(p => !p.IsDeleted)
                 .ToListAsync();

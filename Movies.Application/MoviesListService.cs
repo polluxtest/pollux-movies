@@ -9,7 +9,7 @@ using Movies.Persistence.Repositories;
 
 namespace Movies.Application
 {
-    public interface IUserMoviesService
+    public interface IMoviesListService
     {
         Task AddRemoveAsync(AddRemoveUserMovieModel model);
 
@@ -22,13 +22,13 @@ namespace Movies.Application
         Task<bool> IsMovieInListByUser(Guid movieId, string userId);
     }
 
-    public class UserMoviesService : IUserMoviesService
+    public class MoviesListService : IMoviesListService
     {
-        private readonly IUserMoviesRepository userMoviesRepository;
+        private readonly IMoviesListRepository userMoviesRepository;
         private readonly IMapper mapper;
 
-        public UserMoviesService(
-            IUserMoviesRepository userMoviesRepository,
+        public MoviesListService(
+            IMoviesListRepository userMoviesRepository,
             IMapper mapper)
         {
             this.userMoviesRepository = userMoviesRepository;
@@ -50,10 +50,10 @@ namespace Movies.Application
                 return;
             }
 
-            var userMovie = new UserMovies();
+            var userMovie = new MoviesLists();
             this.mapper.Map(model, userMovie);
 
-            await this.userMoviesRepository.AddASync(userMovie);
+            await this.userMoviesRepository.AddAsync(userMovie);
             await this.userMoviesRepository.SaveAsync();
         }
 
@@ -97,7 +97,7 @@ namespace Movies.Application
         /// Gets the movies by user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns>Task<List<UserMovies>.</returns>
+        /// <returns>Task<List<MoviesLists>.</returns>
         public async Task<List<Guid>> GetMoviesIdsByUser(string userId)
         {
             var userMovies = await this.userMoviesRepository.GetMoviesListIds(userId);

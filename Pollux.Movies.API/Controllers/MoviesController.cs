@@ -1,13 +1,14 @@
-﻿namespace Pollux.Movies.Controllers
-{
-    using global::Movies.Application;
-    using global::Movies.Application.Models;
-    using global::Movies.Common.Constants.Strings;
-    using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+﻿using global::Movies.Application;
+using global::Movies.Application.Models;
+using global::Movies.Common.Constants.Strings;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
+namespace Pollux.Movies.Controllers
+{
     public class MoviesController : BaseController
     {
         private readonly IMoviesService moviesService;
@@ -17,18 +18,16 @@
             this.moviesService = moviesService;
         }
 
-        /// <summary>
-        /// Gets the by language.
-        /// </summary>
-        /// <param name="sortBy">The sort by.</param>
-        /// <returns>List Movie By Language Model.</returns>
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+
         [HttpGet]
         [Route(ApiRoutesConstants.ByLanguage)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByLanguage(string sortBy = null)
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByLanguage(string userId, string sortBy = null)
         {
-            var moviesByLanguage = await this.moviesService.GetByLanguage(sortBy);
-
+            var time = new Stopwatch();
+            time.Start();
+            var moviesByLanguage = await this.moviesService.GetByLanguageAsync(userId, sortBy);
+            time.Stop();
+            Debug.WriteLine(TimeSpan.FromMilliseconds((double)time.ElapsedMilliseconds).TotalSeconds);
             return this.Ok(moviesByLanguage);
         }
 
@@ -40,26 +39,42 @@
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.ByDirector)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByDirector(string sortBy = null)
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByDirector(string userId, string sortBy = null)
         {
-            var moviesByDirector = await this.moviesService.GetByDirector(sortBy);
-
+            var time = new Stopwatch();
+            time.Start();
+            var moviesByDirector = await this.moviesService.GetByDirectorAsync(userId, sortBy);
+            time.Stop();
+            Debug.WriteLine(TimeSpan.FromMilliseconds((double)time.ElapsedMilliseconds).TotalSeconds);
             return this.Ok(moviesByDirector);
         }
 
         /// <summary>
-        /// Gets the by director.
+        /// Gets movies grouped by genre
         /// </summary>
+        /// <param name="userId">The User Id</param>
         /// <param name="sortBy">The sort by.</param>
         /// <returns>Movies By Director.</returns>
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.ByGenre)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByGenre(string sortBy = null)
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByGenre(string userId, string sortBy = null)
         {
-            var moviesByGenre = await this.moviesService.GetByGenreAsync(sortBy);
+            try
+            {
+                var time = new Stopwatch();
+                time.Start();
+                var moviesByGenre = await this.moviesService.GetByGenreAsync(userId, sortBy);
+                time.Stop();
+                Debug.WriteLine(TimeSpan.FromMilliseconds((double)time.ElapsedMilliseconds).TotalSeconds);
 
-            return this.Ok(moviesByGenre);
+                return this.Ok(moviesByGenre);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
 
@@ -67,14 +82,14 @@
         /// Searches the specified search.
         /// </summary>
         /// <param name="search">The search.</param>
+        /// <param name="userId">The user Id.</param>
         /// <returns>Movie List.</returns>
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.Search)]
-        public async Task<ActionResult<List<MovieModel>>> Search(string search)
+        public async Task<ActionResult<List<MovieModel>>> Search(string search, string userId)
         {
-            var searchMovies = await this.moviesService.Search(search);
-
+            var searchMovies = await this.moviesService.Search(search, userId);
             return this.Ok(searchMovies);
         }
 
@@ -87,7 +102,7 @@
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.Movie)]
-        public async Task<ActionResult<MovieInfoModel>> GetMovie([FromRoute] Guid id, [FromQuery] string userId)
+        public async Task<ActionResult<MovieModel>> GetMovie([FromRoute] Guid id, [FromQuery] string userId)
         {
             try
             {

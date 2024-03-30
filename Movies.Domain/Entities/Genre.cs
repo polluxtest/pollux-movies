@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Movies.Domain.Entities
+﻿namespace Movies.Domain.Entities
 {
     public class Genre
     {

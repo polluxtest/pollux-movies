@@ -8,14 +8,14 @@ using Movies.Persistence.Repositories.Base.Interfaces;
 
 namespace Movies.Persistence.Repositories
 {
-    public interface IUserLikesRepository : IRepository<UserLikes>
+    public interface IUserLikesRepository : IRepository<MoviesLikes>
     {
         Task<List<Guid>> GetLikesMoviesIds(string userId);
     }
 
-    public class UserLikesRepository : RepositoryBase<UserLikes>, IUserLikesRepository
+    public class MoviesLikesRepository : RepositoryBase<MoviesLikes>, IUserLikesRepository
     {
-        public UserLikesRepository(PolluxMoviesDbContext context)
+        public MoviesLikesRepository(PolluxMoviesDbContext context)
             : base(context)
         {
 

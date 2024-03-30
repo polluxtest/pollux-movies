@@ -1,15 +1,14 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using Movies.Application.Models;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Movies.Application
 {
-
-    public interface IUserLikesService
+    public interface IMoviesLikesService
     {
         Task AddRemoveUserLike(AddRemoveUserMovieModel model);
         Task DeleteAsync(AddRemoveUserMovieModel model);
@@ -17,13 +16,13 @@ namespace Movies.Application
         public Task<bool> IsMovieLikedByUser(Guid movieId, string userId);
     }
 
-    public class UserLikesService : IUserLikesService
+    public class MoviesLikesService : IMoviesLikesService
     {
         private readonly IMoviesRepository moviesRepository;
         private readonly IUserLikesRepository userLikesRepository;
         private readonly IMapper mapper;
 
-        public UserLikesService(
+        public MoviesLikesService(
             IMoviesRepository moviesRepository,
             IUserLikesRepository userLikesRepository,
             IMapper mapper)
@@ -50,6 +49,8 @@ namespace Movies.Application
             }
 
             await this.LikeMovie(model, movieDb);
+            await this.userLikesRepository.SaveAsync();
+            await this.moviesRepository.SaveAsync();
         }
 
         /// <summary>
@@ -105,14 +106,12 @@ namespace Movies.Application
         /// <param name="movieDb">The movie database.</param>
         private async Task LikeMovie(AddRemoveUserMovieModel model, Movie movieDb)
         {
-            var userMovie = new UserLikes();
+            var userMovie = new MoviesLikes();
             this.mapper.Map(model, userMovie);
 
             movieDb.Likes += 1;
-
-            await this.userLikesRepository.AddASync(userMovie);
-            await this.userLikesRepository.SaveAsync();
             this.UpdateMovie(movieDb);
+            await this.userLikesRepository.AddAsync(userMovie);
         }
 
         /// <summary>
@@ -122,7 +121,6 @@ namespace Movies.Application
         private void UpdateMovie(Movie movie)
         {
             this.moviesRepository.Update(movie);
-            this.moviesRepository.Save(); // todo race condition on dispose with save async
         }
     }
 }

@@ -27,23 +27,18 @@
         /// <summary>
         /// My list.
         /// </summary>
-        public const string MyList = "MyList";
+        public const string MyList = "GetMyList";
 
         /// <summary>
         /// My likes.
         /// </summary>
-        public const string MyLikes = "MyLikes";
+        public const string GetLikesIds = "GetLikesIds";
 
 
         /// <summary>
         /// My list.
         /// </summary>
-        public const string MyListIds = "MyIdsList";
-
-        /// <summary>
-        /// The update list.
-        /// </summary>
-        public const string UpdateList = "UpdateList";
+        public const string GetMyListIds = "GetMyListIds";
 
         /// <summary>
         /// The search.

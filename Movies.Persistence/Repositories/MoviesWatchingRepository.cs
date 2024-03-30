@@ -1,17 +1,17 @@
-﻿namespace Movies.Persistence.Repositories
-{
-    using Microsoft.EntityFrameworkCore;
-    using Movies.Domain.Entities;
-    using Movies.Persistence.Repositories.Base;
-    using Movies.Persistence.Repositories.Base.Interfaces;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Movies.Domain.Entities;
+using Movies.Persistence.Repositories.Base;
+using Movies.Persistence.Repositories.Base.Interfaces;
 
+namespace Movies.Persistence.Repositories
+{
     public interface IMoviesWatchingRepository : IRepository<MovieWatching>
     {
-        Task<List<Movie>> GetManyAsync(string userId);
+        Task<List<MovieWatching>> GetManyAsync(string userId);
         Task<MovieWatching> GetAsync(string userId, Guid movieId);
     }
 
@@ -33,12 +33,12 @@
         /// <summary>Gets the many asynchronous.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns><List<MovieWatching></returns>
-        public async Task<List<Movie>> GetManyAsync(string userId)
+        public async Task<List<MovieWatching>> GetManyAsync(string userId)
         {
             var moviesWatchingDb = await this.dbSet
                 .Include(p => p.Movie)
+                .ThenInclude(p => p.Director)
                 .Where(p => p.UserId == userId)
-                .Select(p => p.Movie)
                 .ToListAsync();
 
             return moviesWatchingDb;
@@ -55,6 +55,7 @@
         {
             var moviesWatchingDb = await this.dbSet
                 .Include(p => p.Movie)
+                .ThenInclude(p => p.Director)
                 .SingleOrDefaultAsync(p => p.UserId == userId && p.MovieId == movieId);
 
             if (moviesWatchingDb == null)

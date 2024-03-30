@@ -44,7 +44,8 @@ namespace Movies.Persistence.Repositories
         public new Task<List<Movie>> GetAllAsync()
         {
             return this.dbSet.Include(p => p.Director)
-                .Where(p => p.ProcessedByAzureJob && !p.IsDeleted).ToListAsync();
+                .Where(p => p.ProcessedByAzureJob && !p.IsDeleted )
+                .ToListAsync();
         }
 
         /// <summary>

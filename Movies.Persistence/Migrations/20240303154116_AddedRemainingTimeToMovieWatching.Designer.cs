@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Persistence;
 
@@ -11,9 +12,10 @@ using Movies.Persistence;
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    partial class PolluxMoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240303154116_AddedRemainingTimeToMovieWatching")]
+    partial class AddedRemainingTimeToMovieWatching
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace Movies.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Movies.Domain.Entities.Director", b =>
+            modelBuilder.Entity("Movies.Domain.Director", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,7 +154,7 @@ namespace Movies.Persistence.Migrations
 
                     b.HasIndex("DirectorId");
 
-                    b.HasIndex("Name", "Language", "Likes", "Recommended", "Imbd");
+                    b.HasIndex("Name", "Gender", "Language", "Likes", "Recommended", "Imbd");
 
                     b.ToTable("Movies");
                 });
@@ -202,40 +204,6 @@ namespace Movies.Persistence.Migrations
                     b.ToTable("MovieGenres");
                 });
 
-            modelBuilder.Entity("Movies.Domain.Entities.MoviesLikes", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("UserId", "MovieId");
-
-                    b.ToTable("MoviesLikes", (string)null);
-                });
-
-            modelBuilder.Entity("Movies.Domain.Entities.MoviesLists", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("UserId", "MovieId");
-
-                    b.ToTable("MoviesLists", (string)null);
-                });
-
             modelBuilder.Entity("Movies.Domain.Entities.MovieWatching", b =>
                 {
                     b.Property<string>("UserId")
@@ -268,9 +236,43 @@ namespace Movies.Persistence.Migrations
                     b.ToTable("MoviesWatching");
                 });
 
+            modelBuilder.Entity("Movies.Domain.Entities.UserLikes", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("UserId", "MovieId");
+
+                    b.ToTable("UserLikes");
+                });
+
+            modelBuilder.Entity("Movies.Domain.Entities.UserMovies", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("UserId", "MovieId");
+
+                    b.ToTable("UserMovies");
+                });
+
             modelBuilder.Entity("Movies.Domain.Entities.Movie", b =>
                 {
-                    b.HasOne("Movies.Domain.Entities.Director", "Director")
+                    b.HasOne("Movies.Domain.Director", "Director")
                         .WithMany()
                         .HasForeignKey("DirectorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -309,29 +311,29 @@ namespace Movies.Persistence.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("Movies.Domain.Entities.MoviesLikes", b =>
-                {
-                    b.HasOne("Movies.Domain.Entities.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("Movies.Domain.Entities.MoviesLists", b =>
-                {
-                    b.HasOne("Movies.Domain.Entities.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-                });
-
             modelBuilder.Entity("Movies.Domain.Entities.MovieWatching", b =>
+                {
+                    b.HasOne("Movies.Domain.Entities.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("Movies.Domain.Entities.UserLikes", b =>
+                {
+                    b.HasOne("Movies.Domain.Entities.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("Movies.Domain.Entities.UserMovies", b =>
                 {
                     b.HasOne("Movies.Domain.Entities.Movie", "Movie")
                         .WithMany()

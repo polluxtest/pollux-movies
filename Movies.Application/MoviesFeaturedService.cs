@@ -1,12 +1,12 @@
-﻿namespace Movies.Application
-{
-    using AutoMapper;
-    using Movies.Application.Models;
-    using Movies.Domain.Entities;
-    using Movies.Persistence.Repositories;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
+using Movies.Application.Models;
+using Movies.Domain.Entities;
+using Movies.Persistence.Repositories;
 
+namespace Movies.Application
+{
     public interface IMoviesFeaturedService
     {
         Task<List<MovieFeaturedModel>> GetAll();
@@ -14,12 +14,12 @@
 
     public class MoviesFeaturedService : IMoviesFeaturedService
     {
-        private readonly IMovieGenresService moviesGenreService;
+        private readonly IMoviesByGenresService moviesGenreService;
         private readonly IMoviesFeaturedRepository moviesFeaturedRepository;
         private readonly IMapper mapper;
 
         public MoviesFeaturedService(
-            IMovieGenresService moviesGenresService,
+            IMoviesByGenresService moviesGenresService,
             IMoviesFeaturedRepository moviesFeaturedRepository,
             IMapper mapper)
         {

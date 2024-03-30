@@ -37,10 +37,10 @@ namespace AzureStorageUrlsTests
             services.AddDbContext<PolluxMoviesDbContext>(options => options.UseSqlServer("Server=localhost;Database=Pollux.Movies;Trusted_Connection=True;"));
             services.AddTransient<IMoviesService, MoviesService>();
             services.AddTransient<IMoviesRepository, MoviesRepository>();
-            services.AddTransient<IUserMoviesRepository, UserMoviesRepository>();
-            services.AddTransient<IUserLikesRepository, UserLikesRepository>();
-            services.AddTransient<IUserMoviesService, UserMoviesService>();
-            services.AddTransient<IUserLikesService, UserLikesService>();
+            services.AddTransient<IMoviesListRepository, MoviesListRepository>();
+            services.AddTransient<IUserLikesRepository, MoviesLikesRepository>();
+            services.AddTransient<IMoviesListService, MoviesListService>();
+            services.AddTransient<IMoviesLikesService, MoviesLikesService>();
 
             this.serviceProvider = this.services.BuildServiceProvider();
             this.moviesService = this.serviceProvider.GetService<IMoviesService>();
