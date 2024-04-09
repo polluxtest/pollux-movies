@@ -45,6 +45,7 @@ namespace Pollux.Movies
             services.AddTransient<IMoviesWatchingService, MoviesWatchingService>();
             services.AddTransient<IImbdService, ImbdService>();
             services.AddTransient<ITranslationService, TranslationService>();
+            services.AddTransient<IMoviesServiceAzure, MoviesServiceAzure>();
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<ApplicationLogger>>();
             services.AddSingleton(typeof(ILogger), logger);

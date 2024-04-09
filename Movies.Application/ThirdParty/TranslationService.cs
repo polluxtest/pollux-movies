@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Movies.Application.ThirdParty
@@ -13,10 +12,12 @@ namespace Movies.Application.ThirdParty
 
     public class TranslationService : ITranslationService
     {
+        private readonly IMoviesServiceAzure moviesServiceAzure;
         private readonly IMoviesService moviesService;
 
-        public TranslationService(IMoviesService moviesService)
+        public TranslationService(IMoviesServiceAzure moviesServiceAzure, IMoviesService moviesService)
         {
+            this.moviesServiceAzure = moviesServiceAzure;
             this.moviesService = moviesService;
         }
 
@@ -25,7 +26,7 @@ namespace Movies.Application.ThirdParty
         /// </summary>
         public async Task TranslateEnToEs()
         {
-            var moviesDb = await this.moviesService.GetAll(true);
+            var moviesDb = await this.moviesServiceAzure.GetAllAsync();
 
 
             foreach (var movie in moviesDb)
@@ -50,14 +51,13 @@ namespace Movies.Application.ThirdParty
                     }),
                 };
 
-
                 using (var response = await client.SendAsync(request))
                 {
                     response.EnsureSuccessStatusCode();
                     var body = await response.Content.ReadAsStringAsync();
                     var translatedText = this.GetTranslatedText(body);
                     movie.DescriptionEs = translatedText;
-                    await this.moviesService.UpdateMovie(movie);
+                    await this.moviesService.Update(movie);
                 }
             }
         }

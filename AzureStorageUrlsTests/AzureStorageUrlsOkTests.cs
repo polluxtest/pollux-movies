@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Movies.Application;
 using Movies.Application.Mappers;
+using Movies.Application.ThirdParty;
 using Movies.Domain.Entities;
 using Movies.Persistence;
 using Movies.Persistence.Repositories;
@@ -20,7 +21,7 @@ namespace AzureStorageUrlsTests
     {
         private IServiceCollection services;
         private IServiceProvider serviceProvider;
-        private IMoviesService moviesService;
+        private IMoviesServiceAzure moviesService;
         private Mock<IMoviesRepository> moviesRepository;
         private Mock<IMapper> mapper;
         private HttpClient httpClient;
@@ -43,7 +44,7 @@ namespace AzureStorageUrlsTests
             services.AddTransient<IMoviesLikesService, MoviesLikesService>();
 
             this.serviceProvider = this.services.BuildServiceProvider();
-            this.moviesService = this.serviceProvider.GetService<IMoviesService>();
+            this.moviesService = this.serviceProvider.GetService<IMoviesServiceAzure>();
         }
 
         [Test]
@@ -51,12 +52,12 @@ namespace AzureStorageUrlsTests
         {
             var moviesList = new List<Movie>();
             this.moviesRepository
-                .Setup(p => p.GetManyAsync(p => p.IsDeleted == false && p.ProcessedByAzureJob))
+                .Setup(p => p.GetManyAsync(p => p.ProcessedByStreamVideo))
                 .Returns(Task.FromResult(moviesList));
 
-            moviesList = await this.moviesService.GetAll(true);
+            moviesList = await this.moviesService.GetAllAsync();
 
-            //this.moviesRepository.Verify(p => p.GetManyAsync(p => p.IsDeleted == false && p.ProcessedByAzureJob), Times.Once);
+            //this.moviesRepository.Verify(p => p.GetManyAsync(p => p.IsDeleted == false && p.ProcessedByStreamVideo), Times.Once);
 
             foreach (var movie in moviesList)
             {
@@ -70,10 +71,10 @@ namespace AzureStorageUrlsTests
         {
             var moviesList = new List<Movie>();
             this.moviesRepository
-                .Setup(p => p.GetManyAsync(p => p.IsDeleted == false && p.ProcessedByAzureJob))
+                .Setup(p => p.GetManyAsync(p => p.ProcessedByStreamVideo))
                 .Returns(Task.FromResult(moviesList));
 
-            moviesList = await this.moviesService.GetAll(true);
+            moviesList = await this.moviesService.GetAllAsync();
 
 
             foreach (var movie in moviesList)

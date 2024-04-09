@@ -39,7 +39,7 @@
             return this.dbSet
                 .Include(p => p.Movie)
                 .ThenInclude(p => p.Director)
-                .Where(p => p.Movie.ProcessedByAzureJob && !p.Movie.IsDeleted)
+                .Where(p => p.Movie.ProcessedByStreamVideo)
                 .ToListAsync();
         }
     }

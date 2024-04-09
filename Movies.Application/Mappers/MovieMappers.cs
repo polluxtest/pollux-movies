@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.ObjectiveC;
 using AutoMapper;
 using Movies.Application.Models;
 using Movies.Domain.Entities;
+using Movies.Persistence.QueryResults;
 using Newtonsoft.Json;
 
 namespace Movies.Application.Mappers
@@ -46,7 +47,6 @@ namespace Movies.Application.Mappers
                 .ForMember(p => p.Language, opt => opt.MapFrom(p => p.Movie.Language))
                 .ForMember(p => p.UrlImage, opt => opt.MapFrom(p => p.Movie.UrlImage))
                 .ForMember(p => p.Year, opt => opt.MapFrom(p => p.Movie.Year))
-                .ForMember(p => p.Type, opt => opt.MapFrom(p => p.Movie.Type))
                 .ForMember(p => p.Id, opt => opt.MapFrom(p => p.Movie.Id));
 
             this.CreateMap<MovieGenres, MovieGenreModel>();
@@ -56,6 +56,22 @@ namespace Movies.Application.Mappers
             this.CreateMap<MovieFeatured, MovieFeaturedModel>().ForMember(
                 dest => dest.Movie,
                 opt => opt.MapFrom(p => p.Movie));
+
+            this.CreateMap<MoviesQueryResult, MovieModel>()
+                .ForMember(p => p.Name, opt => opt.MapFrom(p => p.Movie.Name))
+                .ForMember(p => p.Description, opt => opt.MapFrom(p => p.Movie.Description))
+                .ForMember(p => p.DescriptionEs, opt => opt.MapFrom(p => p.Movie.DescriptionEs))
+                .ForMember(p => p.Imbd, opt => opt.MapFrom(p => p.Movie.Imbd))
+                .ForMember(p => p.DirectorName, opt => opt.MapFrom(p => p.Movie.Director.Name))
+                .ForMember(p => p.Language, opt => opt.MapFrom(p => p.Movie.Language))
+                .ForMember(p => p.UrlImage, opt => opt.MapFrom(p => p.Movie.UrlImage))
+                .ForMember(p => p.Year, opt => opt.MapFrom(p => p.Movie.Year))
+                .ForMember(p => p.Id, opt => opt.MapFrom(p => p.Movie.Id));
+
+
+            this.CreateMap<MoviesQueryResult, MovieWatchingModel>();
+            this.CreateMap<MovieModel, MovieWatchingModel>()
+                .ForMember(p => p.Movie, opt => opt.MapFrom(p => p));
         }
     }
 }

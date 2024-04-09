@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using AzureUploaderTransformerVideos;
 using AzureUploaderTransformerVideos.Constants;
+using Movies.Application.ThirdParty;
 using Movies.Common.Constants.Strings;
 
 namespace ReadFilesService
@@ -25,12 +26,15 @@ namespace ReadFilesService
 
     public class FileDBWriter : IFileDbWriter
     {
+        private readonly IMoviesServiceAzure _moviesServiceAzure;
         private readonly IMoviesService _moviesService;
         private readonly IAzureBlobsService blobService;
 
-        public FileDBWriter(IMoviesService moviesService, IAzureBlobsService blobService)
+        public FileDBWriter(IMoviesService moviesService, IMoviesServiceAzure moviesServiceAzure,
+            IAzureBlobsService blobService)
         {
             this._moviesService = moviesService;
+            this._moviesServiceAzure = moviesServiceAzure;
             this.blobService = blobService;
         }
 
@@ -46,12 +50,10 @@ namespace ReadFilesService
                     Name = file.Item2,
                     Language = string.Empty,
                     Year = string.Empty,
-                    Type = string.Empty,
                     Likes = 0,
                     UrlImage = string.Empty,
                     UrlVideo = string.Empty,
-                    IsDeleted = false,
-                    ProcessedByAzureJob = false
+                    ProcessedByStreamVideo = false
                 };
 
                 await this._moviesService.AddAsync(movie);
@@ -66,7 +68,7 @@ namespace ReadFilesService
         /// <returns></returns>
         public async Task WriteImagesToDataBase(List<(string, string)> files)
         {
-            var movies = await _moviesService.GetAllMoviesImagesFilter(true);
+            var movies = await _moviesServiceAzure.GetAllMoviesImagesFilter(true);
 
             foreach (var movie in movies)
             {
@@ -80,7 +82,7 @@ namespace ReadFilesService
                     p.Item1.Equals(movieNameTrimmed, StringComparison.OrdinalIgnoreCase)).Item2;
 
                 movie.UrlImage = imagePath ?? string.Empty;
-                await _moviesService.UpdateMovie(movie);
+                await _moviesService.Update(movie);
             }
         }
 
@@ -91,7 +93,7 @@ namespace ReadFilesService
         /// <returns></returns>
         public async Task WriteCoverImagesToDataBase(List<(string, string)> files)
         {
-            var movies = await _moviesService.GetAllMoviesCoverImagesFilter(true);
+            var movies = await _moviesServiceAzure.GetAllMoviesCoverImagesFilter(true);
 
             foreach (var movie in movies)
             {
@@ -105,13 +107,13 @@ namespace ReadFilesService
                     p.Item1.Contains(movieName, StringComparison.OrdinalIgnoreCase)).Item2;
 
                 movie.UrlCoverImage = imagePath ?? string.Empty;
-                await _moviesService.UpdateMovie(movie);
+                await _moviesService.Update(movie);
             }
         }
 
         public async Task WriteSubtitlesToDataBase(List<(string, List<string>)> files)
         {
-            var movies = await _moviesService.GetAll(true);
+            var movies = await _moviesServiceAzure.GetAllAsync();
 
             foreach (var file in files)
             {
@@ -149,8 +151,7 @@ namespace ReadFilesService
                 }
 
                 movieDb.Subtitles = JsonConvert.SerializeObject(subtitlesListDeserialized);
-                await _moviesService.UpdateMovie(movieDb);
-
+                await _moviesService.Update(movieDb);
             }
         }
     }

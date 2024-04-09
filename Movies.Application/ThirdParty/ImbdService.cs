@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Movies.Domain.Entities;
 
@@ -10,18 +9,20 @@ namespace Movies.Application.ThirdParty
     public interface IImbdService
     {
         Task FindImbdMovie();
-        Task<string> GetAllMovieRatings(string code);
+        Task<string> GetAllMovieRatings(string imbdCode);
         Task SaveMovieRating(Movie movie, string imbdRating);
     }
 
     public class ImbdService : IImbdService
     {
+        private readonly IMoviesServiceAzure movieServiceAzure;
         private readonly IMoviesService movieService;
-        private HttpClient client = new HttpClient();
+        private readonly HttpClient client = new HttpClient();
 
-        public ImbdService(IMoviesService movieService)
+        public ImbdService(IMoviesService movieService, IMoviesServiceAzure moviesServiceAzure)
         {
             this.movieService = movieService;
+            this.movieServiceAzure = moviesServiceAzure;
         }
 
         /// <summary>
@@ -30,8 +31,7 @@ namespace Movies.Application.ThirdParty
         /// <exception cref="System.ArgumentException">Could not find movie</exception>
         public async Task FindImbdMovie()
         {
-            var movies = await this.movieService.GetAll(true);
-
+            var movies = await this.movieServiceAzure.GetAllAsync();
 
             foreach (var movie in movies)
             {
@@ -91,7 +91,7 @@ namespace Movies.Application.ThirdParty
         public Task SaveMovieRating(Movie movie, string imbdRating)
         {
             movie.Imbd = imbdRating;
-            this.movieService.UpdateMovie(movie);
+            this.movieService.Update(movie);
 
             return Task.CompletedTask;
         }

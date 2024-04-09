@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Movies.Domain.Entities;
-using Movies.Persistence.Configurations;
+using Movies.Persistence.QueryResults;
 using Movies.Persistence.Repositories.Base;
 using Movies.Persistence.Repositories.Base.Interfaces;
 
@@ -15,10 +15,11 @@ namespace Movies.Persistence.Repositories
     /// </summary>
     public interface IMoviesRepository : IRepository<Movie>
     {
-        Task<Movie> GetAsync(Guid movieId);
+        Task<MovieWatching> GetAsync(Guid movieId, string userId);
         Task<Movie> GetAsyncByName(string name);
-        Task<List<Movie>> GetAllAsync();
-        Task<List<Movie>> Search(string search);
+        Task<List<MoviesQueryResult>> GetAllAsync(string userId);
+        new Task<List<Movie>> GetAllAsync();
+        Task<List<MoviesQueryResult>> Search(string search, string userId);
         Task<List<Movie>> GetRecommendedAsync();
         Task<List<Movie>> GetRecommendedByPolluxAsync();
     }
@@ -28,6 +29,8 @@ namespace Movies.Persistence.Repositories
     /// </summary>
     public class MoviesRepository : RepositoryBase<Movie>, IMoviesRepository
     {
+        private readonly PolluxMoviesDbContext db;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersRepository"/> class.
         /// </summary>
@@ -35,29 +38,67 @@ namespace Movies.Persistence.Repositories
         public MoviesRepository(PolluxMoviesDbContext moviesDbContext)
             : base(moviesDbContext)
         {
+            this.db = moviesDbContext;
         }
 
         /// <summary>
-        /// Gets all by default parameters.
+        /// Gets all asynchronous.
         /// </summary>
-        /// <returns>List Movie. </returns>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Task<List<Movie></returns>
+        public new Task<List<MoviesQueryResult>> GetAllAsync(string userId)
+        {
+            var sqlQuery =
+                from movie in this.db.Movies
+                join director in this.db.Directors on movie.DirectorId equals director.Id
+                join movieWatching in this.db.MoviesWatching on movie.Id equals movieWatching.MovieId into mg
+                from moviesWatching in mg.DefaultIfEmpty()
+                where moviesWatching.UserId == userId
+                select new MoviesQueryResult()
+                {
+                    Movie = movie,
+                    Director = director,
+                    ElapsedTime = moviesWatching != null ? moviesWatching.ElapsedTime : 0,
+                    Duration = moviesWatching != null ? moviesWatching.Duration : 0,
+                    RemainingTime = moviesWatching != null ? moviesWatching.RemainingTime : 0,
+                };
+
+            return sqlQuery.ToListAsync();
+        }
+
+        /// <summary>
+        /// Gets all asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Task<List<Movie></returns>
         public new Task<List<Movie>> GetAllAsync()
         {
-            return this.dbSet.Include(p => p.Director)
-                .Where(p => p.ProcessedByAzureJob && !p.IsDeleted )
-                .ToListAsync();
+            return this.dbSet.Include(p => p.Director).ToListAsync();
         }
 
         /// <summary>
         /// Gets the movie asynchronous.
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
+        /// <param name="userId">The userId identifier.</param>
         /// <returns>Movie.</returns>
-        public new Task<Movie> GetAsync(Guid movieId)
+        public new Task<MovieWatching> GetAsync(Guid movieId,string userId)
         {
-            return this.dbSet
-                .Include(p => p.Director)
-                .SingleOrDefaultAsync(p => p.Id == movieId && p.ProcessedByAzureJob && !p.IsDeleted);
+            var sqlQuery =
+                from movie in this.db.Movies
+                join director in this.db.Directors on movie.DirectorId equals director.Id
+                join movieWatching in this.db.MoviesWatching on movie.Id equals movieWatching.MovieId into mg
+                from moviesWatching in mg.DefaultIfEmpty()
+                where movie.Id == movieId && moviesWatching.UserId == null || moviesWatching.UserId == userId
+                select new MovieWatching()
+                {
+                    Movie = movie,
+                    ElapsedTime = moviesWatching != null ? moviesWatching.ElapsedTime : 0,
+                    Duration = moviesWatching != null ? moviesWatching.Duration : 0,
+                    RemainingTime = moviesWatching != null ? moviesWatching.RemainingTime : 0,
+                };
+
+            return sqlQuery.SingleOrDefaultAsync();
         }
 
         /// <summary>
@@ -70,7 +111,7 @@ namespace Movies.Persistence.Repositories
         {
             var movieDb = await this.dbSet
                 .Include(p => p.Director)
-                .SingleOrDefaultAsync(p => p.Name.Trim().Equals(name.Trim()) && p.ProcessedByAzureJob && !p.IsDeleted);
+                .SingleOrDefaultAsync(p => p.Name.Trim().Equals(name.Trim()) && p.ProcessedByStreamVideo);
 
             if (movieDb == null) throw new ArgumentException("Movie not found", name);
 
@@ -84,7 +125,6 @@ namespace Movies.Persistence.Repositories
         public Task<List<Movie>> GetRecommendedAsync()
         {
             return this.dbSet.Include(p => p.Director)
-                .Where(p => p.ProcessedByAzureJob && !p.IsDeleted)
                 .OrderBy(p => p.Likes)
                 .Take(15)
                 .ToListAsync();
@@ -98,24 +138,35 @@ namespace Movies.Persistence.Repositories
         public async Task<List<Movie>> GetRecommendedByPolluxAsync()
         {
             return await this.dbSet.Include(p => p.Director)
-                .Where(p => p.ProcessedByAzureJob && !p.IsDeleted && p.Recommended)
+                .Where(p => p.Recommended)
                 .ToListAsync();
         }
 
         /// <summary>
         /// Searches the specified search.
         /// </summary>
-        /// <param name="search">The search.</param>
+        /// <param name="search">The search string.</param>
+        /// <param name="userId">The user Id.</param>
         /// <returns>Movie List Search Result.</returns>
-        public Task<List<Movie>> Search(string search)
+        public Task<List<MoviesQueryResult>> Search(string search, string userId)
         {
-            return this.dbSet.Include(p => p.Director)
-               .Where(p => p.ProcessedByAzureJob &&
-               !p.IsDeleted && (
-                    p.Director.Name.Contains(search) ||
-                    p.Name.Contains(search) ||
-                    p.Language.Contains(search)))
-               .ToListAsync();
+            var sqlQuery =
+                from movie in this.db.Movies
+                join director in this.db.Directors on movie.DirectorId equals director.Id
+                join movieWatching in this.db.MoviesWatching on movie.Id equals movieWatching.MovieId into mg
+                from moviesWatching in mg.DefaultIfEmpty()
+                where moviesWatching.UserId == userId  &&
+                    (movie.Name.Contains(search) || director.Name.Contains(search) || movie.Language.Contains(search))
+                select new MoviesQueryResult()
+                {
+                    Movie = movie,
+                    Director = director,
+                    ElapsedTime = moviesWatching != null ? moviesWatching.ElapsedTime : 0,
+                    Duration = moviesWatching != null ? moviesWatching.Duration : 0,
+                    RemainingTime = moviesWatching != null ? moviesWatching.RemainingTime : 0,
+                };
+
+            return sqlQuery.ToListAsync();
         }
 
     }

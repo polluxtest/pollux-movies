@@ -1,13 +1,15 @@
-﻿namespace Pollux.Movies.Controllers
-{
-    using global::Movies.Application;
-    using global::Movies.Application.Models;
-    using global::Movies.Application.Models.Requests;
-    using global::Movies.Common.Constants.Strings;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using global::Movies.Application;
+using global::Movies.Application.Models;
+using global::Movies.Application.Models.Requests;
+using global::Movies.Common.Constants.Strings;
+using Microsoft.AspNetCore.Mvc;
 
+namespace Pollux.Movies.Controllers
+{
     public class MoviesWatchingController : BaseController
     {
         private readonly IMoviesWatchingService moviesWatchingService;
@@ -37,9 +39,11 @@
         /// <returns>MovieWatchingModel</returns>
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<MovieModel>> Get([FromQuery] MovieContinueWatchingRequest request)
+        public async Task<ActionResult<MovieWatchingModel>> Get([FromQuery] MovieContinueWatchingRequest request)
         {
-            var movieWatchingModel = await this.moviesService.GetWatchingAsync(request.MovieId,request.UserId);
+            //todo add try catch
+            var movieWatchingModel = await this.moviesService.GetAsync(request.MovieId, request.UserId);
+
             return this.Ok(movieWatchingModel);
         }
 
@@ -51,7 +55,7 @@
         [Route(ApiRoutesConstants.GetAllContinueWatching)]
         public async Task<ActionResult<List<MoviesByCategoryModel>>> GetAllContinueWatching([FromQuery] string userId)
         {
-            var moviesWatching = await this.moviesWatchingService.GetAllGroupedAsync(userId);
+            var moviesWatching = await this.moviesWatchingService.GetAllMoviesContinueWatchingAsync(userId);
 
             return this.Ok(moviesWatching);
         }

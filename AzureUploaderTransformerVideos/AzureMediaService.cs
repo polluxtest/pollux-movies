@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
 using Movies.Application;
+using Movies.Application.ThirdParty;
 using Movies.Domain.Entities;
 
 namespace AzureUploaderTransformerVideos
@@ -19,14 +20,17 @@ namespace AzureUploaderTransformerVideos
     {
         private const string AdaptiveStreamingTransformName = "polluxmediaservicesencodingtransform";
         private const string VideoStoragePath = @"W:\pollux\newMovies";
+        private readonly IMoviesServiceAzure _moviesServiceAzure;
         private readonly IMoviesService _moviesService;
         private readonly AzureMediaServiceConfig azureMSConfig;
 
         public AzureMediaService(
-             IMoviesService moviesService,
-             AzureMediaServiceConfig azureMsConfig)
+            IMoviesServiceAzure moviesServiceAzure,
+            IMoviesService moviesService,
+            AzureMediaServiceConfig azureMsConfig)
         {
             this._moviesService = moviesService;
+            this._moviesServiceAzure = moviesServiceAzure;
             this.azureMSConfig = azureMsConfig;
         }
 
@@ -38,7 +42,7 @@ namespace AzureUploaderTransformerVideos
         {
             try
             {
-                var movies = await this._moviesService.GetAll();
+                var movies = await this._moviesServiceAzure.GetAllAsync();
 
                 foreach (var movie in movies)
                 {
@@ -368,8 +372,8 @@ namespace AzureUploaderTransformerVideos
             StreamingLocator locator = await this.CreateStreamingLocatorAsync(azureMediaServiceClient, this.azureMSConfig, amsIdentity);
 
             movie.UrlVideo = await this.GetStreamingUrlsAsync(azureMediaServiceClient, this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, locator.Name);
-            movie.ProcessedByAzureJob = true;
-            await this._moviesService.UpdateMovie(movie);
+            movie.ProcessedByStreamVideo = true;
+            await this._moviesService.Update(movie);
         }
 
         /// <summary>
@@ -443,7 +447,7 @@ namespace AzureUploaderTransformerVideos
         {
             IAzureMediaServicesClient azureMediaServiceClient = await this.CreateMediaServicesClientAsync(this.azureMSConfig);
 
-            var movies = await this._moviesService.GetAll(true);
+            var movies = await this._moviesServiceAzure.GetAllAsync();
 
             foreach (var movie in movies)
             {
@@ -452,8 +456,8 @@ namespace AzureUploaderTransformerVideos
                 var streamingLocatorName = $"{movie.Name}-locator";
 
                 movie.UrlVideo = await this.GetStreamingUrlsAsync(azureMediaServiceClient, this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, streamingLocatorName, true);
-                movie.ProcessedByAzureJob = true;
-                await this._moviesService.UpdateMovie(movie);
+                movie.ProcessedByStreamVideo = true;
+                await this._moviesService.Update(movie);
 
             }
 

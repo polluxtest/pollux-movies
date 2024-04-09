@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Persistence;
 
@@ -11,9 +12,10 @@ using Movies.Persistence;
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    partial class PolluxMoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240405153407_AddMovieIndexes")]
+    partial class AddMovieIndexes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,8 +41,7 @@ namespace Movies.Persistence.Migrations
 
                     b.HasIndex("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Name");
 
                     b.ToTable("Directors");
                 });
@@ -62,8 +63,7 @@ namespace Movies.Persistence.Migrations
 
                     b.HasIndex("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Name");
 
                     b.ToTable("Genres");
                 });
@@ -148,8 +148,6 @@ namespace Movies.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
-
                     b.HasIndex("DirectorId");
 
                     b.HasIndex("Id");
@@ -160,9 +158,10 @@ namespace Movies.Persistence.Migrations
 
                     b.HasIndex("Likes");
 
-                    b.HasIndex("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
-                    SqlServerIndexBuilderExtensions.IsClustered(b.HasIndex("Name"));
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("Name"), new[] { "Id", "Imbd", "Language", "Description", "DescriptionEs", "Subtitles", "UrlCoverImage", "UrlImage", "UrlVideo", "Year" });
 
                     b.HasIndex("Recommended");
 

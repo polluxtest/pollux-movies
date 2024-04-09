@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Application;
 using Movies.Application.Models;
-using Movies.Common.Constants.Strings;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Pollux.Movies.Controllers
 {
@@ -24,8 +23,7 @@ namespace Pollux.Movies.Controllers
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [AllowAnonymous]
-        [Route(ApiRoutesConstants.FeaturedMovies)]
-        public async Task<ActionResult<List<MovieFeaturedModel>>> GetFeaturedMovies()
+        public async Task<ActionResult<List<MovieFeaturedModel>>> Get()
         {
             var featuredMovies = await this.moviesService.GetAll();
 

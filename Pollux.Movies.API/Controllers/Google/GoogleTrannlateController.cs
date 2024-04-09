@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Application.ThirdParty;
 
-namespace Pollux.Movies.Controllers
+namespace Pollux.Movies.Controllers.Google
 {
     public class GoogleTranslateController : BaseController
     {
@@ -23,8 +23,8 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> TranslateDescription()
         {
-            await this.translationService.TranslateEnToEs();
-            return this.Ok();
+            await translationService.TranslateEnToEs();
+            return Ok();
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Persistence;
 
@@ -11,9 +12,10 @@ using Movies.Persistence;
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    partial class PolluxMoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240330125234_RemoveNotUsedColumnsMoviesTable")]
+    partial class RemoveNotUsedColumnsMoviesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,10 +39,7 @@ namespace Movies.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Name");
 
                     b.ToTable("Directors");
                 });
@@ -60,10 +59,7 @@ namespace Movies.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Name");
 
                     b.ToTable("Genres");
                 });
@@ -112,13 +108,11 @@ namespace Movies.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("ProcessedByStreamVideo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    b.Property<bool>("ProcessedByAzureJob")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("Recommended")
                         .ValueGeneratedOnAdd()
@@ -148,26 +142,9 @@ namespace Movies.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
-
                     b.HasIndex("DirectorId");
 
-                    b.HasIndex("Id");
-
-                    b.HasIndex("Imbd");
-
-                    b.HasIndex("Language");
-
-                    b.HasIndex("Likes");
-
-                    b.HasIndex("Name");
-
-                    SqlServerIndexBuilderExtensions.IsClustered(b.HasIndex("Name"));
-
-                    b.HasIndex("Recommended");
-
-                    b.HasIndex("IsDeleted", "ProcessedByStreamVideo")
-                        .HasFilter("[IsDeleted] = 0 and [ProcessedByStreamVideo] = 1");
+                    b.HasIndex("Name", "Language", "Likes", "Recommended", "Imbd");
 
                     b.ToTable("Movies");
                 });
@@ -211,8 +188,6 @@ namespace Movies.Persistence.Migrations
                     b.HasKey("MovieId", "GenreId");
 
                     b.HasIndex("GenreId");
-
-                    b.HasIndex("MovieId");
 
                     b.HasIndex("MovieId", "GenreId");
 
@@ -279,8 +254,6 @@ namespace Movies.Persistence.Migrations
                     b.HasKey("UserId", "MovieId");
 
                     b.HasIndex("MovieId");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("UserId", "MovieId");
 
@@ -353,17 +326,12 @@ namespace Movies.Persistence.Migrations
             modelBuilder.Entity("Movies.Domain.Entities.MovieWatching", b =>
                 {
                     b.HasOne("Movies.Domain.Entities.Movie", "Movie")
-                        .WithMany("MoviesWatching")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("Movies.Domain.Entities.Movie", b =>
-                {
-                    b.Navigation("MoviesWatching");
                 });
 #pragma warning restore 612, 618
         }

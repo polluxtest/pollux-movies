@@ -68,7 +68,7 @@
         /// <summary>
         /// The get movie names
         /// </summary>
-        public const string GetMovieNames = "GetMovieNames";
+        public const string GetMovieSearchOptions = "GetMovieSearchOptions";
 
         /// <summary>
         /// The featured movies.

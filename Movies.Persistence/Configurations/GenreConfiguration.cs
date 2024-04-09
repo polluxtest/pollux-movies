@@ -12,7 +12,8 @@ namespace Movies.Persistence.Configurations
             builder.Property(p => p.Id).ValueGeneratedOnAdd();
             builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
 
-            builder.HasIndex("Name");
+            builder.HasIndex(p => p.Id);
+            builder.HasIndex(p => p.Name).IsUnique();
         }
     }
 }

@@ -1,24 +1,23 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using AzureUploaderTransformerVideos.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Application;
-using Movies.Common.Constants.Strings;
+using Movies.Application.ThirdParty;
 using ReadFilesService;
 
-namespace Pollux.Movies.Controllers
+namespace Pollux.Movies.Controllers.Azure
 {
     public class ReadCopyController : BaseController
     {
         private readonly IFileReader fileReader;
         private readonly IMoviesGenresService genresService;
-        private readonly IMoviesService moviesService;
+        private readonly IMoviesServiceAzure moviesService;
 
         public ReadCopyController(
             IFileReader fileReader,
             IMoviesGenresService genresService,
-            IMoviesService moviesService)
+            IMoviesServiceAzure moviesService)
         {
             this.fileReader = fileReader;
             this.genresService = genresService;
@@ -30,9 +29,9 @@ namespace Pollux.Movies.Controllers
         [Route("/CopyMovies")]
         public async Task<IActionResult> CopyMovies()
         {
-            await this.fileReader.ReadVideosFromDirectory();
+            await fileReader.ReadVideosFromDirectory();
 
-            return this.Ok();
+            return Ok();
         }
 
 
@@ -41,9 +40,9 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CopyImages()
         {
-            await this.fileReader.ReadImagesFromDirectory();
+            await fileReader.ReadImagesFromDirectory();
 
-            return this.Ok();
+            return Ok();
         }
 
 
@@ -52,9 +51,9 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CopySubtitles()
         {
-            await this.fileReader.ReadSubtitlesFromDirectory();
+            await fileReader.ReadSubtitlesFromDirectory();
 
-            return this.Ok();
+            return Ok();
         }
 
         [HttpGet]
@@ -62,9 +61,9 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CopyCoverImages()
         {
-            await this.fileReader.ReadCoverImagesFromDirectory();
+            await fileReader.ReadCoverImagesFromDirectory();
 
-            return this.Ok();
+            return Ok();
         }
 
         [HttpGet]
@@ -72,12 +71,12 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AddGenres()
         {
-            var genresList = await this.fileReader.ReadGenresFromFile();
+            var genresList = await fileReader.ReadGenresFromFile();
             genresList = genresList.OrderBy(p => p).ToList();
-            await this.genresService.AddAsync(genresList);
-            var movieGenres = await this.fileReader.ReadMovieGenresFromFile();
-            await this.moviesService.AddGenresAsync(movieGenres);
-            return this.Ok();
+            await genresService.AddAsync(genresList);
+            var movieGenres = await fileReader.ReadMovieGenresFromFile();
+            await moviesService.AddGenresAsync(movieGenres);
+            return Ok();
         }
 
     }

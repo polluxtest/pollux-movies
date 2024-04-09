@@ -1,14 +1,14 @@
-﻿namespace Pollux.API.Middlewares
-{
-    using System;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
+namespace Pollux.Movies.Middlewares
+{
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate nextDelegate;
-        private ILogger logger;
+        private readonly ILogger logger;
 
         public ExceptionMiddleware(RequestDelegate nextDelegate, ILogger logger)
         {

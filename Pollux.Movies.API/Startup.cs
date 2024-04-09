@@ -1,5 +1,6 @@
 using Movies.Application.Mappers;
 using Movies.Persistence;
+using Pollux.Movies.Middlewares;
 
 namespace Pollux.Movies
 {
@@ -12,7 +13,6 @@ namespace Pollux.Movies
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.OpenApi.Models;
-    using Pollux.API.Middlewares;
     using Pollux.Movies.Auth;
     using System.Collections.Generic;
 

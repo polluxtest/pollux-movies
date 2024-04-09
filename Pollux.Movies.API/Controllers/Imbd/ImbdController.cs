@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Movies.Application.ThirdParty;
 using Movies.Common.Constants.Strings;
 
-namespace Pollux.Movies.Controllers
+namespace Pollux.Movies.Controllers.Imbd
 {
     public class ImbdController : BaseController
     {
@@ -23,8 +23,8 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetImbdMovieRanking()
         {
-            await this.imbdService.FindImbdMovie();
-            return this.Ok();
+            await imbdService.FindImbdMovie();
+            return Ok();
         }
     }
 }

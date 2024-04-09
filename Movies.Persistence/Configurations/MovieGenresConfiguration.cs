@@ -14,6 +14,8 @@ namespace Movies.Persistence.Configurations
             builder.HasKey(p => new { p.MovieId, p.GenreId });
             builder.Property(p => p.IsDeleted).HasDefaultValue(false);
             builder.HasIndex(p => new { p.MovieId, p.GenreId });
+            builder.HasIndex(p => p.GenreId);
+            builder.HasIndex(p => p.MovieId);
         }
     }
 }

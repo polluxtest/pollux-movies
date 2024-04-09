@@ -1,10 +1,10 @@
-﻿namespace Pollux.Movies.Controllers
-{
-    using System.Threading.Tasks;
-    using AzureUploaderTransformerVideos;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using AzureUploaderTransformerVideos;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
+namespace Pollux.Movies.Controllers.Azure
+{
     public class AzureMediaServicesController : BaseController
     {
         private readonly AzureMediaService azureMediaService;

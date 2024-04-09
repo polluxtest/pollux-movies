@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Movies.Application.ExtensionMethods;
 using Movies.Application.Models;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories;
-using Movies.Application.ExtensionMethods;
-using Movies.Application.Mappers;
+using Movies.Persistence.QueryResults;
 
 namespace Movies.Application
 {
@@ -65,18 +63,16 @@ namespace Movies.Application
         /// <returns>List<MoviesByCategoryModel/></returns>
         public async Task<List<MoviesByCategoryModel>> GetAllByGenreAsync(string userId, string sortBy = null)
         {
-            var moviesByGenreDb = await this.moviesByGenreRepository.GetAllAsync();
-            var moviesWatchingDb = await this.moviesWatchingService.GetAllAsync(userId);
-            var moviesByGenre = this.SetContinueWatching(moviesByGenreDb, moviesWatchingDb);
-
-            return moviesByGenre
+            var moviesByGenreDb = await this.moviesByGenreRepository.GetAllAsync(userId);
+            return moviesByGenreDb
                 .GroupBy(p => p.Genre.Name)
                 .Select(x =>
                 {
                     var moviesByCategory = new MoviesByCategoryModel()
                     {
                         Title = x.Key,
-                        Movies = x.Select(p => p.Movie).ToList().SortCustomBy(sortBy),
+                        Movies = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(x.ToList())
+                            .SortCustomBy(sortBy),
                     };
 
                     return moviesByCategory;

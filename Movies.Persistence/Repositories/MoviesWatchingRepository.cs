@@ -12,7 +12,6 @@ namespace Movies.Persistence.Repositories
     public interface IMoviesWatchingRepository : IRepository<MovieWatching>
     {
         Task<List<MovieWatching>> GetManyAsync(string userId);
-        Task<MovieWatching> GetAsync(string userId, Guid movieId);
     }
 
     public class MoviesWatchingRepository : RepositoryBase<MovieWatching>, IMoviesWatchingRepository
@@ -43,29 +42,5 @@ namespace Movies.Persistence.Repositories
 
             return moviesWatchingDb;
         }
-
-
-        /// <summary>
-        /// Gets the asynchronous.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="movieId">The movie identifier.</param>
-        /// <returns>MovieWatching</returns>
-        public async Task<MovieWatching> GetAsync(string userId, Guid movieId)
-        {
-            var moviesWatchingDb = await this.dbSet
-                .Include(p => p.Movie)
-                .ThenInclude(p => p.Director)
-                .SingleOrDefaultAsync(p => p.UserId == userId && p.MovieId == movieId);
-
-            if (moviesWatchingDb == null)
-            {
-               var movieDb = await this.moviesRepository.GetAsync(movieId);
-               return new MovieWatching() { Movie = movieDb };
-            }
-
-            return moviesWatchingDb;
-        }
-
     }
 }

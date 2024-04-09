@@ -102,8 +102,9 @@ namespace Movies.Persistence.Repositories.Base.Interfaces
         /// <summary>
         /// Gets all asynchronous.
         /// </summary>
-        /// <returns>Entity List.</returns>
+        /// <returns>Task<List<TEntity>></returns>
         Task<List<TEntity>> GetAllAsync();
+
 
         /// <summary>
         /// Gets all asynchronous.
@@ -158,6 +159,7 @@ namespace Movies.Persistence.Repositories.Base.Interfaces
         /// <param name="where">The where.</param>
         /// <returns>List of Entities.</returns>
         Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> where);
+
 
         /// <summary>
         /// Gets the many asynchronous.

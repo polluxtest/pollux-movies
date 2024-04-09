@@ -13,9 +13,8 @@ namespace Movies.Application
 {
     public interface IMoviesWatchingService
     {
-        Task<MovieWatching> GetAsync(MovieContinueWatchingRequest request);
         Task Save(MovieWatchingSaveModel movieWatchingModel);
-        Task<List<MoviesByCategoryModel>> GetAllGroupedAsync(string userId);
+        Task<List<MoviesByCategoryModel>> GetAllMoviesContinueWatchingAsync(string userId);
         Task<List<MovieWatching>> GetAllAsync(string userId);
     }
 
@@ -30,16 +29,6 @@ namespace Movies.Application
             this.mapper = mapper;
         }
 
-        /// <summary>
-        /// Gets the asynchronous.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>MovieWatchingModel</returns>
-        public async Task<MovieWatching> GetAsync(MovieContinueWatchingRequest request)
-        {
-            var movieContinueWatchingDb = await this.moviesWatchingRepository.GetAsync(request.UserId,request.MovieId);
-            return movieContinueWatchingDb;
-        }
 
         /// <summary>Saves the specified movie watching model.</summary>
         /// <param name="movieWatchingModel">The movie watching model.</param>
@@ -73,7 +62,7 @@ namespace Movies.Application
         /// <summary>Gets all movies watching grouped by Continue Watching asynchronous.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>List<MovieWatching/></returns>
-        public async Task<List<MoviesByCategoryModel>> GetAllGroupedAsync(string userId)
+        public async Task<List<MoviesByCategoryModel>> GetAllMoviesContinueWatchingAsync(string userId)
         {
             var moviesWatchingDb = (await this.moviesWatchingRepository.GetManyAsync(userId)).ToList();
             var moviesWatchingModel = this.mapper.Map<List<MovieWatching>, List<MovieModel>>(moviesWatchingDb);

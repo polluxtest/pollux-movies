@@ -93,7 +93,7 @@ namespace Pollux.Movies.Auth
                 this.logger.LogInformation("Authorization exception");
                 this.logger.LogInformation(ex.Message);
                 this.logger.LogInformation(ex.StackTrace);
-                this.logger.LogInformation(ex?.InnerException.Message);
+                this.logger.LogInformation(ex?.InnerException?.Message);
                 this.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return Task.FromResult(AuthenticateResult.Fail("Not Authenticated"));
             }

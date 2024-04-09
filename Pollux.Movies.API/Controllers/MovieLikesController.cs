@@ -34,9 +34,8 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>List<Guid></returns>
-        [Route(ApiRoutesConstants.GetLikesIds)]
         [HttpGet]
-        public async Task<ActionResult<List<System.Guid>>> GetLikesIds([FromQuery] string userId)
+        public async Task<ActionResult<List<System.Guid>>> Get([FromQuery] string userId)
         {
             if (this.IsUserIdValid(userId)) return this.BadRequest("Invalid User Id");
 
