@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using global::Movies.Application;
 using global::Movies.Application.Models;
@@ -41,10 +40,15 @@ namespace Pollux.Movies.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<MovieWatchingModel>> Get([FromQuery] MovieContinueWatchingRequest request)
         {
-            //todo add try catch
-            var movieWatchingModel = await this.moviesService.GetAsync(request.MovieId, request.UserId);
-
-            return this.Ok(movieWatchingModel);
+            try
+            {
+                var movieWatching = await this.moviesService.GetAsync(request.MovieId, request.UserId);
+                return this.Ok(movieWatching);
+            }
+            catch (ArgumentException e)
+            {
+                return this.NotFound();
+            }
         }
 
         /// <summary>Gets all continue watching.</summary>

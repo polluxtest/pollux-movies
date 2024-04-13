@@ -70,6 +70,7 @@ namespace Movies.Application.Mappers
 
 
             this.CreateMap<MoviesQueryResult, MovieWatchingModel>();
+
             this.CreateMap<MovieModel, MovieWatchingModel>()
                 .ForMember(p => p.Movie, opt => opt.MapFrom(p => p));
         }

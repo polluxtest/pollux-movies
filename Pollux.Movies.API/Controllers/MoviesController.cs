@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using global::Movies.Application;
 using global::Movies.Application.Models;
@@ -63,7 +62,7 @@ namespace Pollux.Movies.Controllers
         /// <param name="search">The search.</param>
         /// <param name="userId">The user Id.</param>
         /// <returns>Movie List.</returns>
-        //[ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.Search)]
         public async Task<ActionResult<List<MovieModel>>> Search(string search, string userId)
@@ -78,17 +77,14 @@ namespace Pollux.Movies.Controllers
         /// <param name="id">The identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns>MovieInfoModel.</returns>
-        //[ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.Movie)]
         public async Task<ActionResult<MovieModel>> GetMovie([FromRoute] Guid id, [FromQuery] string userId)
         {
             try
             {
-                var watch = new Stopwatch();
-                watch.Start();
                 var movie = await this.moviesService.GetAsync(id, userId);
-                Debug.WriteLine(TimeSpan.FromMilliseconds((double)watch.ElapsedMilliseconds).TotalSeconds);
                 return this.Ok(movie);
             }
             catch (ArgumentException)
@@ -104,9 +100,9 @@ namespace Pollux.Movies.Controllers
         [ResponseCache(Duration = 8200, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.RecommendedByPollux)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> RecommendedByPollux()
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> RecommendedByPollux(string userId)
         {
-            var recommendedMovies = await this.moviesService.GetRecommendedByPollux();
+            var recommendedMovies = await this.moviesService.GetRecommendedByPollux(userId);
 
             return this.Ok(recommendedMovies);
         }
@@ -118,9 +114,9 @@ namespace Pollux.Movies.Controllers
         [ResponseCache(Duration = 8200, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Route(ApiRoutesConstants.RecommendedByUsers)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> RecommendedByUsers()
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> RecommendedByUsers(string userId)
         {
-            var recommendedMovies = await this.moviesService.GetRecommendedByUsers();
+            var recommendedMovies = await this.moviesService.GetRecommendedByUsers(userId);
 
             return this.Ok(recommendedMovies);
         }
