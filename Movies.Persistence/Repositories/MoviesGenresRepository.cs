@@ -20,25 +20,21 @@ namespace Movies.Persistence.Repositories
     /// </summary>
     public class MoviesGenresRepository : RepositoryBase<Genre>, IMoviesGenresRepository
     {
-        private readonly IMoviesRepository moviesRepository;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MoviesGenresRepository"/> class.
         /// </summary>
         /// <param name="moviesDbContext">The movies database context.</param>
         /// <param name="moviesRepository">The movies repository.</param>
-        public MoviesGenresRepository(
-            PolluxMoviesDbContext moviesDbContext,
-            IMoviesRepository moviesRepository)
+        public MoviesGenresRepository(PolluxMoviesDbContext moviesDbContext)
             : base(moviesDbContext)
         {
-            this.moviesRepository = moviesRepository;
         }
 
         /// <summary>
         /// Adds the many asynchronous.
         /// </summary>
         /// <param name="genres">The genres.</param>
+        /// <returns>Task</returns>
         public async Task AddManyAsync(List<string> genres)
         {
             foreach (var genre in genres)

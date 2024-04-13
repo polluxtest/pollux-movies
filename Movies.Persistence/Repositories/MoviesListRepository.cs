@@ -30,8 +30,9 @@ namespace Movies.Persistence.Repositories
         /// <returns>Movie Ids List.</returns>
         public async Task<List<Guid>> GetMoviesListIds(string userId)
         {
-            return this.dbSet.Where(p => p.UserId.ToString().Equals(userId.ToUpper()))
-            .Select(p => p.MovieId).ToList();
+            return await this.dbSet.Where(p => p.UserId.ToString().Equals(userId))
+                .Select(p => p.MovieId)
+                .ToListAsync();
         }
 
         /// <summary>
@@ -41,12 +42,12 @@ namespace Movies.Persistence.Repositories
         /// <returns>List Movie.</returns>
         public async Task<List<Movie>> GetMoviesMyList(string userId)
         {
-            return this.dbSet
+            return await this.dbSet
                 .Include(p => p.Movie)
                 .ThenInclude(p => p.Director)
-                .Where(p => p.UserId.ToString() == userId.ToUpper())
+                .Where(p => p.UserId.ToString() == userId)
                 .Select(p => p.Movie)
-                .ToList();
+                .ToListAsync();
         }
     }
 }

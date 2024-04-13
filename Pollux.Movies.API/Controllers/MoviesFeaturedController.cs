@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,8 +26,11 @@ namespace Pollux.Movies.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<List<MovieFeaturedModel>>> Get()
         {
+            var stop = new Stopwatch();
+            stop.Start();
             var featuredMovies = await this.moviesService.GetAll();
-
+            stop.Stop();
+            Debug.WriteLine(stop.ElapsedMilliseconds);
             return this.Ok(featuredMovies);
         }
     }

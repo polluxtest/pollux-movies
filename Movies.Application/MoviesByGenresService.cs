@@ -22,37 +22,13 @@ namespace Movies.Application
     {
         private readonly IMoviesByGenresRepository moviesByGenreRepository;
         private readonly IMapper mapper;
-        private readonly IMoviesWatchingService moviesWatchingService;
 
         public MoviesByGenresService(
             IMoviesByGenresRepository moviesByGenreRepository,
-            IMoviesWatchingService moviesWatchingService,
             IMapper mapper)
         {
             this.moviesByGenreRepository = moviesByGenreRepository;
-            this.moviesWatchingService = moviesWatchingService;
             this.mapper = mapper;
-        }
-
-        /// <summary>
-        /// Adds the many to movie asynchronous.
-        /// </summary>
-        /// <param name="movieId">The movie identifier.</param>
-        /// <param name="genresIds">The genres ids.</param>
-        public async Task AddManyToMovieAsync(Guid movieId, List<int> genresIds)
-        {
-            await this.DeleteAllByMovieId(movieId);
-
-            foreach (var genreId in genresIds)
-            {
-                await this.moviesByGenreRepository.AddAsync(new MovieGenres()
-                {
-                    MovieId = movieId,
-                    GenreId = genreId,
-                });
-            }
-
-            await this.moviesByGenreRepository.SaveAsync();
         }
 
         /// <summary>
@@ -89,6 +65,8 @@ namespace Movies.Application
             return await this.moviesByGenreRepository.GetGenresByMovieIdAsync(movieId);
         }
 
+        #region azure
+
         /// <summary>
         /// Deletes all by movie identifier.
         /// </summary>
@@ -105,26 +83,27 @@ namespace Movies.Application
             await this.moviesByGenreRepository.SaveAsync();
         }
 
-
-        private List<MovieGenreModel> SetContinueWatching(
-            List<MovieGenres> moviesByCategory,
-            List<MovieWatching> moviesWatching)
+        /// <summary>
+        /// Adds the many to movie asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <param name="genresIds">The genres ids.</param>
+        public async Task AddManyToMovieAsync(Guid movieId, List<int> genresIds)
         {
-            var moviesWatchingIds = moviesWatching.Select(p => p.Movie.Id).ToList();
-            var moviesModels = this.mapper.Map<List<MovieGenres>, List<MovieGenreModel>>(moviesByCategory);
-            foreach (var movie in moviesModels)
-            {
-                if (moviesWatchingIds.Contains(movie.Movie.Id))
-                {
-                    var movieWatching = moviesWatching.Single(p => p.Movie.Id == movie.Movie.Id);
+            await this.DeleteAllByMovieId(movieId);
 
-                    movie.Movie.RemainingTime = movieWatching.RemainingTime;
-                    movie.Movie.ElapsedTime = movieWatching.ElapsedTime;
-                    movie.Movie.Duration = movieWatching.Duration;
-                }
+            foreach (var genreId in genresIds)
+            {
+                await this.moviesByGenreRepository.AddAsync(new MovieGenres()
+                {
+                    MovieId = movieId,
+                    GenreId = genreId,
+                });
             }
 
-            return moviesModels;
+            await this.moviesByGenreRepository.SaveAsync();
         }
+
+        #endregion
     }
 }

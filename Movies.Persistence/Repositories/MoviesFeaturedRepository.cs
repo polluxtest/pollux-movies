@@ -1,19 +1,18 @@
-﻿namespace Movies.Persistence.Repositories
-{
-    using Microsoft.EntityFrameworkCore;
-    using Movies.Domain.Entities;
-    using Movies.Persistence.Repositories.Base;
-    using Movies.Persistence.Repositories.Base.Interfaces;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Movies.Domain.Entities;
+using Movies.Persistence.Repositories.Base;
+using Movies.Persistence.Repositories.Base.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
+namespace Movies.Persistence.Repositories
+{
     /// <summary>
     /// Movies Featured Repository contract.
     /// </summary>
     public interface IMoviesFeaturedRepository : IRepository<MovieFeatured>
     {
-        Task<List<MovieFeatured>> GetAll();
+        new Task<List<MovieFeatured>> GetAll();
     }
 
     /// <summary>
@@ -39,7 +38,6 @@
             return this.dbSet
                 .Include(p => p.Movie)
                 .ThenInclude(p => p.Director)
-                .Where(p => p.Movie.ProcessedByStreamVideo)
                 .ToListAsync();
         }
     }

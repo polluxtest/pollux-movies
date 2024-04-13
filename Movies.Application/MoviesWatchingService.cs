@@ -50,7 +50,6 @@ namespace Movies.Application
 
             if (movieWatchingDb != null)
             {
-
                 movieWatchingDb.ElapsedTime = movieWatchingModel.ElapsedTime;
                 movieWatchingDb.RemainingTime = (int)Math.Round(TimeSpan
                     .FromSeconds(movieWatchingModel.Duration - movieWatchingModel.ElapsedTime).TotalMinutes);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -68,14 +67,15 @@ namespace Movies.Persistence.Repositories
         }
 
         /// <summary>
-        /// Gets the recommended.
+        /// Get Recommended Movies
         /// </summary>
-        /// <returns>List<Movie/></returns>
+        /// <param name="userId">UserId</param>
+        /// <returns><List<MoviesQueryResult></returns>
         public Task<List<MoviesQueryResult>> GetRecommendedAsync(string userId)
         {
             var sqlQuery = this.GetBaseQuery(userId).
                 OrderByDescending(p => p.Movie.Likes);
-          
+
             return sqlQuery.Take(MoviesSearchContants.MaxResultSearch).ToListAsync();
         }
 

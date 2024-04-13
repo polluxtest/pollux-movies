@@ -10,7 +10,9 @@ namespace Movies.Persistence.Configurations
         {
             builder.ToTable<MoviesLikes>("MoviesLikes");
             builder.HasKey(p => new { p.UserId, p.MovieId });
-            builder.HasIndex("UserId", "MovieId");
+            builder.HasIndex(p => new { p.UserId, p.MovieId });
+            builder.HasIndex(p => p.MovieId);
+            builder.HasIndex(p => p.UserId);
         }
     }
 }

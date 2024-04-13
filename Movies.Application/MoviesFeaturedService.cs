@@ -37,7 +37,7 @@ namespace Movies.Application
             var featuredMovies = await this.moviesFeaturedRepository.GetAll();
             var featureMoviesModelList = this.mapper.Map<List<MovieFeatured>, List<MovieFeaturedModel>>(featuredMovies);
 
-            // todo this should be added as navigation property
+            // todo possible optimization by querying movies genres
             foreach (var featuredMovie in featureMoviesModelList)
             {
                 featuredMovie.Movie.Genres = await this.moviesGenreService.GetAllByMovieIdAsync(featuredMovie.Movie.Id);

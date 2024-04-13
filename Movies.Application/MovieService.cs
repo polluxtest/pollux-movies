@@ -181,6 +181,7 @@ namespace Movies.Application
         /// <summary>
         /// Gets the recommended by users.
         /// </summary>
+        /// <param name="userId">The User Id.</param>
         /// <returns>List<MoviesByCategoryModel/>.</returns>
         public async Task<List<MoviesByCategoryModel>> GetRecommendedByUsers(string userId)
         {
@@ -195,7 +196,7 @@ namespace Movies.Application
         /// <summary>
         /// Gets the movie search options.
         /// </summary>
-        /// <returns>Task<List<string></returns>
+        /// <returns>List<string></returns>
         public async Task<List<string>> GetMovieSearchOptions()
         {
             var resultOptions = new List<string>();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Movies.Domain.Entities;
 using Movies.Persistence.Repositories.Base;
 using Movies.Persistence.Repositories.Base.Interfaces;
@@ -18,7 +19,6 @@ namespace Movies.Persistence.Repositories
         public MoviesLikesRepository(PolluxMoviesDbContext context)
             : base(context)
         {
-
         }
 
         /// <summary>
@@ -28,8 +28,10 @@ namespace Movies.Persistence.Repositories
         /// <returns>Movie Ids List.</returns>
         public async Task<List<Guid>> GetLikesMoviesIds(string userId)
         {
-            return this.dbSet.Where(p => p.UserId.ToString().Equals(userId.ToUpper()))
-            .Select(p => p.MovieId).ToList();
+            return await this.dbSet
+                .Where(p => p.UserId.ToString().Equals(userId))
+                .Select(p => p.MovieId)
+                .ToListAsync();
         }
     }
 }
