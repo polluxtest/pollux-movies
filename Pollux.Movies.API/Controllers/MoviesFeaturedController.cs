@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Application;
 using Movies.Application.Models;
+using Movies.Common.Constants;
 
 namespace Pollux.Movies.Controllers
 {
@@ -21,16 +22,16 @@ namespace Pollux.Movies.Controllers
         /// Gets the by language.
         /// </summary>
         /// <returns>List Movie By Language Model.</returns>
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [ResponseCache(
+            Duration = ResponseCachaTimes.ThirtyMinutes,
+            Location = ResponseCacheLocation.Any,
+            VaryByQueryKeys = new[] { "*" })]
+        [HttpGet]
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<List<MovieFeaturedModel>>> Get()
         {
-            var stop = new Stopwatch();
-            stop.Start();
             var featuredMovies = await this.moviesService.GetAll();
-            stop.Stop();
-            Debug.WriteLine(stop.ElapsedMilliseconds);
             return this.Ok(featuredMovies);
         }
     }

@@ -10,8 +10,8 @@ namespace Movies.Application
 {
     public interface IMoviesLikesService
     {
-        Task AddRemoveUserLike(AddRemoveUserMovieModel model);
-        Task DeleteAsync(AddRemoveUserMovieModel model);
+        Task AddRemoveUserLike(MovieUserRequest model);
+        Task DeleteAsync(MovieUserRequest model);
         Task<List<Guid>> GetLikesMoviesIds(string userId);
         public Task<bool> IsMovieLikedByUser(Guid movieId, string userId);
     }
@@ -37,7 +37,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Task.</returns>
-        public async Task AddRemoveUserLike(AddRemoveUserMovieModel model)
+        public async Task AddRemoveUserLike(MovieUserRequest model)
         {
             var exists = await this.userLikesRepository.AnyAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
             var movieDb = await this.moviesRepository.GetAsync(p => p.Id == model.MovieId);
@@ -58,7 +58,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Task.</returns>
-        public async Task DeleteAsync(AddRemoveUserMovieModel model)
+        public async Task DeleteAsync(MovieUserRequest model)
         {
             var userMovie = await this.userLikesRepository.GetAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
             this.userLikesRepository.Delete(userMovie);
@@ -92,7 +92,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <param name="movieDb">The movie database.</param>
-        private async Task UnlikeMovie(AddRemoveUserMovieModel model, Movie movieDb)
+        private async Task UnlikeMovie(MovieUserRequest model, Movie movieDb)
         {
             await this.DeleteAsync(model);
             movieDb.Likes -= 1;
@@ -104,7 +104,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <param name="movieDb">The movie database.</param>
-        private async Task LikeMovie(AddRemoveUserMovieModel model, Movie movieDb)
+        private async Task LikeMovie(MovieUserRequest model, Movie movieDb)
         {
             var userMovie = new MoviesLikes();
             this.mapper.Map(model, userMovie);

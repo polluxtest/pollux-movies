@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Movies.Application.Models;
-using Movies.Application.Models.Requests;
 using Movies.Common.Constants.Strings;
 using Movies.Domain.Entities;
 using Movies.Persistence.QueryResults;
@@ -51,17 +50,18 @@ namespace Movies.Application
             if (movieWatchingDb != null)
             {
                 movieWatchingDb.ElapsedTime = movieWatchingModel.ElapsedTime;
-                movieWatchingDb.RemainingTime = (int)Math.Round(TimeSpan
-                    .FromSeconds(movieWatchingModel.Duration - movieWatchingModel.ElapsedTime).TotalMinutes);
+                movieWatchingDb.RemainingTime = movieWatchingModel.RemainingTime;
                 this.moviesWatchingRepository.Update(movieWatchingDb);
             }
             else
             {
-                var movieWatching = new MovieWatching() {
+                var movieWatching = new MovieWatching()
+                {
                     MovieId = movieWatchingModel.MovieId,
                     UserId = movieWatchingModel.UserId,
-                    ElapsedTime =movieWatchingModel.ElapsedTime,
+                    ElapsedTime = movieWatchingModel.ElapsedTime,
                     Duration = movieWatchingModel.Duration,
+                    RemainingTime = movieWatchingModel.RemainingTime,
                 };
                 await this.moviesWatchingRepository.AddAsync(movieWatching);
             }

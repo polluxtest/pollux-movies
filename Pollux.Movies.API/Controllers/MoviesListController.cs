@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Application;
 using Movies.Application.Models;
+using Movies.Application.Models.Requests;
 using Movies.Common.Constants.Strings;
+using MovieUserRequest = Movies.Application.Models.MovieUserRequest;
 
 namespace Pollux.Movies.Controllers
 {
@@ -22,12 +22,12 @@ namespace Pollux.Movies.Controllers
         /// <summary>
         /// Gets the specified user identifier.
         /// </summary>
-        /// <param name="userId">The user identifier.</param>
+        /// <param name="request">The user identifier.</param>
         /// <returns>List of My movie ids.</returns>
         [HttpGet]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> Get([FromQuery] string userId)
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> Get(UserIdRequest request)
         {
-            var userMovieList = await this.userMoviesService.GetMovieMyList(userId);
+            var userMovieList = await this.userMoviesService.GetMovieMyList(request.UserId.ToString());
 
             return this.Ok(userMovieList);
         }
@@ -35,15 +35,13 @@ namespace Pollux.Movies.Controllers
         /// <summary>
         /// Gets the specified user identifier.
         /// </summary>
-        /// <param name="userId">The user identifier.</param>
+        /// <param name="request">The user identifier.</param>
         /// <returns>List of My movies.</returns>
         [HttpGet]
         [Route(ApiRoutesConstants.GetMyListIds)]
-        public async Task<ActionResult<List<Guid>>> GetMyListIds([FromQuery] string userId)
+        public async Task<ActionResult<List<Guid>>> GetMyListIds([FromQuery] UserIdRequest request)
         {
-            if (this.IsUserIdValid(userId)) return this.BadRequest("Invalid User Id");
-
-            var userMovieList = await this.userMoviesService.GetMoviesIdsByUser(userId);
+            var userMovieList = await this.userMoviesService.GetMoviesIdsByUser(request.UserId.ToString());
 
             return this.Ok(userMovieList);
         }
@@ -54,7 +52,7 @@ namespace Pollux.Movies.Controllers
         /// <param name="request">The request.</param>
         /// <returns>Movie id added.</returns>
         [HttpPost]
-        public async Task<ActionResult<int>> Post([FromBody] AddRemoveUserMovieModel request)
+        public async Task<ActionResult<int>> Post([FromBody] MovieUserRequest request)
         {
             await this.userMoviesService.AddRemoveAsync(request);
 

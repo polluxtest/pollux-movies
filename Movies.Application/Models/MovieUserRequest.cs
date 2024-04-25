@@ -2,7 +2,7 @@
 
 namespace Movies.Application.Models
 {
-    public class AddRemoveUserMovieModel
+    public class MovieUserRequest
     {
         /// <summary>
         /// Gets or sets the user identifier.

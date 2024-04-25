@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Application;
-using Movies.Application.Models;
-using Movies.Common.Constants.Strings;
+using Movies.Application.Models.Requests;
+using MovieUserRequest = Movies.Application.Models.MovieUserRequest;
 
 namespace Pollux.Movies.Controllers
 {
@@ -22,7 +22,7 @@ namespace Pollux.Movies.Controllers
         /// <param name="request">The request.</param>
         /// <returns>Task.</returns>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] AddRemoveUserMovieModel request)
+        public async Task<ActionResult> Post([FromBody] MovieUserRequest request)
         {
             await this.userLikesService.AddRemoveUserLike(request);
 
@@ -32,14 +32,12 @@ namespace Pollux.Movies.Controllers
         /// <summary>
         /// Gets the specified user identifier.
         /// </summary>
-        /// <param name="userId">The user identifier.</param>
+        /// <param name="request">The user identifier.</param>
         /// <returns>List<Guid></returns>
         [HttpGet]
-        public async Task<ActionResult<List<System.Guid>>> Get([FromQuery] string userId)
+        public async Task<ActionResult<List<System.Guid>>> Get([FromQuery] UserIdRequest request)
         {
-            if (this.IsUserIdValid(userId)) return this.BadRequest("Invalid User Id");
-
-            var moviesLikes = await this.userLikesService.GetLikesMoviesIds(userId);
+            var moviesLikes = await this.userLikesService.GetLikesMoviesIds(request.UserId.ToString());
 
             return this.Ok(moviesLikes);
         }

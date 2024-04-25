@@ -11,9 +11,9 @@ namespace Movies.Application
 {
     public interface IMoviesListService
     {
-        Task AddRemoveAsync(AddRemoveUserMovieModel model);
+        Task AddRemoveAsync(MovieUserRequest model);
 
-        Task DeleteAsync(AddRemoveUserMovieModel model);
+        Task DeleteAsync(MovieUserRequest model);
 
         Task<List<Guid>> GetMoviesIdsByUser(string userId);
 
@@ -40,7 +40,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Task.</returns>
-        public async Task AddRemoveAsync(AddRemoveUserMovieModel model)
+        public async Task AddRemoveAsync(MovieUserRequest model)
         {
             var exists = await this.userMoviesRepository.AnyAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
 
@@ -62,7 +62,7 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Task.</returns>
-        public async Task DeleteAsync(AddRemoveUserMovieModel model)
+        public async Task DeleteAsync(MovieUserRequest model)
         {
             var userMovie = await this.userMoviesRepository.GetAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
             this.userMoviesRepository.Delete(userMovie);

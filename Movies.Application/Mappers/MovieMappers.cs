@@ -22,7 +22,7 @@ namespace Movies.Application.Mappers
                 .ForMember(dest => dest.DirectorName, opt => opt.MapFrom(p => p.Director.Name))
                 .ReverseMap();
 
-            this.CreateMap<AddRemoveUserMovieModel, MoviesLists>();
+            this.CreateMap<MovieUserRequest, MoviesLists>();
 
             this.CreateMap<MovieWatching, MovieWatchingModel>()
                 .ForMember(
@@ -51,7 +51,7 @@ namespace Movies.Application.Mappers
 
             this.CreateMap<MovieGenres, MovieGenreModel>();
 
-            this.CreateMap<AddRemoveUserMovieModel, MoviesLikes>();
+            this.CreateMap<MovieUserRequest, MoviesLikes>();
 
             this.CreateMap<MovieFeatured, MovieFeaturedModel>().ForMember(
                 dest => dest.Movie,

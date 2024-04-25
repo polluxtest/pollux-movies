@@ -12,9 +12,5 @@ namespace Pollux.Movies.Controllers
     [ApiController]
     public class BaseController : ControllerBase
     {
-        protected bool IsUserIdValid(string userId)
-        {
-            return string.IsNullOrEmpty(userId);
-        }
     }
 }

@@ -51,6 +51,7 @@ namespace Pollux.Movies
             this.SetUpSwagger(services);
             services.AddDIRepositories();
             services.AddDIServices();
+            services.AddResponseCaching();
             services.AddAutoMapper(AssemblyApplication.Assembly);
         }
 
@@ -67,6 +68,7 @@ namespace Pollux.Movies
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseResponseCaching();
             app.UseEndpoints(
             endpoints =>
             {

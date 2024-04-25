@@ -35,7 +35,7 @@ namespace Movies.Application.ExtensionMethods
         /// </summary>
         /// <param name="movies">The movies.</param>
         /// <param name="sortBy">The sort by.</param>
-        /// <returns></returns>
+        /// <returns>List<MovieModel></returns>
         public static List<MovieModel> SortCustomBy(this List<MovieModel> movies, string sortBy = null)
         {
             switch (sortBy)
