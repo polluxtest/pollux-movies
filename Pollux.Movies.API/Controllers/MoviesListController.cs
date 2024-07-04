@@ -25,7 +25,7 @@ namespace Pollux.Movies.Controllers
         /// <param name="request">The user identifier.</param>
         /// <returns>List of My movie ids.</returns>
         [HttpGet]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> Get(UserIdRequest request)
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> Get([FromQuery] UserIdRequest request)
         {
             var userMovieList = await this.userMoviesService.GetMovieMyList(request.UserId.ToString());
 

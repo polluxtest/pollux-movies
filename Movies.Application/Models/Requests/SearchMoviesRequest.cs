@@ -19,5 +19,13 @@ namespace Movies.Application.Models.Requests
         /// The user identifier.
         /// </value>
         public Guid UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sort by.
+        /// </summary>
+        /// <value>
+        /// The sort by.
+        /// </value>
+        public string SortBy { get; set; }
     }
 }

@@ -81,15 +81,12 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <param name="request">The search request.</param>
         /// <returns>List<MovieModel></returns>
-        [ResponseCache(
-            Duration = ResponseCachaTimes.OneMinute,
-            Location = ResponseCacheLocation.Any,
-            VaryByQueryKeys = new[] { "*" })]
         [HttpGet]
         [Route(ApiRoutesConstants.Search)]
-        public async Task<ActionResult<List<MovieModel>>> Search(SearchMoviesRequest request)
+        public async Task<ActionResult<List<MovieModel>>> Search([FromQuery] SearchMoviesRequest request)
         {
-            var searchMovies = await this.moviesService.Search(request.Search, request.UserId.ToString());
+            var searchMovies =
+                await this.moviesService.Search(request.Search, request.UserId.ToString(), request.SortBy);
             return this.Ok(searchMovies);
         }
 

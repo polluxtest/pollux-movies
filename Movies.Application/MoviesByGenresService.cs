@@ -16,6 +16,8 @@ namespace Movies.Application
         Task AddManyToMovieAsync(Guid movieId, List<int> genresIds);
         Task<List<MoviesByCategoryModel>> GetAllByGenreAsync(string userId, string sortBy = null);
         Task<List<string>> GetAllByMovieIdAsync(Guid movieId);
+        Task<List<string>> GetGenresAsync();
+        Task<List<MovieModel>> GetSearchByGenreAsync(string userId, string genre, string sortBy = null);
     }
 
     public class MoviesByGenresService : IMoviesByGenresService
@@ -63,6 +65,29 @@ namespace Movies.Application
         public async Task<List<string>> GetAllByMovieIdAsync(Guid movieId)
         {
             return await this.moviesByGenreRepository.GetGenresByMovieIdAsync(movieId);
+        }
+
+        /// <summary>
+        /// Gets the genres asynchronous.
+        /// </summary>
+        /// <returns>List<string></returns>
+        public async Task<List<string>> GetGenresAsync()
+        {
+            return await this.moviesByGenreRepository.GetGenresAsync();
+        }
+
+        /// <summary>
+        /// Gets the search by genre asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="genre">The genre.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <returns>Task<List<MovieModel></returns>
+        public async Task<List<MovieModel>> GetSearchByGenreAsync(string userId, string genre, string sortBy = null)
+        {
+            var moviesByGenreDb = await this.moviesByGenreRepository.GetSearchByGenreAsync(userId, genre);
+            var moviesSearch = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(moviesByGenreDb);
+            return moviesSearch.SortCustomBy(sortBy);
         }
 
         #region azure

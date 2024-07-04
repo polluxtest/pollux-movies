@@ -11,11 +11,13 @@ namespace Movies.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<MovieGenres> builder)
         {
-            builder.HasKey(p => new { p.MovieId, p.GenreId });
+            builder.HasKey(p => new { p.MovieId, p.GenreId, p.GenreGenericId });
             builder.Property(p => p.IsDeleted).HasDefaultValue(false);
+            builder.Property(p => p.GenreGenericId).HasDefaultValue(null);
             builder.HasIndex(p => new { p.MovieId, p.GenreId });
-            builder.HasIndex(p => p.GenreId);
             builder.HasIndex(p => p.MovieId);
+            builder.HasIndex(p => p.GenreId);
+            builder.HasIndex(p => p.GenreGenericId);
         }
     }
 }

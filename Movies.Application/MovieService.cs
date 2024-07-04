@@ -27,7 +27,7 @@ namespace Movies.Application
 
         Task AddAsync(Movie movie);
 
-        Task<List<MovieModel>> Search(string search, string userId);
+        Task<List<MovieModel>> Search(string search, string userId, string sortBy);
 
         Task<List<MoviesByCategoryModel>> GetRecommendedByUsers(string userId);
 
@@ -151,16 +151,14 @@ namespace Movies.Application
         /// </summary>
         /// <param name="search">The search.</param>
         /// <param name="userId">The User Id.</param>
+        /// <param name="sortBy">The Sort By.</param>
         /// <returns>List<MovieModel></returns>
-        public async Task<List<MovieModel>> Search(string search, string userId)
+        public async Task<List<MovieModel>> Search(string search, string userId, string sortBy)
         {
-            if (string.IsNullOrEmpty(search))
-            {
-                search = search.RandomLetter(97, 123);
-            }
-
             var moviesDbSearch = await this.moviesRepository.Search(search, userId);
             var moviesResult = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(moviesDbSearch);
+
+            moviesResult = moviesResult.SortCustomBy(sortBy);
 
             return moviesResult.Take(MoviesSearchContants.MaxResultSearch).ToList();
         }

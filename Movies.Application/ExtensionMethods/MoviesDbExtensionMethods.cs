@@ -40,6 +40,7 @@ namespace Movies.Application.ExtensionMethods
         {
             switch (sortBy)
             {
+                case SortByConstants.NoSort: break;
                 case SortByConstants.Magic:
                     movies = MagicSort(movies);
                     break;

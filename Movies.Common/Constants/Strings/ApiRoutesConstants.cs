@@ -89,5 +89,10 @@
         /// The get continue watching
         /// </summary>
         public const string GetContinueWatching = "GetContinueWatching";
+
+        /// <summary>
+        /// The get search by genre
+        /// </summary>
+        public const string GetSearchByGenre = "GetSearchByGenre";
     }
 }

@@ -36,6 +36,24 @@
         /// </value>
         public Genre Genre { get; set; }
 
+
+        /// <summary>
+        /// Gets or sets the genre identifier generic.
+        /// </summary>
+        /// <value>
+        /// The genre identifier.
+        /// </value>
+        public int GenreGenericId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the genre generic.
+        /// </summary>
+        /// <value>
+        /// The genre.
+        /// </value>
+        public Genre GenreGeneric { get; set; }
+
+
         /// <summary>
         /// Gets or sets a value indicating whether this instance is deleted.
         /// </summary>

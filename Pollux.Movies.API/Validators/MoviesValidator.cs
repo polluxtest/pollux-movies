@@ -35,7 +35,6 @@ namespace Pollux.Movies.Validators
         public MoviesSearchValidator()
         {
             this.RuleFor(p => p.UserId).NotEqual(Guid.Empty).NotNull().NotEmpty().WithMessage("Invalid user id");
-            this.RuleFor(p => p.Search).NotNull().NotEmpty().WithMessage("Invalid search id");
         }
     }
 
@@ -52,8 +51,18 @@ namespace Pollux.Movies.Validators
     {
         public MovieSearchValidator()
         {
-            this.RuleFor(p => p.Search).NotNull().NotEmpty().WithMessage("Invalid search id");
             this.RuleFor(p => p.UserId).NotEqual(Guid.Empty).NotNull().NotEmpty().WithMessage("Invalid User id");
+        }
+    }
+
+
+    public class SearchByGenreValidator : AbstractValidator<SearchByGenreRequest>
+    {
+        public SearchByGenreValidator()
+        {
+            this.RuleFor(p => p.SortBy).NotNull().NotEmpty().WithMessage("Invalid sort");
+            this.RuleFor(p => p.Genre).NotNull().NotEmpty().WithMessage("Invalid genre");
+            this.RuleFor(p => p.UserId).NotNull().NotEmpty().WithMessage("Invalid User id");
         }
     }
 }

@@ -12,8 +12,8 @@ using Movies.Persistence;
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    [Migration("20240413132529_AddMissingIndexes")]
-    partial class AddMissingIndexes
+    [Migration("20240427160136_recreateMoviesGenres")]
+    partial class recreateMoviesGenres
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -205,12 +205,17 @@ namespace Movies.Persistence.Migrations
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
 
+                    b.Property<int>("GenreGenericId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.HasKey("MovieId", "GenreId");
+                    b.HasKey("MovieId", "GenreId", "GenreGenericId");
+
+                    b.HasIndex("GenreGenericId");
 
                     b.HasIndex("GenreId");
 
@@ -319,6 +324,12 @@ namespace Movies.Persistence.Migrations
 
             modelBuilder.Entity("Movies.Domain.Entities.MovieGenres", b =>
                 {
+                    b.HasOne("Movies.Domain.Entities.Genre", "GenreGeneric")
+                        .WithMany()
+                        .HasForeignKey("GenreGenericId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Movies.Domain.Entities.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreId")
@@ -332,6 +343,8 @@ namespace Movies.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Genre");
+
+                    b.Navigation("GenreGeneric");
 
                     b.Navigation("Movie");
                 });
