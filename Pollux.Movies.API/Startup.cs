@@ -1,5 +1,6 @@
 using Movies.Application.Mappers;
 using Movies.Persistence;
+using Pollux.API.Auth;
 using Pollux.Movies.Middlewares;
 
 namespace Pollux.Movies
@@ -13,7 +14,6 @@ namespace Pollux.Movies
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.OpenApi.Models;
-    using Pollux.Movies.Auth;
     using System.Collections.Generic;
 
     public class Startup

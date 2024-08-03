@@ -1,6 +1,6 @@
 ﻿namespace Movies.Common.Constants
 {
-    public static class ResponseCachaTimes
+    public static class ResponseCacheTimes
     {
         /// <summary>
         /// 60 minutes time in seconds

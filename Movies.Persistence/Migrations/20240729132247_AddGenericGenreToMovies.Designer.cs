@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Persistence;
 
@@ -11,9 +12,10 @@ using Movies.Persistence;
 namespace Movies.Persistence.Migrations
 {
     [DbContext(typeof(PolluxMoviesDbContext))]
-    partial class PolluxMoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240729132247_AddGenericGenreToMovies")]
+    partial class AddGenericGenreToMovies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,7 @@ namespace Movies.Persistence.Migrations
                     b.ToTable("Directors");
                 });
 
-            modelBuilder.Entity("Movies.Domain.Entities.CategoryGenre", b =>
+            modelBuilder.Entity("Movies.Domain.Entities.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -308,7 +310,7 @@ namespace Movies.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Movies.Domain.Entities.CategoryGenre", "CategoryGenre")
+                    b.HasOne("Movies.Domain.Entities.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -316,7 +318,7 @@ namespace Movies.Persistence.Migrations
 
                     b.Navigation("Director");
 
-                    b.Navigation("CategoryGenre");
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("Movies.Domain.Entities.MovieFeatured", b =>
@@ -332,7 +334,7 @@ namespace Movies.Persistence.Migrations
 
             modelBuilder.Entity("Movies.Domain.Entities.MovieGenres", b =>
                 {
-                    b.HasOne("Movies.Domain.Entities.CategoryGenre", "CategoryGenre")
+                    b.HasOne("Movies.Domain.Entities.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -344,7 +346,7 @@ namespace Movies.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CategoryGenre");
+                    b.Navigation("Genre");
 
                     b.Navigation("Movie");
                 });

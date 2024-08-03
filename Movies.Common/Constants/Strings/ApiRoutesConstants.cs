@@ -94,5 +94,10 @@
         /// The get search by genre
         /// </summary>
         public const string GetSearchByGenre = "GetSearchByGenre";
+
+        /// <summary>
+        /// Movie Genres Route
+        /// </summary>
+        public const string GetMoviesGenres = "GetMoviesGenres";
     }
 }
