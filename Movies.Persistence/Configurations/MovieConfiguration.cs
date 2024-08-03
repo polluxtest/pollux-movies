@@ -28,8 +28,10 @@ namespace Movies.Persistence.Configurations
             builder.Property(p => p.Likes).HasDefaultValue(0);
             builder.Property(p => p.Recommended).HasDefaultValue(false);
             builder.Property(p => p.ProcessedByStreamVideo).HasDefaultValue(false);
+            builder.Property(p => p.GenreId).HasDefaultValue(1);
 
             builder.HasOne<Director>(p => p.Director);
+            builder.HasOne<Genre>(p => p.Genre);
             builder.HasMany<MovieWatching>(p => p.MoviesWatching)
                 .WithOne(p => p.Movie);
 
@@ -40,6 +42,7 @@ namespace Movies.Persistence.Configurations
             builder.HasIndex(p => p.Likes);
             builder.HasIndex(p => p.Recommended);
             builder.HasIndex(p => p.Name).IsClustered();
+            builder.HasIndex(p => p.GenreId);
             builder.HasIndex("IsDeleted", "ProcessedByStreamVideo")
                 .HasFilter("[IsDeleted] = 0 and [ProcessedByStreamVideo] = 1");
         }

@@ -10,9 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{EC6986EA-E867-443E-96F8-93445FC2E891}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{97C7C7C6-F85B-437E-B279-166BD28BD663}"
-	ProjectSection(SolutionItems) = preProject
-		Movies.Application\MoviesListService.cs = Movies.Application\MoviesListService.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{4A34A37C-D663-4F33-902E-655F914E5B80}"
 EndProject

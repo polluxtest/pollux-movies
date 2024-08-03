@@ -114,6 +114,22 @@ namespace Movies.Domain.Entities
         public Director Director { get; set; }
 
         /// <summary>
+        /// Gets or sets the genre identifier.
+        /// </summary>
+        /// <value>
+        /// The director identifier.
+        /// </value>
+        public int GenreId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the genre.
+        /// </summary>
+        /// <value>
+        /// The director.
+        /// </value>
+        public Genre Genre { get; set; }
+
+        /// <summary>
         /// Gets or sets the likes.
         /// </summary>
         /// <value>
