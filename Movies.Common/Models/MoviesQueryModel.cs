@@ -1,8 +1,7 @@
-﻿using Movies.Domain.Entities;
-
-namespace Movies.Application.Models
+﻿
+namespace Movies.Common.Models
 {
-    public class MovieGenreModel
+    public class MoviesQueryModel : MovieCommonModel
     {
         /// <summary>
         /// Gets or sets the movie.
@@ -12,12 +11,13 @@ namespace Movies.Application.Models
         /// </value>
         public MovieModel Movie { get; set; }
 
+
         /// <summary>
-        /// Gets or sets the genre.
+        /// Gets or sets the genres.
         /// </summary>
         /// <value>
-        /// The genre.
+        /// The genres.
         /// </value>
-        public Genre Genre { get; set; }
+        public string[] CategoryGenres { get; set; }
     }
 }

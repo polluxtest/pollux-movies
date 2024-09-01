@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
-using Movies.Application.Models;
-using Movies.Domain.Entities;
-using Movies.Persistence.Repositories;
-
-namespace Movies.Application
+﻿namespace Movies.Application.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using AutoMapper;
+
+    using Movies.Common.Models.Requests;
+    using Movies.Domain.Entities;
+    using Movies.Persistence.Repositories;
+
     public interface IMoviesLikesService
     {
-        Task AddRemoveUserLike(MovieUserRequest model);
-        Task DeleteAsync(MovieUserRequest model);
-        Task<List<Guid>> GetLikesMoviesIds(string userId);
-        public Task<bool> IsMovieLikedByUser(Guid movieId, string userId);
+        Task AddRemoveUserLike(MovieUserRequestGuid model);
+
+        Task DeleteAsync(MovieUserRequestGuid model);
+
+        Task<List<Guid>> GetLikesMoviesIds(Guid userId);
     }
 
     public class MoviesLikesService : IMoviesLikesService
@@ -37,9 +40,10 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Task.</returns>
-        public async Task AddRemoveUserLike(MovieUserRequest model)
+        public async Task AddRemoveUserLike(MovieUserRequestGuid model)
         {
-            var exists = await this.userLikesRepository.AnyAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
+            var exists =
+                await this.userLikesRepository.AnyAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
             var movieDb = await this.moviesRepository.GetAsync(p => p.Id == model.MovieId);
 
             if (exists)
@@ -58,10 +62,12 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Task.</returns>
-        public async Task DeleteAsync(MovieUserRequest model)
+        public async Task DeleteAsync(MovieUserRequestGuid model)
         {
-            var userMovie = await this.userLikesRepository.GetAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
+            var userMovie =
+                await this.userLikesRepository.GetAsync(p => p.MovieId == model.MovieId && p.UserId == model.UserId);
             this.userLikesRepository.Delete(userMovie);
+
             await this.userLikesRepository.SaveAsync();
         }
 
@@ -70,21 +76,9 @@ namespace Movies.Application
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>List liked movies.</returns>
-        public Task<List<Guid>> GetLikesMoviesIds(string userId)
+        public Task<List<Guid>> GetLikesMoviesIds(Guid userId)
         {
             return this.userLikesRepository.GetLikesMoviesIds(userId);
-        }
-
-
-        /// <summary>
-        /// Determines whether [is movie liked by user] [the specified movie identifier].
-        /// </summary>
-        /// <param name="movieId">The movie identifier.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns>True/False.</returns>
-        public Task<bool> IsMovieLikedByUser(Guid movieId, string userId)
-        {
-            return this.userLikesRepository.AnyAsync(p => p.MovieId == movieId && p.UserId.ToString().Equals(userId));
         }
 
         /// <summary>
@@ -92,7 +86,8 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <param name="movieDb">The movie database.</param>
-        private async Task UnlikeMovie(MovieUserRequest model, Movie movieDb)
+        /// <returns>Task</returns>
+        private async Task UnlikeMovie(MovieUserRequestGuid model, Movie movieDb)
         {
             await this.DeleteAsync(model);
             movieDb.Likes -= 1;
@@ -104,12 +99,17 @@ namespace Movies.Application
         /// </summary>
         /// <param name="model">The model.</param>
         /// <param name="movieDb">The movie database.</param>
-        private async Task LikeMovie(MovieUserRequest model, Movie movieDb)
+        /// <returns>Task</returns>
+        private async Task LikeMovie(MovieUserRequestGuid model, Movie movieDb)
         {
-            var userMovie = new MoviesLikes();
-            this.mapper.Map(model, userMovie);
+            var userMovie = new MoviesLikes()
+            {
+                UserId = model.UserId,
+                MovieId = model.MovieId,
+            };
 
             movieDb.Likes += 1;
+
             this.UpdateMovie(movieDb);
             await this.userLikesRepository.AddAsync(userMovie);
         }

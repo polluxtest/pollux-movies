@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-
-namespace Pollux.Movies.Middlewares
+﻿namespace Pollux.Movies.Middlewares
 {
+    using System;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
+
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate nextDelegate;

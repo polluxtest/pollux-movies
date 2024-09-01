@@ -1,7 +1,7 @@
 using AzureUploaderTransformerVideos;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Movies.Application;
+using Movies.Application.Services;
 using Movies.Application.ThirdParty;
 using Movies.Persistence;
 using Movies.Persistence.Repositories;

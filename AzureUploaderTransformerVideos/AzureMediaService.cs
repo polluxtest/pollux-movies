@@ -10,7 +10,7 @@ using Microsoft.Azure.Management.Media.Models;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
-using Movies.Application;
+using Movies.Application.Services;
 using Movies.Application.ThirdParty;
 using Movies.Domain.Entities;
 
@@ -64,7 +64,8 @@ namespace AzureUploaderTransformerVideos
         {
             Debug.WriteLine("starting creating assents.");
 
-            IAzureMediaServicesClient azureMediaServiceClient = await this.CreateMediaServicesClientAsync(this.azureMSConfig);
+            IAzureMediaServicesClient azureMediaServiceClient =
+                await this.CreateMediaServicesClientAsync(this.azureMSConfig);
 
             azureMediaServiceClient.LongRunningOperationRetryTimeout = 2;
 
@@ -104,7 +105,8 @@ namespace AzureUploaderTransformerVideos
             IAzureMediaServicesClient client,
             AzureVideoAssetModel assetModel)
         {
-            Asset asset = await client.Assets.CreateOrUpdateAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, assetModel.InputAssetName, new Asset());
+            Asset asset = await client.Assets.CreateOrUpdateAsync(this.azureMSConfig.ResourceGroup,
+                this.azureMSConfig.AccountName, assetModel.InputAssetName, new Asset());
 
             var response = await client.Assets.ListContainerSasAsync(
                 this.azureMSConfig.ResourceGroup,
@@ -135,7 +137,8 @@ namespace AzureUploaderTransformerVideos
             string outputAssetName)
         {
             // Check if an Asset already exists
-            Asset inputAsset = await client.Assets.GetAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, outputAssetName);
+            Asset inputAsset = await client.Assets.GetAsync(this.azureMSConfig.ResourceGroup,
+                this.azureMSConfig.AccountName, outputAssetName);
             Asset outputAsset = new Asset();
 
             if (inputAsset != null)
@@ -143,7 +146,8 @@ namespace AzureUploaderTransformerVideos
                 throw new ArgumentException("the output asset name already exists", outputAssetName);
             }
 
-            return await client.Assets.CreateOrUpdateAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, outputAssetName, outputAsset);
+            return await client.Assets.CreateOrUpdateAsync(this.azureMSConfig.ResourceGroup,
+                this.azureMSConfig.AccountName, outputAssetName, outputAsset);
         }
 
         /// <summary>
@@ -158,8 +162,8 @@ namespace AzureUploaderTransformerVideos
         {
             // Does a Transform already exist with the desired name? Assume that an existing Transform with the desired name
             // also uses the same recipe or Preset for processing content.
-            Transform transform = await azureMediaServiceClient.Transforms.
-                GetAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, AdaptiveStreamingTransformName);
+            Transform transform = await azureMediaServiceClient.Transforms.GetAsync(this.azureMSConfig.ResourceGroup,
+                this.azureMSConfig.AccountName, AdaptiveStreamingTransformName);
 
             if (transform == null)
             {
@@ -182,7 +186,7 @@ namespace AzureUploaderTransformerVideos
 
             JobOutput[] jobOutputs =
             {
-                 new JobOutputAsset(assetModel.OutputAssetName),
+                new JobOutputAsset(assetModel.OutputAssetName),
             };
 
             Job job = await client.Jobs.CreateAsync(
@@ -215,7 +219,8 @@ namespace AzureUploaderTransformerVideos
             Job job;
             do
             {
-                job = await client.Jobs.GetAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, AdaptiveStreamingTransformName, jobName);
+                job = await client.Jobs.GetAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName,
+                    AdaptiveStreamingTransformName, jobName);
 
                 Debug.WriteLine($"Job is '{job.State}'.");
                 for (int i = 0; i < job.Outputs.Count; i++)
@@ -234,8 +239,7 @@ namespace AzureUploaderTransformerVideos
                 {
                     await Task.Delay(SleepIntervalMs);
                 }
-            }
-            while (job.State != JobState.Finished && job.State != JobState.Error && job.State != JobState.Canceled);
+            } while (job.State != JobState.Finished && job.State != JobState.Error && job.State != JobState.Canceled);
 
             return job;
         }
@@ -286,15 +290,18 @@ namespace AzureUploaderTransformerVideos
 
             IList<string> streamingUrls = new List<string>();
 
-            StreamingEndpoint streamingEndpoint = await client.StreamingEndpoints.GetAsync(resourceGroupName, accountName, DefaultStreamingEndpointName);
+            StreamingEndpoint streamingEndpoint =
+                await client.StreamingEndpoints.GetAsync(resourceGroupName, accountName, DefaultStreamingEndpointName);
 
             if (streamingEndpoint != null)
             {
                 if (streamingEndpoint.ResourceState != StreamingEndpointResourceState.Running)
                 {
-                    await client.StreamingEndpoints.StartAsync(resourceGroupName, accountName, DefaultStreamingEndpointName);
+                    await client.StreamingEndpoints.StartAsync(resourceGroupName, accountName,
+                        DefaultStreamingEndpointName);
                 }
             }
+
             ListPathsResponse paths = null;
 
             try
@@ -327,10 +334,11 @@ namespace AzureUploaderTransformerVideos
         /// <param name="client">The client.</param>
         /// <param name="jobName">Name of the job.</param>
         private async Task CleanUpAsync(
-           IAzureMediaServicesClient client,
-           string jobName)
+            IAzureMediaServicesClient client,
+            string jobName)
         {
-            await client.Jobs.DeleteAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, AdaptiveStreamingTransformName, jobName);
+            await client.Jobs.DeleteAsync(this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName,
+                AdaptiveStreamingTransformName, jobName);
         }
 
         /// <summary>
@@ -367,11 +375,14 @@ namespace AzureUploaderTransformerVideos
         /// <param name="azureMediaServiceClient">The azure media service client.</param>
         /// <param name="movie">The movie.</param>
         /// <param name="amsIdentity">The ams identity.</param>
-        private async void UpdateMovie(IAzureMediaServicesClient azureMediaServiceClient, Movie movie, AzureVideoAssetModel amsIdentity)
+        private async void UpdateMovie(IAzureMediaServicesClient azureMediaServiceClient, Movie movie,
+            AzureVideoAssetModel amsIdentity)
         {
-            StreamingLocator locator = await this.CreateStreamingLocatorAsync(azureMediaServiceClient, this.azureMSConfig, amsIdentity);
+            StreamingLocator locator =
+                await this.CreateStreamingLocatorAsync(azureMediaServiceClient, this.azureMSConfig, amsIdentity);
 
-            movie.UrlVideo = await this.GetStreamingUrlsAsync(azureMediaServiceClient, this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, locator.Name);
+            movie.UrlVideo = await this.GetStreamingUrlsAsync(azureMediaServiceClient, this.azureMSConfig.ResourceGroup,
+                this.azureMSConfig.AccountName, locator.Name);
             movie.ProcessedByStreamVideo = true;
             await this._moviesService.Update(movie);
         }
@@ -410,7 +421,8 @@ namespace AzureUploaderTransformerVideos
 
             // Use ApplicationTokenProvider.LoginSilentAsync to get a token using a service principal with symetric key
             ClientCredential clientCredential = new ClientCredential(config.AadClientId, config.AadSecret);
-            return await ApplicationTokenProvider.LoginSilentAsync(config.AadTenantId, clientCredential, ActiveDirectoryServiceSettings.Azure);
+            return await ApplicationTokenProvider.LoginSilentAsync(config.AadTenantId, clientCredential,
+                ActiveDirectoryServiceSettings.Azure);
         }
 
         /// <summary>
@@ -445,7 +457,8 @@ namespace AzureUploaderTransformerVideos
         /// </summary>
         public async Task ChangeURLVideoManifestToDashProtocol()
         {
-            IAzureMediaServicesClient azureMediaServiceClient = await this.CreateMediaServicesClientAsync(this.azureMSConfig);
+            IAzureMediaServicesClient azureMediaServiceClient =
+                await this.CreateMediaServicesClientAsync(this.azureMSConfig);
 
             var movies = await this._moviesServiceAzure.GetAllAsync();
 
@@ -455,12 +468,11 @@ namespace AzureUploaderTransformerVideos
 
                 var streamingLocatorName = $"{movie.Name}-locator";
 
-                movie.UrlVideo = await this.GetStreamingUrlsAsync(azureMediaServiceClient, this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, streamingLocatorName, true);
+                movie.UrlVideo = await this.GetStreamingUrlsAsync(azureMediaServiceClient,
+                    this.azureMSConfig.ResourceGroup, this.azureMSConfig.AccountName, streamingLocatorName, true);
                 movie.ProcessedByStreamVideo = true;
                 await this._moviesService.Update(movie);
-
             }
-
         }
     }
 }

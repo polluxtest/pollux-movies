@@ -1,27 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Movies.Application.ExtensionMethods;
-using Movies.Application.Models;
-using Movies.Common.Constants;
-using Movies.Common.Constants.Strings;
-using Movies.Common.ExtensionMethods;
-using Movies.Domain.Entities;
-using Movies.Persistence.QueryResults;
-using Movies.Persistence.Repositories;
-using Pitcher;
-
-namespace Movies.Application
+﻿namespace Movies.Application.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using AutoMapper;
+
+    using Movies.Application.ExtensionMethods;
+    using Movies.Common.Constants;
+    using Movies.Common.Constants.Strings;
+    using Movies.Common.ExtensionMethods;
+    using Movies.Common.Models;
+    using Movies.Domain.Entities;
+    using Movies.Persistence.Queries;
+    using Movies.Persistence.Repositories;
+
+    using Pitcher;
+
     public interface IMoviesService
     {
         Task<List<MoviesByCategoryModel>> GetByLanguageAsync(string userId, string sortBy = null);
 
         Task<List<MoviesByCategoryModel>> GetByDirectorAsync(string userId, string sortBy = null);
 
-        Task<List<MoviesByCategoryModel>> GetByGenreAsync(string userId, string sortBy = null);
+        Task<List<MoviesByCategoryModel>> GetByCategoryGenresAsync(string userId, string sortBy = null);
 
         Task Update(Movie movie);
 
@@ -36,6 +39,8 @@ namespace Movies.Application
         Task<List<string>> GetMovieSearchOptions();
 
         Task<MovieWatchingModel> GetAsync(Guid movieId, string userId);
+
+        Task<List<string>> GetGenresAsync();
     }
 
     public class MoviesService : IMoviesService
@@ -71,7 +76,7 @@ namespace Movies.Application
                     var moviesByCategory = new MoviesByCategoryModel()
                     {
                         Title = $"{p.Key} {TitleConstants.Language}",
-                        Movies = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(p.ToList())
+                        Movies = this.mapper.Map<List<MoviesQuery>, List<MovieModel>>(p.ToList())
                             .SortCustomBy(sortBy),
                     };
 
@@ -100,12 +105,12 @@ namespace Movies.Application
                     var moviesByCategory = new MoviesByCategoryModel()
                     {
                         Title = p.Key,
-                        Movies = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(p.ToList())
+                        Movies = this.mapper.Map<List<MoviesQuery>, List<MovieModel>>(p.ToList())
                             .SortCustomBy(sortBy),
                     };
 
                     return moviesByCategory;
-                }).OrderByDescending(y => y.Movies.Count()); // todo is this neccessary 
+                }).OrderByDescending(y => y.Movies.Count()); // todo is this neccessary
 
             var movies = moviesGroupedByDirector.ToList();
 
@@ -118,9 +123,9 @@ namespace Movies.Application
         /// <param name="userId">The user identifier.</param>
         /// <param name="sortBy">The sort by.</param>
         /// <returns>Task<List<MoviesByCategoryModel>></returns>
-        public async Task<List<MoviesByCategoryModel>> GetByGenreAsync(string userId, string sortBy = null)
+        public async Task<List<MoviesByCategoryModel>> GetByCategoryGenresAsync(string userId, string sortBy = null)
         {
-            var movies = await this.movieGenresService.GetAllByGenreAsync(userId, sortBy);
+            var movies = await this.movieGenresService.GetAllByCategoryGenres(userId, sortBy);
             return movies;
         }
 
@@ -155,8 +160,8 @@ namespace Movies.Application
         /// <returns>List<MovieModel></returns>
         public async Task<List<MovieModel>> Search(string search, string userId, string sortBy)
         {
-            var moviesDbSearch = await this.moviesRepository.Search(search, userId);
-            var moviesResult = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(moviesDbSearch);
+            var moviesDbSearch = await this.moviesRepository.SearchAsync(search, userId);
+            var moviesResult = this.mapper.Map<List<MoviesQuery>, List<MovieModel>>(moviesDbSearch);
 
             moviesResult = moviesResult.SortCustomBy(sortBy);
 
@@ -171,9 +176,12 @@ namespace Movies.Application
         public async Task<List<MoviesByCategoryModel>> GetRecommendedByPollux(string userId)
         {
             var moviesDb = await this.moviesRepository.GetRecommendedByPolluxAsync(userId);
-            var movies = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(moviesDb);
+            var movies = this.mapper.Map<List<MoviesQuery>, List<MovieModel>>(moviesDb);
 
-            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = movies, Title = TitleConstants.RecommendedByPollux } };
+            return new List<MoviesByCategoryModel>()
+                       {
+                           new() { Movies = movies, Title = TitleConstants.RecommendedByPollux },
+                       };
         }
 
         /// <summary>
@@ -185,10 +193,12 @@ namespace Movies.Application
         {
             var moviesDb = await this.moviesRepository.GetRecommendedAsync(userId);
 
-            var movies = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(moviesDb);
+            var movies = this.mapper.Map<List<MoviesQuery>, List<MovieModel>>(moviesDb);
 
-            return new List<MoviesByCategoryModel>() { new MoviesByCategoryModel() { Movies = movies, Title = TitleConstants.RecommendedByUsers } };
-
+            return new List<MoviesByCategoryModel>()
+                       {
+                           new() { Movies = movies, Title = TitleConstants.RecommendedByUsers },
+                       };
         }
 
         /// <summary>
@@ -220,12 +230,18 @@ namespace Movies.Application
 
             Throw.When(movieDb == null, new ArgumentException($"movie not found id {movieId}"));
 
-            var genres = await this.movieGenresService.GetAllByMovieIdAsync(movieId);
-            var movieWatching = this.mapper.Map<MoviesQueryResult, MovieWatchingModel>(movieDb);
-
-            movieWatching.Movie.Genres = genres;
+            var movieWatching = this.mapper.Map<MoviesQuery, MovieWatchingModel>(movieDb);
 
             return movieWatching;
+        }
+
+        /// <summary>
+        /// Gets the genres asynchronous.
+        /// </summary>
+        /// <returns>List<string></returns>
+        public async Task<List<string>> GetGenresAsync()
+        {
+            return await this.moviesRepository.GetGenresAsync();
         }
     }
 }

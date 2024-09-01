@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Movies.Application.Services;
 
 namespace Movies.Application.ThirdParty
 {

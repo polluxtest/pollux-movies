@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Movies.Persistence.Repositories.Base.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Movies.Domain.Entities;
-using Movies.Persistence.QueryResults;
+using Movies.Persistence.Queries;
 using Movies.Persistence.Repositories.Base;
 
 namespace Movies.Persistence.Repositories
 {
     public interface IMoviesByGenresRepository : IRepository<MovieGenres>
     {
-        Task<List<MoviesQueryResult>> GetAllAsync(string userId);
+        Task<List<MoviesQuery>> GetAllAsync(string userId);
         Task<List<string>> GetGenresByMovieIdAsync(Guid movieId);
-        Task<List<MoviesQueryResult>> GetSearchByGenreAsync(string userId, string genre);
-        Task<List<string>> GetGenresAsync();
+        Task<List<MoviesQuery>> GetSearchByCategoryAsync(string userId, string genre);
     }
 
     public class MovieByGenresRepository : RepositoryBase<MovieGenres>, IMoviesByGenresRepository
@@ -33,22 +31,20 @@ namespace Movies.Persistence.Repositories
         /// Gets the search by genre asynchronous.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <param name="genre">The genre.</param>
-        /// <returns>List<MoviesQueryResult></returns>
-        public new Task<List<MoviesQueryResult>> GetSearchByGenreAsync(string userId, string genre)
+        /// <param name="genreName">The genre.</param>
+        /// <returns>List<MoviesQueryModel></returns>
+        public new Task<List<MoviesQuery>> GetSearchByCategoryAsync(string userId, string genreName)
         {
             var sqlQuery =
-                from movieGenre in this.db.MovieGenres
-                join genres in this.db.Genres on movieGenre.GenreGenericId equals genres.Id
-                join movie in this.db.Movies on movieGenre.MovieId equals movie.Id
+                from movie in this.db.Movies
+                join genre in this.db.Genres on movie.GenreId equals genre.Id
                 join director in this.db.Directors on movie.DirectorId equals director.Id
                 join movieWatching in this.db.MoviesWatching on movie.Id equals movieWatching.MovieId into mg
                 from moviesWatching in mg.DefaultIfEmpty()
-                where (moviesWatching.UserId == userId ||
-                       moviesWatching.UserId == null) && movieGenre.GenreGeneric.Name == genre
-                select new MoviesQueryResult()
+                where (moviesWatching.UserId == userId || moviesWatching.UserId == null) && genre.Name == genreName
+                select new MoviesQuery()
                 {
-                    Genre = genres,
+                    Genre = genre.Name,
                     Movie = movie,
                     Director = director,
                     ElapsedTime = moviesWatching != null ? moviesWatching.ElapsedTime : 0,
@@ -63,20 +59,21 @@ namespace Movies.Persistence.Repositories
         /// Gets all asynchronous filter by genre.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns>List<MoviesQueryResult></returns>
-        public new Task<List<MoviesQueryResult>> GetAllAsync(string userId)
+        /// <returns>List<MoviesQueryModel></returns>
+        public new Task<List<MoviesQuery>> GetAllAsync(string userId)
         {
             var sqlQuery =
-                from movieGenre in this.db.MovieGenres
-                join genre in this.db.Genres on movieGenre.GenreId equals genre.Id
-                join movie in this.db.Movies on movieGenre.MovieId equals movie.Id
+                from movieGenres in this.db.MovieGenres
+                join categorGenre in this.db.Genres on movieGenres.GenreId equals categorGenre.Id
+                join movie in this.db.Movies on movieGenres.MovieId equals movie.Id
+                join genre in this.db.Genres on movie.GenreId equals genre.Id
                 join director in this.db.Directors on movie.DirectorId equals director.Id
                 join movieWatching in this.db.MoviesWatching on movie.Id equals movieWatching.MovieId into mg
                 from moviesWatching in mg.DefaultIfEmpty()
-                where moviesWatching.UserId == userId || moviesWatching.UserId == null
-                select new MoviesQueryResult()
+                select new MoviesQuery()
                 {
-                    Genre = genre,
+                    Genre = genre.Name,
+                    CategoryGenres = new List<string>() { categorGenre.Name },
                     Movie = movie,
                     Director = director,
                     ElapsedTime = moviesWatching != null ? moviesWatching.ElapsedTime : 0,
@@ -99,16 +96,6 @@ namespace Movies.Persistence.Repositories
                 .Include(p => p.Genre)
                 .Select(p => p.Genre.Name)
                 .ToListAsync();
-        }
-
-        /// <summary>
-        /// Gets the genres asynchronous.
-        /// </summary>
-        /// <returns>List<string></returns>
-        public async Task<List<string>> GetGenresAsync()
-        {
-            var genres = await this.dbSet.Select(p => p.GenreGeneric.Name).Distinct().ToListAsync();
-            return genres;
         }
     }
 }

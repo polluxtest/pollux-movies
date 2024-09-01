@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Movies.Application.Models.Requests
+namespace Movies.Common.Models.Requests
 {
     public class GetMoviesByCategoryRequest
     {

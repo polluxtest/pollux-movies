@@ -1,4 +1,4 @@
-﻿namespace Movies.Application.Models.Requests
+﻿namespace Movies.Common.Models.Requests
 {
     public class MovieContinueWatchingRequest : MovieUserRequest
     {

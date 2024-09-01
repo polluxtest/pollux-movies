@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Movies.Application.Services;
 using Movies.Domain.Entities;
 
 namespace Movies.Application.ThirdParty

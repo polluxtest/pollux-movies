@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Movies.Domain.Entities;
 
-namespace Movies.Application.Models
+namespace Movies.Common.Models
 {
-    public class MovieModel
+    public class MovieModel : MovieCommonModel
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -38,21 +37,14 @@ namespace Movies.Application.Models
         /// </value>
         public string DescriptionEs { get; set; }
 
-        /// <summary>
-        /// Gets or sets the gender.
-        /// </summary>
-        /// <value>
-        /// The gender.
-        /// </value>
-        public string Gender { get; set; }
 
         /// <summary>
-        /// Gets or sets the type.
+        /// Gets or sets the movie genre generic.
         /// </summary>
         /// <value>
-        /// The type.
+        /// The movie genre.
         /// </value>
-        public string Type { get; set; }
+        public string Genre { get; set; }
 
         /// <summary>
         /// Gets or sets the language.
@@ -140,23 +132,7 @@ namespace Movies.Application.Models
         /// <value>
         /// The genres.
         /// </value>
-        public List<string> Genres { get; set; }
-
-        /// <summary>Gets or sets the elapsed time.</summary>
-        /// <value>The elapsed time.</value>
-        public int ElapsedTime { get; set; }
-
-        /// <summary>Gets or sets the duration.</summary>
-        /// <value>The duration.</value>
-        public int Duration { get; set; }
-
-        /// <summary>
-        /// Gets or sets the remaining time.
-        /// </summary>
-        /// <value>
-        /// The remaining time.
-        /// </value>
-        public int RemainingTime { get; set; }
+        public List<string> CategoryGenres { get; set; }
     }
 
 }

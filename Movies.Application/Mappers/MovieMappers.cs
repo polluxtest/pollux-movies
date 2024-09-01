@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ObjectiveC;
-using AutoMapper;
-using Movies.Application.Models;
-using Movies.Domain.Entities;
-using Movies.Persistence.QueryResults;
-using Newtonsoft.Json;
-
-namespace Movies.Application.Mappers
+﻿namespace Movies.Application.Mappers
 {
+    using System.Collections.Generic;
+
+    using AutoMapper;
+
+    using Movies.Common.Models;
+    using Movies.Domain.Entities;
+    using Movies.Persistence.Queries;
+
+    using Newtonsoft.Json;
+
     public class MovieMappers : Profile
     {
         public MovieMappers()
@@ -20,59 +20,44 @@ namespace Movies.Application.Mappers
                     opt =>
                         opt.MapFrom(p => JsonConvert.DeserializeObject<List<string>>(p.Subtitles)))
                 .ForMember(dest => dest.DirectorName, opt => opt.MapFrom(p => p.Director.Name))
+                .ForMember(dest => dest.Genre, opt => opt.MapFrom(p => p.Genre.Name))
                 .ReverseMap();
 
-            this.CreateMap<MovieUserRequest, MoviesLists>();
 
             this.CreateMap<MovieWatching, MovieWatchingModel>()
                 .ForMember(
                     dest => dest.Movie,
                     opt => opt.MapFrom(p => p.Movie))
                 .ForPath(
-                    dest => dest.Movie.Duration,
+                    dest => dest.Duration,
                     opt => opt.MapFrom(p => p.Duration))
                 .ForPath(
-                    dest => dest.Movie.ElapsedTime,
+                    dest => dest.ElapsedTime,
                     opt => opt.MapFrom(p => p.ElapsedTime))
                 .ForPath(
-                    dest => dest.Movie.RemainingTime,
+                    dest => dest.RemainingTime,
                     opt => opt.MapFrom(p => p.RemainingTime));
-
-            this.CreateMap<MovieWatching, MovieModel>()
-                .ForMember(p => p.Name, opt => opt.MapFrom(p => p.Movie.Name))
-                .ForMember(p => p.Description, opt => opt.MapFrom(p => p.Movie.Description))
-                .ForMember(p => p.DescriptionEs, opt => opt.MapFrom(p => p.Movie.DescriptionEs))
-                .ForMember(p => p.Imbd, opt => opt.MapFrom(p => p.Movie.Imbd))
-                .ForMember(p => p.DirectorName, opt => opt.MapFrom(p => p.Movie.Director.Name))
-                .ForMember(p => p.Language, opt => opt.MapFrom(p => p.Movie.Language))
-                .ForMember(p => p.UrlImage, opt => opt.MapFrom(p => p.Movie.UrlImage))
-                .ForMember(p => p.Year, opt => opt.MapFrom(p => p.Movie.Year))
-                .ForMember(p => p.Id, opt => opt.MapFrom(p => p.Movie.Id));
-
-            this.CreateMap<MovieGenres, MovieGenreModel>();
-
-            this.CreateMap<MovieUserRequest, MoviesLikes>();
-
-            this.CreateMap<MovieFeatured, MovieFeaturedModel>().ForMember(
-                dest => dest.Movie,
-                opt => opt.MapFrom(p => p.Movie));
-
-            this.CreateMap<MoviesQueryResult, MovieModel>()
-                .ForMember(p => p.Name, opt => opt.MapFrom(p => p.Movie.Name))
-                .ForMember(p => p.Description, opt => opt.MapFrom(p => p.Movie.Description))
-                .ForMember(p => p.DescriptionEs, opt => opt.MapFrom(p => p.Movie.DescriptionEs))
-                .ForMember(p => p.Imbd, opt => opt.MapFrom(p => p.Movie.Imbd))
-                .ForMember(p => p.DirectorName, opt => opt.MapFrom(p => p.Movie.Director.Name))
-                .ForMember(p => p.Language, opt => opt.MapFrom(p => p.Movie.Language))
-                .ForMember(p => p.UrlImage, opt => opt.MapFrom(p => p.Movie.UrlImage))
-                .ForMember(p => p.Year, opt => opt.MapFrom(p => p.Movie.Year))
-                .ForMember(p => p.Id, opt => opt.MapFrom(p => p.Movie.Id));
-
-
-            this.CreateMap<MoviesQueryResult, MovieWatchingModel>();
 
             this.CreateMap<MovieModel, MovieWatchingModel>()
                 .ForMember(p => p.Movie, opt => opt.MapFrom(p => p));
+
+            this.CreateMap<MovieWatching, MovieModel>()
+                .IncludeMembers(p => p.Movie);
+
+            this.CreateMap<MoviesQuery, MovieModel>()
+                .IncludeMembers(p => p.Movie)
+                .ForMember(p => p.DirectorName, opt => opt.MapFrom(p => p.Director.Name))
+                .ForMember(p => p.Genre, opt => opt.MapFrom(p => p.Genre));
+
+
+            this.CreateMap<MoviesQuery, MovieWatchingModel>()
+                .ForMember(p => p.Movie, opt => opt.MapFrom(p => p.Movie))
+                .ForPath(p => p.Movie.Genre, opt => opt.MapFrom(p => p.Genre))
+                .ForPath(p => p.Movie.CategoryGenres, opt => opt.MapFrom(p => p.CategoryGenres));
+            this.CreateMap<MovieFeaturedQuery, MovieFeaturedModel>()
+                .ForMember(p => p.Movie, opt => opt.MapFrom(p => p.Movie))
+                .ForPath(p => p.Movie.Genre, opt => opt.MapFrom(p => p.Genre))
+                .ForPath(p => p.Movie.CategoryGenres, opt => opt.MapFrom(p => p.CategoryGenres));
         }
     }
 }

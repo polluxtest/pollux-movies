@@ -14,7 +14,7 @@ namespace Movies.Persistence
         /// </summary>
         /// <param name="options">The options<see cref="DbContextOptions{PolluxDbContext}"/>.</param>
         public PolluxMoviesDbContext(DbContextOptions<PolluxMoviesDbContext> options)
-          : base(options)
+            : base(options)
         {
             this.ChangeTracker.LazyLoadingEnabled = false;
         }

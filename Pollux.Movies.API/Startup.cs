@@ -1,20 +1,19 @@
-using Movies.Application.Mappers;
-using Movies.Persistence;
-using Pollux.API.Auth;
-using Pollux.Movies.Middlewares;
-
 namespace Pollux.Movies
 {
+    using System.Collections.Generic;
     using AzureUploaderTransformerVideos;
     using FluentValidation.AspNetCore;
+    using global::Movies.Application.Mappers;
     using global::Movies.Common.Constants.Strings;
+    using global::Movies.Persistence;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.OpenApi.Models;
-    using System.Collections.Generic;
+    using Pollux.API.Auth;
+    using Pollux.Movies.Middlewares;
 
     public class Startup
     {
@@ -170,6 +169,5 @@ namespace Pollux.Movies
             })
             .AddScheme<TokenAuthenticationOptions, TokenAuthenticationHandler>(AuthConstants.TokenAuthenticationDefaultScheme, o => { });
         }
-
     }
 }

@@ -1,14 +1,14 @@
-﻿namespace Movies.Application.Models
+﻿namespace Movies.Common.Models
 {
-    public class MovieWatchModel
+    public class MovieCommonModel
     {
         /// <summary>Gets or sets the elapsed time.</summary>
         /// <value>The elapsed time.</value>
-        public double ElapsedTime { get; set; }
+        public int ElapsedTime { get; set; }
 
         /// <summary>Gets or sets the duration.</summary>
         /// <value>The duration.</value>
-        public double Duration { get; set; }
+        public int Duration { get; set; }
 
         /// <summary>
         /// Gets or sets the remaining time.

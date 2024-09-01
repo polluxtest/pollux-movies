@@ -8,6 +8,11 @@
         public const int OneHour = 3600;
 
         /// <summary>
+        /// 120 minutes time in seconds
+        /// </summary>
+        public const int TwoHours = 7200;
+
+        /// <summary>
         /// 30 minutes time in seconds
         /// </summary>
         public const int ThirtyMinutes = 1800;

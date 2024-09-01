@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Movies.Application.Models.Requests
+namespace Movies.Common.Models.Requests
 {
     public class UserIdRequest
     {
@@ -11,6 +11,7 @@ namespace Movies.Application.Models.Requests
         /// <value>
         /// The user identifier.
         /// </value>
-        [FromQuery] public Guid UserId { get; set; }
+        [FromQuery]
+        public Guid UserId { get; set; }
     }
 }

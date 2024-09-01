@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Movies.Application;
 using Movies.Domain.Entities;
 using Movies.Common.ExtensionMethods;
 using Newtonsoft.Json;
@@ -13,6 +12,7 @@ using AzureUploaderTransformerVideos;
 using AzureUploaderTransformerVideos.Constants;
 using Movies.Application.ThirdParty;
 using Movies.Common.Constants.Strings;
+using Movies.Application.Services;
 
 namespace ReadFilesService
 {
@@ -57,7 +57,6 @@ namespace ReadFilesService
                 };
 
                 await this._moviesService.AddAsync(movie);
-
             }
         }
 
@@ -124,21 +123,26 @@ namespace ReadFilesService
                     throw new ArgumentException($"movie not found with {file.Item1}");
                 }
 
-                List<string> subtitlesListDeserialized = JsonConvert.DeserializeObject<List<string>>(movieDb.Subtitles ?? string.Empty);
+                List<string> subtitlesListDeserialized =
+                    JsonConvert.DeserializeObject<List<string>>(movieDb.Subtitles ?? string.Empty);
 
                 if (subtitlesListDeserialized == null) subtitlesListDeserialized = new List<string>();
 
                 foreach (var subtitle in file.Item2)
                 {
-                    var subtitleName = subtitle.Replace(FilesLocalPathsConstants.FilesSubtitlesPath, string.Empty).Replace("\\", "-").Remove(0, 1);
+                    var subtitleName = subtitle.Replace(FilesLocalPathsConstants.FilesSubtitlesPath, string.Empty)
+                        .Replace("\\", "-").Remove(0, 1);
 
-                    if (await this.blobService.CheckBlobFileExistsAsync(AzureContainersConstants.AzureSubtitlesContainer, subtitleName))
+                    if (await this.blobService.CheckBlobFileExistsAsync(
+                            AzureContainersConstants.AzureSubtitlesContainer, subtitleName))
                     {
                         continue;
                     }
 
-                    var azureSubtitleUrl = $"{AzureContainersConstants.AzureCDNPath}/{AzureContainersConstants.AzureSubtitlesContainer}/{subtitleName}";
-                    var subtitleUri = await this.blobService.UploadBlobFileAsync(AzureContainersConstants.AzureSubtitlesContainer,
+                    var azureSubtitleUrl =
+                        $"{AzureContainersConstants.AzureCDNPath}/{AzureContainersConstants.AzureSubtitlesContainer}/{subtitleName}";
+                    var subtitleUri = await this.blobService.UploadBlobFileAsync(
+                        AzureContainersConstants.AzureSubtitlesContainer,
                         subtitleName, subtitle);
 
                     if (string.IsNullOrEmpty(subtitleUri))
@@ -147,7 +151,6 @@ namespace ReadFilesService
                     }
 
                     subtitlesListDeserialized.Add(azureSubtitleUrl);
-
                 }
 
                 movieDb.Subtitles = JsonConvert.SerializeObject(subtitlesListDeserialized);

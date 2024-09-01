@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Movies.Application;
+using Movies.Application.Services;
 using Movies.Application.ThirdParty;
 using ReadFilesService;
 
@@ -78,6 +78,5 @@ namespace Pollux.Movies.Controllers.Azure
             await moviesService.AddGenresAsync(movieGenres);
             return Ok();
         }
-
     }
 }

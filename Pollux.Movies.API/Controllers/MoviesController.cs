@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using global::Movies.Application;
-using global::Movies.Application.Models;
-using global::Movies.Common.Constants.Strings;
-using Microsoft.AspNetCore.Mvc;
-using Movies.Application.Models.Requests;
-using Movies.Common.Constants;
-
-namespace Pollux.Movies.Controllers
+﻿namespace Pollux.Movies.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using global::Movies.Application.Services;
+    using global::Movies.Common.Constants;
+    using global::Movies.Common.Constants.Strings;
+    using global::Movies.Common.Models;
+    using global::Movies.Common.Models.Requests;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
+    [Authorize]
     public class MoviesController : BaseController
     {
         private readonly IMoviesService moviesService;
@@ -26,15 +30,16 @@ namespace Pollux.Movies.Controllers
         /// <returns>List<MoviesByCategoryModel></returns>
         [HttpGet]
         [ResponseCache(
-            Duration = ResponseCachaTimes.ThirtyMinutes,
+            Duration = ResponseCacheTimes.TwoHours,
             Location = ResponseCacheLocation.Any,
             VaryByQueryKeys = new[] { "*" })]
         [Route(ApiRoutesConstants.ByLanguage)]
+        [ProducesResponseType(200)]
         public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByLanguage(
             [FromQuery] GetMoviesByCategoryRequest request)
         {
             var moviesByLanguage =
-                await this.moviesService.GetByLanguageAsync(request.UserId.ToString(), request.SortBy);
+                await this.moviesService.GetByLanguageAsync(request.UserId, request.SortBy);
             return this.Ok(moviesByLanguage);
         }
 
@@ -44,7 +49,7 @@ namespace Pollux.Movies.Controllers
         /// <param name="request">The Request UserId and sort.</param>
         /// <returns>List<MoviesByCategoryModel></returns>
         [ResponseCache(
-            Duration = ResponseCachaTimes.ThirtyMinutes,
+            Duration = ResponseCacheTimes.TwoHours,
             Location = ResponseCacheLocation.Any,
             VaryByQueryKeys = new[] { "*" })]
         [HttpGet]
@@ -53,7 +58,7 @@ namespace Pollux.Movies.Controllers
             [FromQuery] GetMoviesByCategoryRequest request)
         {
             var moviesByDirector =
-                await this.moviesService.GetByDirectorAsync(request.UserId.ToString(), request.SortBy);
+                await this.moviesService.GetByDirectorAsync(request.UserId, request.SortBy);
             return this.Ok(moviesByDirector);
         }
 
@@ -63,15 +68,16 @@ namespace Pollux.Movies.Controllers
         /// <param name="request">The Request UserId and sort.</param>
         /// <returns>List<MoviesByCategoryModel></returns>
         [ResponseCache(
-            Duration = ResponseCachaTimes.ThirtyMinutes,
+            Duration = ResponseCacheTimes.TwoHours,
             Location = ResponseCacheLocation.Any,
             VaryByQueryKeys = new[] { "*" })]
         [HttpGet]
-        [Route(ApiRoutesConstants.ByGenre)]
-        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByGenre(
+        [ProducesResponseType(200)]
+        [Route(ApiRoutesConstants.ByCategoryGenre)]
+        public async Task<ActionResult<List<MoviesByCategoryModel>>> GetByCategoryGenre(
             [FromQuery] GetMoviesByCategoryRequest request)
         {
-            var moviesByGenre = await this.moviesService.GetByGenreAsync(request.UserId.ToString(), request.SortBy);
+            var moviesByGenre = await this.moviesService.GetByCategoryGenresAsync(request.UserId, request.SortBy);
 
             return this.Ok(moviesByGenre);
         }
@@ -82,36 +88,12 @@ namespace Pollux.Movies.Controllers
         /// <param name="request">The search request.</param>
         /// <returns>List<MovieModel></returns>
         [HttpGet]
+        [ProducesResponseType(200)]
         [Route(ApiRoutesConstants.Search)]
         public async Task<ActionResult<List<MovieModel>>> Search([FromQuery] SearchMoviesRequest request)
         {
-            var searchMovies =
-                await this.moviesService.Search(request.Search, request.UserId.ToString(), request.SortBy);
+            var searchMovies = await this.moviesService.Search(request.Search, request.UserId, request.SortBy);
             return this.Ok(searchMovies);
-        }
-
-        /// <summary>
-        /// Gets the movie.
-        /// </summary>
-        /// <param name="request">The request to get the movie.</param>
-        /// <returns>MovieInfoModel.</returns>
-        [ResponseCache(
-            Duration = ResponseCachaTimes.TenMinutes,
-            Location = ResponseCacheLocation.Any,
-            VaryByQueryKeys = new[] { "*" })]
-        [HttpGet]
-        [Route(ApiRoutesConstants.Movie)]
-        public async Task<ActionResult<MovieModel>> GetMovie(GetMovieRequest request)
-        {
-            try
-            {
-                var movie = await this.moviesService.GetAsync(request.Id, request.UserId.ToString());
-                return this.Ok(movie);
-            }
-            catch (ArgumentException)
-            {
-                return this.NotFound();
-            }
         }
 
         /// <summary>
@@ -120,10 +102,11 @@ namespace Pollux.Movies.Controllers
         /// <param name="request">The user identifier.</param>
         /// <returns><List<MoviesByCategoryModel></returns>
         [ResponseCache(
-            Duration = ResponseCachaTimes.ThirtyMinutes,
+            Duration = ResponseCacheTimes.OneHour,
             Location = ResponseCacheLocation.Any,
             VaryByQueryKeys = new[] { "*" })]
         [HttpGet]
+        [ProducesResponseType(200)]
         [Route(ApiRoutesConstants.RecommendedByPollux)]
         public async Task<ActionResult<List<MoviesByCategoryModel>>> RecommendedByPollux(
             [FromQuery] UserIdRequest request)
@@ -139,10 +122,11 @@ namespace Pollux.Movies.Controllers
         /// <param name="request">The user identifier.</param>
         /// <returns>List<MoviesByCategoryModel/></returns>
         [ResponseCache(
-            Duration = ResponseCachaTimes.ThirtyMinutes,
+            Duration = ResponseCacheTimes.ThirtyMinutes,
             Location = ResponseCacheLocation.Any,
             VaryByQueryKeys = new[] { "*" })]
         [HttpGet]
+        [ProducesResponseType(200)]
         [Route(ApiRoutesConstants.RecommendedByUsers)]
         public async Task<ActionResult<List<MoviesByCategoryModel>>> RecommendedByUsers(
             [FromQuery] UserIdRequest request)
@@ -157,7 +141,7 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <returns>List<string>></returns>
         [ResponseCache(
-            Duration = ResponseCachaTimes.OneHour,
+            Duration = ResponseCacheTimes.TwoHours,
             Location = ResponseCacheLocation.Any,
             VaryByQueryKeys = new[] { "*" })]
         [HttpGet]

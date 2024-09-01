@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Movies.Application.ExtensionMethods;
-using Movies.Application.Models;
-using Movies.Domain.Entities;
-using Movies.Persistence.Repositories;
-using Movies.Persistence.QueryResults;
-
-namespace Movies.Application
+﻿namespace Movies.Application.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using AutoMapper;
+
+    using Movies.Application.ExtensionMethods;
+    using Movies.Common.Models;
+    using Movies.Domain.Entities;
+    using Movies.Persistence.Queries;
+    using Movies.Persistence.Repositories;
+
     public interface IMoviesByGenresService
     {
         Task AddManyToMovieAsync(Guid movieId, List<int> genresIds);
-        Task<List<MoviesByCategoryModel>> GetAllByGenreAsync(string userId, string sortBy = null);
-        Task<List<string>> GetAllByMovieIdAsync(Guid movieId);
-        Task<List<string>> GetGenresAsync();
+
+        Task<List<MoviesByCategoryModel>> GetAllByCategoryGenres(string userId, string sortBy = null);
+
         Task<List<MovieModel>> GetSearchByGenreAsync(string userId, string genre, string sortBy = null);
     }
 
@@ -39,17 +41,17 @@ namespace Movies.Application
         /// <param name="userId">The user id</param>
         /// <param name="sortBy">The sort by.</param>
         /// <returns>List<MoviesByCategoryModel/></returns>
-        public async Task<List<MoviesByCategoryModel>> GetAllByGenreAsync(string userId, string sortBy = null)
+        public async Task<List<MoviesByCategoryModel>> GetAllByCategoryGenres(string userId, string sortBy = null)
         {
             var moviesByGenreDb = await this.moviesByGenreRepository.GetAllAsync(userId);
             return moviesByGenreDb
-                .GroupBy(p => p.Genre.Name)
+                .GroupBy(p => p.CategoryGenres.FirstOrDefault())
                 .Select(x =>
                 {
                     var moviesByCategory = new MoviesByCategoryModel()
                     {
                         Title = x.Key,
-                        Movies = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(x.ToList())
+                        Movies = this.mapper.Map<List<MoviesQuery>, List<MovieModel>>(x.ToList())
                             .SortCustomBy(sortBy),
                     };
 
@@ -57,24 +59,6 @@ namespace Movies.Application
                 }).ToList();
         }
 
-        /// <summary>
-        /// Gets all by movie identifier asynchronous.
-        /// </summary>
-        /// <param name="movieId">The movie identifier.</param>
-        /// <returns>List<string/></returns>
-        public async Task<List<string>> GetAllByMovieIdAsync(Guid movieId)
-        {
-            return await this.moviesByGenreRepository.GetGenresByMovieIdAsync(movieId);
-        }
-
-        /// <summary>
-        /// Gets the genres asynchronous.
-        /// </summary>
-        /// <returns>List<string></returns>
-        public async Task<List<string>> GetGenresAsync()
-        {
-            return await this.moviesByGenreRepository.GetGenresAsync();
-        }
 
         /// <summary>
         /// Gets the search by genre asynchronous.
@@ -83,10 +67,15 @@ namespace Movies.Application
         /// <param name="genre">The genre.</param>
         /// <param name="sortBy">The sort by.</param>
         /// <returns>Task<List<MovieModel></returns>
-        public async Task<List<MovieModel>> GetSearchByGenreAsync(string userId, string genre, string sortBy = null)
+        public async Task<List<MovieModel>> GetSearchByGenreAsync(
+            string userId,
+            string genre,
+            string sortBy = null)
         {
-            var moviesByGenreDb = await this.moviesByGenreRepository.GetSearchByGenreAsync(userId, genre);
-            var moviesSearch = this.mapper.Map<List<MoviesQueryResult>, List<MovieModel>>(moviesByGenreDb);
+            var moviesByGenreDb = await this.moviesByGenreRepository.GetSearchByCategoryAsync(userId, genre);
+
+            var moviesSearch = this.mapper.Map<List<MoviesQuery>, List<MovieModel>>(moviesByGenreDb);
+
             return moviesSearch.SortCustomBy(sortBy);
         }
 

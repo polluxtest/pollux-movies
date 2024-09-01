@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Movies.Domain.Entities;
 
@@ -13,6 +14,7 @@ namespace Movies.Persistence.Configurations
             builder.HasIndex(p => new { p.UserId, p.MovieId });
             builder.HasIndex(p => p.MovieId);
             builder.HasIndex(p => p.UserId);
+            builder.Property(p => p.DateAdded).IsRequired().HasDefaultValue(DateTime.Now);
         }
     }
 }

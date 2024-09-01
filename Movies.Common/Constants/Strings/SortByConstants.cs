@@ -24,10 +24,5 @@
 
         /// <summary>The magic sort</summary>
         public const string Magic = "Magic";
-
-        /// <summary>
-        /// No Sorting
-        /// </summary>
-        public const string NoSort = "NoSort";
     }
 }

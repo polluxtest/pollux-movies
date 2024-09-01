@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Movies.Application;
-using Movies.Application.Models;
-using Movies.Application.Models.Requests;
-using Movies.Common.Constants.Strings;
-using MovieUserRequest = Movies.Application.Models.MovieUserRequest;
-
-namespace Pollux.Movies.Controllers
+﻿namespace Pollux.Movies.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using global::Movies.Application.Services;
+    using global::Movies.Common.Constants.Strings;
+    using global::Movies.Common.Models;
+    using global::Movies.Common.Models.Requests;
+
+    using Microsoft.AspNetCore.Mvc;
+
+    using MovieUserRequest = global::Movies.Common.Models.Requests.MovieUserRequest;
+
     public class MoviesListController : BaseController
     {
         private readonly IMoviesListService userMoviesService;
@@ -41,7 +44,7 @@ namespace Pollux.Movies.Controllers
         [Route(ApiRoutesConstants.GetMyListIds)]
         public async Task<ActionResult<List<Guid>>> GetMyListIds([FromQuery] UserIdRequest request)
         {
-            var userMovieList = await this.userMoviesService.GetMoviesIdsByUser(request.UserId.ToString());
+            var userMovieList = await this.userMoviesService.GetMoviesIdsByUser(request.UserId);
 
             return this.Ok(userMovieList);
         }
@@ -52,12 +55,11 @@ namespace Pollux.Movies.Controllers
         /// <param name="request">The request.</param>
         /// <returns>Movie id added.</returns>
         [HttpPost]
-        public async Task<ActionResult<int>> Post([FromBody] MovieUserRequest request)
+        public async Task<ActionResult<int>> Post([FromBody] MovieUserRequestGuid request)
         {
             await this.userMoviesService.AddRemoveAsync(request);
 
             return this.Ok();
         }
-
     }
 }

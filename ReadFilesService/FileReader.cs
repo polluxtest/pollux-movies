@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AzureUploaderTransformerVideos.Constants;
-using Movies.Application.Models;
 using Movies.Common.Constants.Strings;
 using Movies.Common.ExtensionMethods;
 

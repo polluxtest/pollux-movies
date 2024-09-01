@@ -6,8 +6,8 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Movies.Application;
 using Movies.Application.Mappers;
+using Movies.Application.Services;
 using Movies.Application.ThirdParty;
 using Movies.Domain.Entities;
 using Movies.Persistence;
@@ -35,7 +35,8 @@ namespace AzureStorageUrlsTests
             this.moviesRepository = new Mock<IMoviesRepository>();
 
             services.AddAutoMapper(AssemblyApplication.Assembly);
-            services.AddDbContext<PolluxMoviesDbContext>(options => options.UseSqlServer("Server=localhost;Database=Pollux.Movies;Trusted_Connection=True;"));
+            services.AddDbContext<PolluxMoviesDbContext>(options =>
+                options.UseSqlServer("Server=localhost;Database=Pollux.Movies;Trusted_Connection=True;"));
             services.AddTransient<IMoviesService, MoviesService>();
             services.AddTransient<IMoviesRepository, MoviesRepository>();
             services.AddTransient<IMoviesListRepository, MoviesListRepository>();
@@ -83,7 +84,6 @@ namespace AzureStorageUrlsTests
                 try
                 {
                     Assert.True(response.IsSuccessStatusCode);
-
                 }
                 catch (Exception e)
                 {

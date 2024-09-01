@@ -28,5 +28,12 @@ namespace Movies.Domain.Entities
         /// </value>
         public Movie Movie { get; set; }
 
+        /// <summary>
+        /// Gets or sets the date added.
+        /// </summary>
+        /// <value>
+        /// The date added.
+        /// </value>
+        public DateTime DateAdded { get; set; }
     }
 }

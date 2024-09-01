@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Movies.Application.Models.Requests
+namespace Movies.Common.Models.Requests
 {
     public class SearchMoviesRequest
     {
@@ -18,7 +18,7 @@ namespace Movies.Application.Models.Requests
         /// <value>
         /// The user identifier.
         /// </value>
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the sort by.

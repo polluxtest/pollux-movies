@@ -1,16 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using global::Movies.Application;
-using global::Movies.Application.Models;
-using global::Movies.Application.Models.Requests;
-using global::Movies.Common.Constants.Strings;
-using Microsoft.AspNetCore.Mvc;
-using Movies.Common.Constants;
-using MovieUserRequest = Movies.Application.Models.MovieUserRequest;
-
-namespace Pollux.Movies.Controllers
+﻿namespace Pollux.Movies.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+
+    using global::Movies.Application.Services;
+    using global::Movies.Common.Constants;
+    using global::Movies.Common.Constants.Strings;
+    using global::Movies.Common.Models;
+    using global::Movies.Common.Models.Requests;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
+    [Authorize]
     public class MoviesWatchingController : BaseController
     {
         private readonly IMoviesWatchingService moviesWatchingService;
@@ -27,7 +31,7 @@ namespace Pollux.Movies.Controllers
         /// <returns>Ok.</returns>
         [HttpPost]
         [ProducesResponseType(204)]
-        public async Task<IActionResult> Post([FromBody] MovieWatchingSaveModel movieWatchingModel)
+        public async Task<IActionResult> Post([FromBody] MovieWatchingSaveRequest movieWatchingModel)
         {
             await this.moviesWatchingService.Save(movieWatchingModel);
             return this.NoContent();
@@ -40,7 +44,7 @@ namespace Pollux.Movies.Controllers
         /// <returns>MovieWatchingModel</returns>
         [HttpGet]
         [ResponseCache(
-            Duration = ResponseCachaTimes.ThirtyMinutes,
+            Duration = ResponseCacheTimes.TenMinutes,
             Location = ResponseCacheLocation.Any,
             VaryByQueryKeys = new[] { "*" })]
         [HttpGet]
@@ -49,7 +53,7 @@ namespace Pollux.Movies.Controllers
         {
             try
             {
-                var movieWatching = await this.moviesService.GetAsync(request.MovieId, request.UserId.ToString());
+                var movieWatching = await this.moviesService.GetAsync(request.MovieId, request.UserId);
                 return this.Ok(movieWatching);
             }
             catch (ArgumentException e)

@@ -1,101 +1,101 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-
-namespace Pollux.Movies.Auth
+﻿namespace Pollux.API.Auth
 {
+    using System;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text.Encodings.Web;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Pollux.Movies;
+    using global::Movies.Common.Constants.Strings;
+
     /// <summary>
     /// TokenAuthenticationOptions.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions" />
-    public class TokenAuthenticationOptions : AuthenticationSchemeOptions { }
+    /// <seealso cref="AuthenticationSchemeOptions" />
+    public class TokenAuthenticationOptions : AuthenticationSchemeOptions
+    {
+    }
 
     /// <summary>
     /// TokenAuthenticationHandler.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Authentication.AuthenticationHandler&lt;Pollux.Movies.Auth.TokenAuthenticationOptions&gt;" />
+    /// <seealso cref="TokenAuthenticationOptions" />
     public class TokenAuthenticationHandler : AuthenticationHandler<TokenAuthenticationOptions>
     {
-        private readonly IServiceProvider serviceProvider;
         private readonly IConfiguration configuration;
         private readonly ILogger<ApplicationLogger> logger;
+        private readonly ILoggerFactory loggerFactory;
+        private readonly string tokenIssuer;
+        private readonly string signingKeyId;
 
         public TokenAuthenticationHandler(
             IOptionsMonitor<TokenAuthenticationOptions> options,
             ILogger<ApplicationLogger> logger,
             ILoggerFactory loggerFactory,
-            UrlEncoder encoder,
             ISystemClock clock,
-            IServiceProvider serviceProvider,
-            IConfiguration configuration)
-       : base(options, loggerFactory, encoder, clock)
+            IConfiguration configuration,
+            UrlEncoder encoder)
+            : base(options, loggerFactory, encoder, clock)
         {
-            this.logger = logger;
-            this.serviceProvider = serviceProvider;
             this.configuration = configuration;
             this.logger = logger;
+            this.tokenIssuer = this.configuration.GetSection("AppSettings")["TokenIssuer"];
+            this.signingKeyId = this.configuration.GetSection("AppSettings")["SigningKeyId"];
         }
 
         /// <summary>
         /// Handles the authenticate asynchronous.
         /// </summary>
         /// <returns>AuthenticateResult.</returns>
-        protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             try
             {
-                this.Request.Headers.TryGetValue("Authorization", out var token);
-                this.logger.LogInformation($"token {token}");
-                if (string.IsNullOrEmpty(token))
+                this.Request.Headers.TryGetValue("Authorization", out var bearerToken);
+                this.logger.LogInformation($"token {bearerToken}");
+                if (string.IsNullOrEmpty(bearerToken))
                 {
-                    this.logger.LogInformation($"Initial Authorization token empty {token}");
-                    return Task.FromResult(AuthenticateResult.NoResult());
+                    this.logger.LogInformation($"Initial Authorization token empty {bearerToken}");
+                    return AuthenticateResult.Fail(AuthConstants.NotAuthenticated);
                 }
 
-                var claims = new[] { new Claim("token", token) };
+                var claims = new[] { new Claim("token", bearerToken) };
                 var identity = new ClaimsIdentity(claims, nameof(TokenAuthenticationHandler));
                 var ticket = new AuthenticationTicket(new ClaimsPrincipal(identity), this.Scheme.Name);
 
-                if (!string.IsNullOrEmpty(token))
+                if (!string.IsNullOrEmpty(bearerToken))
                 {
-                    this.logger.LogInformation("token is not null and token decoded is the same ok.");
-                    if (token.ToString().Contains("Bearer", StringComparison.OrdinalIgnoreCase))
+                    if (bearerToken.ToString()
+                        .Contains("Bearer ", StringComparison.OrdinalIgnoreCase))
                     {
-                        token = token.ToString().Remove(0, 7);
-                        bool isValid = this.ValidateToken(token);
-                        if (isValid)
+                        bearerToken = bearerToken.ToString().Remove(0, 7);
+                        var isValid = this.ValidateToken(bearerToken);
+                        if (!isValid)
                         {
-                            this.logger.LogInformation("Token is valid");
-                            return Task.FromResult(AuthenticateResult.Success(ticket));
+                            return AuthenticateResult.Fail(AuthConstants.NotAuthenticated);
                         }
-                        else
-                        {
-                            this.logger.LogInformation("Token is invalid");
-                            return Task.FromResult(AuthenticateResult.Fail("Not Authenticated"));
-                        }
+
+                        this.logger.LogInformation("Token is valid");
+                        return AuthenticateResult.Success(ticket);
                     }
                 }
 
-                this.logger.LogInformation("Authorization failed 401");
-                this.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                return Task.FromResult(AuthenticateResult.Fail("Not Authenticated"));
+                return AuthenticateResult.Fail(AuthConstants.NotAuthenticated);
             }
             catch (Exception ex)
             {
-                this.logger.LogInformation("Authorization exception");
+                this.logger.LogInformation("Unexpcted error");
                 this.logger.LogInformation(ex.Message);
                 this.logger.LogInformation(ex.StackTrace);
                 this.logger.LogInformation(ex?.InnerException?.Message);
-                this.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                return Task.FromResult(AuthenticateResult.Fail("Not Authenticated"));
+                this.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                return AuthenticateResult.Fail(AuthConstants.NotAuthenticated);
             }
         }
 
@@ -103,65 +103,24 @@ namespace Pollux.Movies.Auth
         /// Validates the token.
         /// </summary>
         /// <param name="token">The token.</param>
+        /// <returns>true/false</returns>
         private bool ValidateToken(string token)
         {
-            try
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadJwtToken(token);
+            var securityTokenSigningkeyId = securityToken.Header["kid"];
+            if (securityToken.Issuer.Equals(this.tokenIssuer) &&
+                this.signingKeyId.Equals(securityTokenSigningkeyId))
             {
-                var tokenIssuer = this.configuration.GetSection("AppSettings")["TokenIssuer"];
-                this.logger.LogInformation($"token issuer app settings {tokenIssuer}");
-                var signingKeyId = this.configuration.GetSection("AppSettings")["SigningKeyId"];
-                this.logger.LogInformation($"signing key app settings {signingKeyId}");
+                var claims = securityToken.Claims.ToList();
+                var userId = claims.First(p => p.Type.Equals("sub")).Value;
+                var expiration = claims[1].Value;
+                var expirationDate = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiration)).UtcDateTime;
 
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityToken = tokenHandler.ReadJwtToken(token);
-                this.logger.LogInformation($"token decoded jwt issuer {securityToken.Issuer}");
-                var securityTokenSigningkeyId = securityToken.Header["kid"];
-                this.logger.LogInformation($"signing key request header {securityTokenSigningkeyId}");
-
-                if (securityToken.Issuer.Equals(tokenIssuer))
-                {
-                    this.logger.LogInformation("Token issuer matched");
-                    if (signingKeyId.Equals(securityTokenSigningkeyId))
-                    {
-                        this.logger.LogInformation("Signing key matched");
-                        var claims = securityToken.Claims.ToList();
-                        this.logger.LogInformation($"claims  {claims}");
-                        this.logger.LogInformation("token issuer and token decoded is the same ok.");
-                        var expiration = claims[1].Value;
-
-                        this.logger.LogInformation($"expiration  {expiration}");
-
-                        var expirationDateTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiration));
-                        if (DateTime.UtcNow > expirationDateTime)
-                        {
-                            this.logger.LogInformation($"expired token");
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        this.logger.LogInformation("signing key NOT MATCHED");
-                    }
-                }
-                else
-                {
-                    this.logger.LogInformation("token issuer NOT MATCHED");
-                    return false;
-                }
-
-                return true;
+                return string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token) || DateTime.UtcNow <= expirationDate;
             }
-            catch (Exception ex)
-            {
-                this.logger.LogError($"error exception  {ex.Message}");
-                this.logger.LogError($"error exception  {ex.StackTrace}");
-                this.logger.LogError($"error exception  {ex.InnerException}");
 
-                return false;
-            }
+            return false;
         }
     }
 }
-
-
-

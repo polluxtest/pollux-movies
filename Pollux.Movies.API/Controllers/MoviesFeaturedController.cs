@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Movies.Application;
-using Movies.Application.Models;
-using Movies.Common.Constants;
-
-namespace Pollux.Movies.Controllers
+﻿namespace Pollux.Movies.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using global::Movies.Application.Services;
+    using global::Movies.Common.Constants;
+    using global::Movies.Persistence.Queries;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
+    [Authorize]
     public class MoviesFeaturedController : BaseController
     {
         private readonly IMoviesFeaturedService moviesService;
@@ -23,13 +25,12 @@ namespace Pollux.Movies.Controllers
         /// </summary>
         /// <returns>List Movie By Language Model.</returns>
         [ResponseCache(
-            Duration = ResponseCachaTimes.ThirtyMinutes,
+            Duration = ResponseCacheTimes.TwoHours,
             Location = ResponseCacheLocation.Any,
             VaryByQueryKeys = new[] { "*" })]
         [HttpGet]
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<List<MovieFeaturedModel>>> Get()
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<List<MovieFeaturedQuery>>> Get()
         {
             var featuredMovies = await this.moviesService.GetAll();
             return this.Ok(featuredMovies);

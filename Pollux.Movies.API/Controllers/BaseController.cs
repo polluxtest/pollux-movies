@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Movies.Common.Constants.Strings;
-
-namespace Pollux.Movies.Controllers
+﻿namespace Pollux.Movies.Controllers
 {
+    using global::Movies.Common.Constants.Strings;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
     /// <summary>
     /// Defines the Base Controllers attributes for the core domain <see cref="BaseController" />.
     /// </summary>

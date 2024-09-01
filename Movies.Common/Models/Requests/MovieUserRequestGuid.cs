@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Movies.Application.Models.Requests
+namespace Movies.Common.Models.Requests
 {
-    public class MovieUserRequest
+    public class MovieUserRequestGuid
     {
         /// <summary>
         /// Gets or sets the user identifier.
@@ -10,7 +10,7 @@ namespace Movies.Application.Models.Requests
         /// <value>
         /// The user identifier.
         /// </value>
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the movie identifier.

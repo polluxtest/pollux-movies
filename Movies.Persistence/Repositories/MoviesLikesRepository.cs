@@ -11,7 +11,7 @@ namespace Movies.Persistence.Repositories
 {
     public interface IUserLikesRepository : IRepository<MoviesLikes>
     {
-        Task<List<Guid>> GetLikesMoviesIds(string userId);
+        Task<List<Guid>> GetLikesMoviesIds(Guid userId);
     }
 
     public class MoviesLikesRepository : RepositoryBase<MoviesLikes>, IUserLikesRepository
@@ -26,10 +26,10 @@ namespace Movies.Persistence.Repositories
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>Movie Ids List.</returns>
-        public async Task<List<Guid>> GetLikesMoviesIds(string userId)
+        public async Task<List<Guid>> GetLikesMoviesIds(Guid userId)
         {
             return await this.dbSet
-                .Where(p => p.UserId.ToString().Equals(userId))
+                .Where(p => p.UserId.Equals(userId))
                 .Select(p => p.MovieId)
                 .ToListAsync();
         }

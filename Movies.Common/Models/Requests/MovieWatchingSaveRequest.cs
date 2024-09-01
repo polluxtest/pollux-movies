@@ -1,6 +1,6 @@
-﻿namespace Movies.Application.Models
+﻿namespace Movies.Common.Models.Requests
 {
-    public class MovieWatchingSaveModel : Requests.MovieUserRequest
+    public class MovieWatchingSaveRequest : MovieUserRequest
     {
         /// <summary>Gets or sets the elapsed time.</summary>
         /// <value>The elapsed time.</value>

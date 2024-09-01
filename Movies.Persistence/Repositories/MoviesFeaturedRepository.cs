@@ -4,6 +4,9 @@ using Movies.Persistence.Repositories.Base;
 using Movies.Persistence.Repositories.Base.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Movies.Persistence.Queries;
+using System.Linq;
+using Movies.Common.Models;
 
 namespace Movies.Persistence.Repositories
 {
@@ -12,7 +15,7 @@ namespace Movies.Persistence.Repositories
     /// </summary>
     public interface IMoviesFeaturedRepository : IRepository<MovieFeatured>
     {
-        new Task<List<MovieFeatured>> GetAll();
+        new Task<List<MovieFeaturedQuery>> GetAll();
     }
 
     /// <summary>
@@ -20,6 +23,9 @@ namespace Movies.Persistence.Repositories
     /// </summary>
     public class MoviesFeaturedRepository : RepositoryBase<MovieFeatured>, IMoviesFeaturedRepository
     {
+        private readonly PolluxMoviesDbContext db;
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MoviesFeaturedRepository"/> class.
         /// </summary>
@@ -27,18 +33,33 @@ namespace Movies.Persistence.Repositories
         public MoviesFeaturedRepository(PolluxMoviesDbContext moviesDbContext)
             : base(moviesDbContext)
         {
+            this.db = moviesDbContext;
         }
 
         /// <summary>
         /// Gets all by default parameters.
         /// </summary>
         /// <returns>List Movie. </returns>
-        public new Task<List<MovieFeatured>> GetAll()
+        public new async Task<List<MovieFeaturedQuery>> GetAll()
         {
-            return this.dbSet
-                .Include(p => p.Movie)
-                .ThenInclude(p => p.Director)
-                .ToListAsync();
+            var sqlQuery =
+                from moviesFeatured in this.db.MoviesFeatured
+                join movie in this.db.Movies on moviesFeatured.MovieId equals movie.Id
+                join genre in this.db.Genres on movie.GenreId equals genre.Id
+                join director in this.db.Directors on movie.DirectorId equals director.Id
+                select new MovieFeaturedQuery()
+                {
+                    Genre = genre.Name,
+                    CategoryGenres = from movieGenres in this.db.MovieGenres
+                        where movieGenres.MovieId == movie.Id
+                        select movieGenres.Genre.Name,
+                    Movie = movie,
+                    Director = director,
+                    UrlPortraitImage = moviesFeatured.UrlPortraitImage,
+                };
+
+
+            return await sqlQuery.ToListAsync();
         }
     }
 }

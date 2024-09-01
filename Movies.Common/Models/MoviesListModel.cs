@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Movies.Application.Models
+namespace Movies.Common.Models
 {
     public class MoviesListModel
     {

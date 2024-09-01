@@ -1,6 +1,5 @@
 ﻿namespace Movies.Common.Constants.Strings
 {
-
     public static class ApiRoutesConstants
     {
         /// <summary>
@@ -16,7 +15,7 @@
         /// <summary>
         /// The by genre
         /// </summary>
-        public const string ByGenre = "ByGenre";
+        public const string ByCategoryGenre = "ByCategoryGenre";
 
         /// <summary>
         /// The by language.
