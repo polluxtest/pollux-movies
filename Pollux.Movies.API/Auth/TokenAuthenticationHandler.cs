@@ -120,6 +120,9 @@
                 return string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token) || DateTime.UtcNow <= expirationDate;
             }
 
+            this.logger.LogInformation(securityToken.Issuer);
+            this.logger.LogInformation(this.tokenIssuer);
+
             return false;
         }
     }
