@@ -75,8 +75,8 @@
                         .Contains("Bearer ", StringComparison.OrdinalIgnoreCase))
                     {
                         bearerToken = bearerToken.ToString().Remove(0, 7);
-                        var isValid = this.ValidateToken(bearerToken);
-                        if (!isValid)
+                        var isInValid = this.ValidateToken(bearerToken);
+                        if (isInValid)
                         {
                             return AuthenticateResult.Fail(AuthConstants.NotAuthenticated);
                         }
@@ -117,7 +117,7 @@
                 var expiration = claims[1].Value;
                 var expirationDate = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiration)).UtcDateTime;
 
-                return string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token) || DateTime.UtcNow <= expirationDate;
+                return string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token) || DateTime.UtcNow >= expirationDate;
             }
 
             this.logger.LogInformation(securityToken.Issuer);

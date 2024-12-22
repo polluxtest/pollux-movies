@@ -82,4 +82,17 @@
             this.RuleFor(p => p.UserId).NotNull().NotEmpty().WithMessage("Invalid User id");
         }
     }
+
+    /// <summary>
+    /// Validates Request for Movies By Director Id
+    /// </summary>
+    /// <seealso cref="FluentValidation.AbstractValidator&lt;Movies.Common.Models.Requests.GetMoviesByDirectorRequest&gt;" />
+    public class GetMoviesByDirectorIdValidator : AbstractValidator<GetMoviesByDirectorRequest>
+    {
+        public GetMoviesByDirectorIdValidator()
+        {
+            this.RuleFor(p => p.DirectorId).GreaterThan(0).WithMessage("Invalid Ditector Id");
+            //this.RuleFor(p => p.SortBy).NotNull().NotEmpty().WithMessage("Invalid sort");
+        }
+    }
 }

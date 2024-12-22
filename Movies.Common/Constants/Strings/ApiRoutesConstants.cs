@@ -98,5 +98,10 @@
         /// Movie Genres Route
         /// </summary>
         public const string GetMoviesGenres = "GetMoviesGenres";
+
+        /// <summary>
+        /// The get movies by director identifier
+        /// </summary>
+        public const string GetMoviesByDirectorId = "GetMoviesByDirectorId";
     }
 }

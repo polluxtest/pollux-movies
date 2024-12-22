@@ -36,6 +36,7 @@ namespace Pollux.Movies
         public static void AddDIServices(this IServiceCollection services)
         {
             services.AddTransient<AzureMediaService, AzureMediaService>();
+            services.AddTransient<IAzureBlobsService, AzureBlobsService>();
             services.AddTransient<IMoviesService, MoviesService>();
             services.AddTransient<IMoviesFeaturedService, MoviesFeaturedService>();
             services.AddTransient<IMoviesByGenresService, MoviesByGenresService>();

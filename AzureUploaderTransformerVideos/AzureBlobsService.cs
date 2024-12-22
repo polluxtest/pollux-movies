@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 
@@ -13,12 +14,13 @@ namespace AzureUploaderTransformerVideos
     {
         Task<string> UploadBlobFileAsync(string containerName, string fileName, string filePath);
         Task<bool> CheckBlobFileExistsAsync(string containerName, string fileName);
+        Task<List<string>> GetAllFileNamesByContainerName(string containerName);
     }
 
     public class AzureBlobsService : IAzureBlobsService
     {
         private readonly AzureMediaServiceConfig azureMSConfig;
-        private const string storageAccountKey = "DiSRgwmE1WZn8mCMXEi3tyxaMlTiFEDKHxkjYYfNMgbYzme4LVIRic4bq7GTHURBU/jSwBpPLggtK2Oi+J2Gtg==";
+        private const string storageAccountKey = "d4wS4dKEXRu0w6cSUUDdRabMhiOhNNQchC74loMIktJ1f2g/7VngH4ch+8ZOo+thvFsvreKthRcU+AStUVUk2Q==";
 
         public AzureBlobsService(AzureMediaServiceConfig azureMSConfig)
         {
@@ -53,6 +55,26 @@ namespace AzureUploaderTransformerVideos
             {
                 return false;
             }
+        }
+
+        public async Task<List<string>> GetAllFileNamesByContainerName(string containerName)
+        {
+            var storageConnectionString = this.azureMSConfig.StorageConnectionString;
+            var blobServiceClient = new BlobServiceClient(storageConnectionString);
+
+            var container = blobServiceClient.GetBlobContainerClient(containerName);
+
+            var blobs =  container.GetBlobsAsync(Azure.Storage.Blobs.Models.BlobTraits.None);
+
+            List<string> blobNames = new List<string>();
+
+            await foreach(var blob in blobs)
+            {
+                var blobName = blob.Name;
+                blobNames.Add(blobName);
+            }
+
+            return blobNames;
         }
     }
 }

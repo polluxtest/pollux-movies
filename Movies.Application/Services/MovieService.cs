@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection.Metadata.Ecma335;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -41,6 +43,14 @@
         Task<MovieWatchingModel> GetAsync(Guid movieId, string userId);
 
         Task<List<string>> GetGenresAsync();
+
+        Task<List<MovieModel>> GetMoviesByDirectorIdAsync(
+            int directorId,
+            string sortBy,
+            CancellationToken cancellationToken = default);
+
+        Task<List<Movie>> GetAllAsync(
+         CancellationToken cancellationToken = default);
     }
 
     public class MoviesService : IMoviesService
@@ -242,6 +252,32 @@
         public async Task<List<string>> GetGenresAsync()
         {
             return await this.moviesRepository.GetGenresAsync();
+        }
+
+        /// <summary>
+        /// Gets the movies by director identifier asynchronous.
+        /// </summary>
+        /// <param name="directorId">The director identifier.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns><List<MovieModel></returns>
+        public async Task<List<MovieModel>> GetMoviesByDirectorIdAsync(
+            int directorId,
+            string sortBy,
+            CancellationToken cancellationToken = default)
+        {
+            var movies = await this.moviesRepository.GetMoviesByDirectorIdAsync(directorId, cancellationToken);
+            return this.mapper.Map<List<Movie>, List<MovieModel>>(movies);
+        }
+
+        /// <summary>
+        /// Gets all asynchronous.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>List<MovieModel></returns>
+        public async Task<List<Movie>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+          return await this.moviesRepository.GetAllAsync();
         }
     }
 }

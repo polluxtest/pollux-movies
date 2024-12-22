@@ -11,6 +11,8 @@ using Movies.Persistence.Repositories.Base.Interfaces;
 
 namespace Movies.Persistence.Repositories
 {
+    using System.Threading;
+
     /// <summary>
     /// Users Repository contract.
     /// </summary>
@@ -25,6 +27,7 @@ namespace Movies.Persistence.Repositories
         Task<List<MoviesQuery>> GetRecommendedByPolluxAsync(string userId);
         IQueryable<MoviesQuery> GetBaseQuery(string userId);
         Task<List<string>> GetGenresAsync();
+        Task<List<Movie>> GetMoviesByDirectorIdAsync(int directorId, CancellationToken cancellationToken =  default);
     }
 
     /// <summary>
@@ -121,6 +124,21 @@ namespace Movies.Persistence.Repositories
         }
 
         /// <summary>
+        /// Gets the movies by director identifier asynchronous.
+        /// </summary>
+        /// <param name="directorId">The director identifier.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>List<Movie></returns>
+        public async Task<List<Movie>> GetMoviesByDirectorIdAsync(int directorId, CancellationToken cancellationToken = default)
+        {
+            var movies = await this.dbSet
+                             .Where(p => p.DirectorId == directorId)
+                             .ToListAsync(cancellationToken);
+            return movies;
+        }
+
+        /// <summary>
         /// Base Query to get all movies with the neccesary joins
         /// </summary>
         /// <param name="userId">UserId</param>
@@ -148,13 +166,12 @@ namespace Movies.Persistence.Repositories
             return sqlQuery;
         }
 
-
         /// <summary>
         /// Gets the asynchronous.
         /// </summary>
-        /// <param name="userId">The user identifier.</param>
         /// <param name="movieId">The movie identifier.</param>
-        /// <returns>MoviesQuery</returns>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Task<MoviesQuery></returns>
         public async Task<MoviesQuery> GetAsync(Guid movieId, string userId)
         {
             var sqlQuery =
@@ -180,6 +197,7 @@ namespace Movies.Persistence.Repositories
 
             return await sqlQuery.SingleOrDefaultAsync();
         }
+
 
         #region azure
 
